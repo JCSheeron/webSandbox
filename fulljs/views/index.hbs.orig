@@ -1,0 +1,24 @@
+<h1>{{ title }}</h1>
+<p>Welcome to {{ title }}</p>
+<p>Use double braces to render text (escape html).</p>
+<p>Here is a condition param: {{ condition }}</p>
+<p>Use tripple braces to not escape html: {{{ param3 }}}</p>
+<p>Helper functions.</p>
+<p>Block (multiline) use # after braces and end with /</p>
+<p>Evaluate conditions:</p>
+{{# if condition }}
+    Condition is met
+    {{ else }}
+    Condition is not met
+{{/if}}
+
+<p>Loop thru arrays!</p>
+{{# each arrData}}
+    {{ this }}
+{{/each}}
+<br>
+{{# each arrData as |val key|}}
+    key:{{ key }} value:{{ val }} <br>
+{{/each}}
+
+

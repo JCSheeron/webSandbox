@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Cherry Tree - A Responsive Images Demo</title>
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,700italic|PT+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+		<link href='style.css' rel='stylesheet' type='text/css'>
+	</head>
+    
+	<body>
+        <main class="main" role="main">
+        
+            <h1 class="main-title">Cherry Trees in Burnaby</h1>
+        
+            <figure class="featured-image">
+                <img 
+                     src="images/original.jpg"
+                     alt="Cherry Blossom in bloom"
+                >
+                <figcaption class="image-caption">
+                    Detail of a cherry tree in bloom in Burnaby, British Columbia, Canada.
+                </figcaption>
+            </figure>
+            
+            <p>For more than sixty years, Vancouverites have enjoyed a love affair each spring with the soul-stirring flowering plum and cherry trees that line our streets and grace our parks. In our City’s infant years in the late 1800s–until the 1940s, planting trees on boulevards and in parks often followed the tradition of large shade trees—elm, maple, chestnut and plane—trees that were tall, stately and long-lived. Many of those magnificent trees that were planted on our parks and streets so long ago still survive today.</p>
+            <p>Even before the middle of the last century, attitudes at the Park Board toward tree planting had begun to change. In the 1930s, ‘40s and ‘50s, the staff initiated a number of significant cherry tree plantings—provided primarily as gifts to the Park Board. In the early 1930s the mayors of both Kobe and Yokohama presented the Park Board with 500 Japanese cherry trees for planting at the Japanese cenotaph in Stanley Park honouring Japanese Canadians who served in WWI. And so, as the impact of cherry tree plantings began to reshape the city’s landscape, Vancouverites were soon smitten by their fleeting beauty, their clouds of blossoms, as they heralded spring’s arrival each year.</p>
+        
+        </main>
+	</body>
+</html>

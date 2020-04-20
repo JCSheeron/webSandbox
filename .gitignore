@@ -1,0 +1,15 @@
+# ignore all the node_module folders
+node_modules/
+# ignore Exercise folders
+**/Exercise?Files/
+
+# ignore compressed files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+

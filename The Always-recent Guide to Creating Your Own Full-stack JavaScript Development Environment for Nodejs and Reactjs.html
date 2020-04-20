@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://jscomplete.com/learn/1rd-reactful -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no">
+<meta name="description" content="Step-by-step guide to create a standalone full-stack JavaScript development environment for Nodejs and server-side rendered Reactjs">
+<meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320">
+<link rel="canonical" href="https://jscomplete.com/learn/1rd-reactful">
+<meta name="robots" content="index, follow">
+<meta name="content-type" content="Page">
+<meta name="categories" content="page">
+<meta name="theme-color" content="#2F3BA2">
+<meta property="og:site_name" content="jsComplete.com">
+<meta property="og:url" content="https://jscomplete.com/learn/1rd-reactful">
+<meta property="og:title" content="The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs">
+<meta property="og:description" content="Step-by-step guide to create a standalone full-stack JavaScript development environment for Nodejs and server-side rendered Reactjs">
+<meta property="og:image" content="https://jscomplete.com/stf/images/logo-sm.png">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs">
+<meta name="twitter:description" content="Step-by-step guide to create a standalone full-stack JavaScript development environment for Nodejs and server-side rendered Reactjs">
+<meta name="twitter:url" content="https://jscomplete.com/learn/1rd-reactful">
+<meta name="twitter:image" content="https://jscomplete.com/stf/images/logo-sm.png">
+<meta name="twitter:label1" content="Written by">
+<meta name="twitter:data1" content="Samer Buna">
+<meta name="twitter:label2" content="Filed under">
+<meta name="twitter:data2" content="JavaScript">
+<meta name="twitter:site" content="@agilelabs">
+<meta name="twitter:creator" content="@samerbuna">
+<meta property="article:published_time" content="2019-02-03T21:45:19.585Z">
+<meta property="article:modified_time" content="2020-01-16T20:38:32.293Z">
+<meta property="article:publisher" content="https://www.facebook.com/jscomplete">
+<meta property="article:author" content="https://www.facebook.com/samerbuna">
+<meta property="article:tag" content="JavaScript">
+<script src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/sdk.js" async="" crossorigin="anonymous"></script><script src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/1184601594897239" async=""></script><script id="facebook-jssdk" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/sdk(1).js"></script><script async="" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/analytics.js"></script><script async="" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/fbevents.js"></script><script type="application/ld+json">
+      {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "publisher": {
+              "@type": "Organization",
+              "name": "jsComplete.com",
+              "logo": "https://jscomplete.com/stf/images/logo-sm.png"
+          },
+          "author": {
+              "@type": "Person",
+              "name": "Samer Buna",
+              "image": {
+                  "@type": "ImageObject",
+                  "url": "//www.gravatar.com/avatar/4b6b338a1609ea0a4dfec74208425620?s=250&d=mm&r=x",
+                  "width": 250,
+                  "height": 250
+              },
+              "url": "https://jscomplete.com/samer-buna",
+              "sameAs": [
+                  "https://samerbuna.com",
+                  "https://www.facebook.com/samerbuna",
+                  "https://twitter.com/samerbuna"
+              ]
+          },
+          "headline": "The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs",
+          "url": "https://jscomplete.com/learn/1rd-reactful",
+          "datePublished": "2019-02-03T21:45:19.585Z",
+          "dateModified": "2020-01-16T20:38:32.293Z",
+          "image": {
+              "@type": "ImageObject",
+              "url": "https://jscomplete.com/stf/images/logo-sm.png",
+              "width": 800,
+              "height": 500
+          },
+          "keywords": "JavaScript",
+          "description": "Step-by-step guide to create a standalone full-stack JavaScript development environment for Nodejs and server-side rendered Reactjs",
+          "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://www.jscomplete.com/learn/"
+          }
+      }
+      </script>
+<link rel="shortcut icon" href="https://jscomplete.com/favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#9f6986">
+<meta name="apple-mobile-web-app-title" content="jsComplete">
+<link rel="apple-touch-icon" href="https://jscomplete.com/stf/images/icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="https://jscomplete.com/stf/images/icon-512.png">
+<link rel="apple-touch-startup-image" href="https://jscomplete.com/stf/images/icon-512.png">
+<link rel="stylesheet" href="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/main.5b787633cb7144c9b9c6.css">
+<link rel="manifest" href="https://jscomplete.com/manifest.json">
+<script>window.__jscD = 'eyJpbml0U3RhdGUiOnsibGF5b3V0Ijp0cnVlLCJxdWVyeSI6e30sImNvdXJzZXPGDWxlc3NvbsQNIjFyZC1yZWFjdGZ1bMQQaWQiOs4VLCJ0aXRsZSI6IlRoZSBBbHdheXMtcmVjZW50IEd1aWRlIHRvIENyZWF0aW5nIFlvdXIgT3duIERldmVsb3BtxCdFbnZpcm9uxQxmb3IgTm9kZSBhbmQgUsRlIiwic2VvVMZldW5kZWZpbmVkLCJkZXNjcmlwdGlvbiI6IlN0ZXAtYnktc3RlcCBnyHhjxHhlIGEgc3RhbmRhbG9uZSBmdWxsLXN0YWNrIEphdmFTxUUgZOsAkGXzAJBqc+UAknNlcnZlci1zxGByZW5kZXJl5wCnanPmAKlE7ACXbnVsbCwiY2F0ZWdv5AFrInNob3J0IHJlYWTEL3dpcCI6ZmFsc2UsInB1Ymxpc2hlZOgBnmZlYXR1csoQdGFncyI6IuUBVCxCZWdpbm5lciIsImlj5QGsIsRVaW5nIiwiZGlzcGxheU1ldGhv5AGwyhphZG9j7QFFY29udGVudM0UZGVmYXVsdEPlAhNJZOgAxmtleXdvcmTEa+oBOCIsIuYBZGRBdCI6IjIwMTktMDItMDNUMjE6NDU6MTkuNTg1WiIsInVwZMsnMjAtMDEtMTZUMjA6Mzg6MzIuMjkzxCdtYWluSW1hZ2XId2xvY2vkAQXnASfkAINDb3XkALMxODQwLCJib2TkAVlQR2d4UGxSb1pTQkJiSGRoZVhNdGNtVmpaVzUwSUVkMWFXUmxJSFJ2SUVOeVpXRjBhVzVuSUZsdmRYSWdUM2R1SUVSbGRtVnNiM0J0eENkRmJuWnBjbTl1eFF4bWIzSWdUbTlrWlNCaGJtUWdVbVZoWTNROEwyZ3hQZ284WkdsMklHbGtQU0owYjJNaUlHTnNZWE56eGd6T0czUnBkR3hsSWo0OEwyUnBkajRLUEhWc3lDdHpaV04wYk1SME1jUXliR2srUEdFZ2FISmxaajBpSTJsdWFYUnBZV3hwZW1sdVp5SStNUzRnU2NzUlBDOWhQand2YkduU05YTjBZV3hz5ADQTFcxaGFXNHRaR1Z3Wlc1a1pXNWphV1Z6SWo0eXhFWElJU0JOWVdua0FQSEtJZDlWeEZWazZnRWd6MXd6elZ6c0FVamZZOFZqWStjQmlpMWhiaTNuQVBrdFpHbHnlAKwzSjVMWE4wY25WamRIVnlaU0krTkM3cUFiWmhidWdCRkNCRXlDd2dVOGdzMld0dmJtWnBaM1Z5eEc1M1pXSndZV05yTFdGdVpDMWlZV0psYkNJK05TNGdROG9pSUZmR0l1VUIrRUxFSXRsWDZBRENibkJ0TFhOamNtbHdkSE10Wm05eTdBReQA0DI2d0NcdTAwMkbEJUlGUEdLZVVDWU9zQk5OaGxkR1Z6eFflAdF5ZVhSb3hBdDNhWFJvTFdFdGMyRnRjR3hsTFhMa0Fwc3RZWEJ3YkdsallYUnBiMjRpUGpjdUlGVEdOeUJGeVRjZ3hEY2dZU0JUeFRmbUF0SWdRY28zNndDQkwzVnN4QWJtQXJyb0F0UndjbVZoYldMa0F0VEdGT3NDejJsdmJtSnZaSG5FR21GejVBTnB4eHhoZFhSb2IzSXRZbXh2WTJzaVBnb2dJRHhwYldjZ2MzSmpQU0l2YVcxaFoyVnpMM05oYldWeUxURXVhbkJsWnlJZ0w4VWw1QUxIeEFrZ0lPa0JCMmgwZEhCek9pOHZkSGRwZEhSbGNpNWpiMjNHTzJKMWJtRWlJSFJoY21kbGREMGlYMkpzWVc1cklpQnlaV3c5SW01dmIzQmxibVZ5SUc1dmNtVm1aWEp5WlhJaVBsUEVOU0JDZFc1aDVBRHd4bVZtYjI5MFpYSStWWEJrWVhSbFpDQktZVzUxWVhKNUlESXdNakFnUEhOd1lXN2xBUUJoY25ScFkyeGxMV3hsYm1kMGFPUUQyc1Fi5ALBeHrmAcRrQUxvdjVnQzdQ5wHVbEFRZnVBU2x3WVhKaFozSmhjR2prQVNkd1BsbHZkU0JqWVc0Z1kyOTFiblFnYjI0Z2RHaHBjeUJuNkFTb1llVUV2eUJpWlNEbUJNSXVJRmRsSUhYbEFLSWdhWFFnWVda5ADCZ1lXNTVJRzFoYW05eUlHTm9ZVzVuWlNCcGJzVVViMlnEVGxJT1FDeHVRQlpTQjFjMlZrTGlEa0JSYmtBOWprQXkxcGIyNXpJR2hsY21VZ2MyaHZkV3hrSUhkdmNtdmtBSWJHVTJOb2FXNWw2QUl4Y21Wc+QCZuQEZ2VlY0FqQ0IyWlhKemFXOXV4R2prQlNKcWN5QW9KbWQwT3owZ01UQXA1UUNw5ATHYjIxdOQD00lIVno1QUo3NUFDT2JHSGtBc3NnVEZSVHhGSmxZWE5seUVBdVBDOXc3Z0p3OWdFelZPUUJJbWx6SUdFZ2MzUmxjQzFpNUFRbVpYRG5BVFRsQUsxbGVIQnPlAa5zOXpJR0ZpYjNWMElHRnNiTVbmAY5kRzl2Yk9nQkNrRjB4UlBrQUtEbkFTdkZSQ3pFQzNKbHhHTWk1Z05kSWlCelpYSjJaWEl0Y3VRRXo4UUhZV1I1SU9zRGJDQjBhR0YwSUhubkFjeDFjOFJvSU9VQTZIbmtCbURvQkhuRkxIUDVBT2hoWkcxdjVBVFdiMjdsQXlzZ2JtOTA1UU5uZOQAnU9RQ1JuUnl4QVZreUM5cFkrUUQ1UW84YWNnUlptRWd4QlF0eFRnZzVRWjZQU0pPeFVVOEwrVUQwWFJrelVKamIyNTA1UVNkQ3VVQlZPWUJRblZ6WlhQbEFRMXRiM04wSUhCdmNI5AGpTG5BVGpsQU9kaOQB3TVBSFliMjVzZWNRdVpPUUNjT1FCd1PmASBtQkUzckFSaHo1UUp2YzJVZ2QrVUNYbUpsSUR4emRISnZibWMrUlho5AQkemN6d3Z4eEFnS09RRkNXRWdkMlZpNXdGdEtTekpMZWNGaTlFdGJXOWtkV3hsSUfkA8BSc3hUSGtCYXpJTmVjRnRNOHpTbE12U2xOWTVBREFjR25FTk9nQW9lVUExV1Z5ZEdGcDVBRFdibecAnUFodmxBT052Y09ZQ1NXSjF4UlY1eFN6eEFTRnZibVhsQU83cEFVaGhiSE52SUdGemMzVnTlARJodDNZVzUwNUFJWWFNUTNZbTkwYU1WRll1UUdodVFDZytRQXZNUVJabkp2Ym5URkV1VUNXR+QBKlRoNXdFVUx1Z0J46QPQZ3d2NkFJYcYPd00wY0Q1QjVRUXBaMsYTbUE0WnliM1ZueFg1ejdnUUxMT1lBcUdsc2JDQm9ZWFpsNUFOaWFlVUdKdVFBKzJaMWJHeDVMZWdDeTJWa0lHWHJDU2JrQWhrbUl6Z3lNVGM3Y3lEbUF4xl1rQVhEbUF6REVkZklDRytZQkErY0E1T29BOWVnQkIra0JHT1VCdWVjRGdPVUdWc2xWNWdHOTdnVE5jM1JoY25UbkJMTnVJR1Z0Y0jkAs5rSVQ4aGRlZVlBNU9ZQnFPUUE4K2dCRStnRUp1d0k0ZW9EM0c1bFpXUXM1QUhwNUFSMGIyNWx4WDl5xQxHemtBdHh1YitVRCsyOW01UVXmAKZJbU52WkdVdForUUdlK1lIa09jRFJHeHBhMlVnUEdWdFB1VUlPT3NIdVR3dlpXMCs3Z1FkemdmdkLnAUNsQ2psb011VUdsdjhLTTJnecYXUWV1K2dJNDVRaXo1QXI4OVFGTHlYYmxCbzNuQmlnODVBRDRQdWNHZFM1cWMrUUlVOFVUSUdacGJPVUJOR2x6eFF2a0JXSHNCRDlxY3lCd2NtOXHkCA1jK1FESjPlCBVsSeQDSUd3Z2FXNW1iM0p0NWdWdDVnWFM1UWJieGrkAuxVQlZXbDBjeUJ1WVcxbExPZ0dtaXdnWlhSaktlWUI5bkxrQ2N4MzVBSEw3d0hkeWtia0FlQnpJQ2h6YitjRTZHNTXkAUM1UVhTNXdzSXhDNXQ1UUlsWWVRSHJHTmxLZjhHdFBJSDUrWUJVT1VINWVVQkJPb0hHZVlCT09RS0crUUJWK2dCTk9RRmHkCIFEcllhR3hwNVFuaDZBbGN6QnZxQmQ0OGNISmxQaVFnYld0a2FYTGxBOGhxY3dvS0pDQmpaTXNOeW5uRUxmc0Nl5gFaRUhqdjhBdStZREgyRnphK1VEUkdFZ1ptVjNJSEYxNUFxWTVRZWVibVRwQnpocGJuUmxjbUZqNXdobGMzVndjR3g1eEIza0NPSnpkMlZ55AX75ApqNVFZNElFWEVMT1FDSjJ0bOUFqzdSbVlYVnNkSFA2QVpUd0IyQjBhWETmAIdCMcYIMcgJRU4rZ0hYbFRFUcYQOEhYUXJvQWYza0JCM3VBU3NnTFhub0FTNTBiK2NDN0hUbEJKTucCLndOSTVnTnU2d0Q0SUhaaGJIWG9CSzdKWnNnenhIOWtaWFRrQXVibUF6N0ZZK2tEUDhSSTVBU1RlZVVFaE9RRG1lUUZkY1VTNUEyNnhCVGxDbzFzNmdHNuQBompQb0NNazl1WStZSFFQNENOMuQGmFLkBIVtQnBUbkNw5gCDbkJwYsYKQVJ0MTVBWWc3Z0RpNmdTNEtNUmPpBNhEUXhsYkhQRVlXVjDGE3dQSjlBTHYyWMYPa0FXeHViM2ZrQmhMbEJOOTBieUFpWkc5amRlVU9DT1VHRyswRWd1VURGbVRGSit3QXMrY0ZLV2hoY0hCbDVBTW9kWFLkBojGTlkyRnNiSGtnZDJobGJzVTU3QUZENVFTajZBQ0tZVzdtROcCFcYGQmxENkJs5wGhRUU3K0VFN8cabkQ3Q0tqbEJKSXRjM1RrQmE1S1lYWmg1ZzhuN1Foc2FHRnpJRElnNUFDWElIUjVjR+QH8mR4N0FDZ0xPUUJRMlRtQ0JITkdlWURIT1FGNXVRQmJXTG1DRHBoYkd4bDVRbHJ5elhtQ0c3bUJKM3JEOFhUVGVRS0MrVUtKY1JXeGtoc2IyTmhiTTAzNXcxSitndjU3d0VGUnVVS3F1Y0hFK29MRWVVSWV5Qm41QVpDNXdxVTdReHlhWFA1QzEwdTVCTG55aW5sQ29iRlZDQmtlVzVoYldsajVBeWk1QVN0N0FNN3lubktQK1VLMU05RWN1UUpkSFRMUuQIrkxWc2JDd2dZV3gwYU9VSlYrc0R3bU52YnVRSnhYTG5CdmxoSUdKbDVB5gEsSzVnc1Y1QVIxNUFGWExPY0pKZkFQOTNkM2R5NXVaMmx1ZU9VUCtmOFA4Q0krVGtkSlRsamtEK0FnNVFGUlEwUk81UUN5YVdQxk5EbXZyQSs1djZRZjc1d0bnBXZ3ZUrJCTXEBFFPdzVBNm14RkzGGEIzSDJEdsYMdEIxeGtiM2R1Ykc5aDVnczQ1Z1FTeVZ6RkRzVng1d1N3NVFMVmNHeGhZK1VCeGVZQjhPZ0ZVbTV2WkdWZjVnMVZ5VHRtYjJ6RUl5aDNhR2xqYU1RenhYUG5DTWhpWldOaDVBSVB45wXQa0FvVGxDODVwY3VRTkdzZHg1UWJhZE9vRGJlY0x0KzRJSCtRQ1dYUGtCZDdsQ1J2cEEybDU2UVXnAv93cMgJZugDIDnoAPRm5wQqdzlVK1E5VTZBR09hZWdBcStRRXMrc0ErMuQKBmJsQTdscWRYTjA1QTF1YUc5eWRHUGtEV3prQjM3R08rMEYxeTRnVkdGclpTRGxGQVVn5ALIYVd6a0FNZmxFZmZrQjFSdjVRVVJJ5AbzWXM3S2Y4SG9QMEc0K1VOa09RTmZ2RUdxK1VGUCtRRTkrZ0ViZWNYRk1jTzdRK0R4UnRFVDAzSkh1a0dPT1lMU201bGVI5wONQTFIyQl0QTFIbERVckdCaTFrYjIzyBluxglDaOcDhkFo5wHFQ2hEOUFobFhhT1FJSitvRHJlVUFzdW9IdVdUTUYrWUF5Y1liNlJQSjVB5wPNNUJDamNtWGxDQTduQm54cDdRYkU2QU9iNVE3djVBT0E1QW5PNWhFcVpPY0o1bTdrQ2RRZzVBV0liT1FEdEd6bEV2cnFFTURuRUx2cER25AVFQnNiK2NMa1hWdXgwc+QD62I1QUo2eTN2a0FNUEdIOFJRYm1mRVJH5A9kNGdTV2J0RVFuT0pHbmtCNjNxQnpYRVJYQjFjK1VHUFhMSEsy5AvJYmxEaDdLYitZS0llOE5wblByRlBjdHhVemxFYTF2WnVVT0Era1Fx5ANvZVVYa0dWNGRNUW41QVI1OWdmdecCEHJ0K2dOTlUybmtBNXA1YjNYSGRPWVFLbmR5YWVVWGwrY1VIbVRsRmJOdGTkA8RlUVJidWNGZ2lBbzVRRHU1ZzdBNkFWNTVnQ1Y1QWhvYuQHeGNvczVRY3k1UU545AfsRXVZRHFlVUI5KzRUS09rTDBIUnlZVzV6NUJXUTZCRDRjOHA4NVFJZGMyOXRaZVlM5A/YQmVRQlpPVVdJZVFXWU9RQXlYSnZkM1BrQ1NoMGIyUmhlZTRJWmZrVHUrZ0g1Q0JxYjJMbUJnbnBBYW5wQUxaMDZnZDM1QXRKWVhKbOcA6VHnBkd3UW03UVFtNXhuNnlBZ3RZMnjnBoZ3UXHfCTJGd1pENkFRazdRQ3U3UVFQNUFNTGRtbGs1eERNelM3dkRWTXNJT1lIeGU4V3FPY0RoK1VDak9jQsY9K1lCbVdG5BFJaGJPa2JDV1BrRVpERVVlUUdzdVFKc0dWa0lITuQP7HdkT1FQc09ZSecMcGtBaE9nQjV2TUtUY1EweUdWRVpYWWdVK1lLVitRQ0EyVmg1UmVjYmVRWmpPUUU2M+QMRTd1RVRINEFPdmtGTE4zNXdWcFlY5AjpbG5hSFRtQXI3bUMwTHZCRzlwNmdRVmNISnZZbUZpNXhZR1lTQm5iMjlr5BLiWldIdUJX5wN8QkJMNkJCTG9BT3Jx5wDUZugG82hwWSs4V3orWUJLZWdERU9rVmVPa1RhdVFEMmVRSjltVnk2ZytpNVFQUzVCTXA1Z0dv5QxHZVVNTmVRTG91UUVaTVFqNUJiWDVBUTfkD3ZER2hsZU9VWTR1c0VNODFINVFSUjZRRWE1aGM2NVFTdWRHxnpQSEVGUVNTRGtEcDNuQWp6a0ZPenRBK3pzREtEdUY1c3VJReQGYXdVeFdBczVo5AifSWg2Z0NN5A11WlhKdTdBNFdabVZoNUIzdzV3U3U1Z2FLNkFTcDVBOSs1QUtTYzNUbEFjRG1HdE5sZUdW5AhOR3BPc09VZTRCYWVnRWVlUUXmAItPVUJaT1FLMm1WMDV3Rms1d3pjeENsdDVBbUt4Q3JtQUxIcEFLam5GdDdtRDfnBK9ER25wQWhWSTVCWkk2QmhZTnVvRkUrMFdmTWwyeG5Ka2IrVVU4beQSH2xqxjJ3VWfJCTdRVWc1UjhPTGVZQ1dpQkF4UTR2NVFQN3h3emtEQ1hJRE9ZQkhDMWxibmJQRXVjSecGGThG5w/qa1JYT3dBaFAwRTcrZ0RUY1lyNkF5bTdRZHY4UU5DNXd5QTVnZEF4bkRtQUwzSGFpMXpZMjl3WldRZ2JHbGljbUZ5NUFyNDVRbHc1Z2xs6AGTa0JJVEZmT2NDcWUwYjNPa2lMMnJtRUTkD91ScTd3xiU2xgd4R0c5UkfHOXnnBYHUDnhH5wbNaEdVNVF3UWIyeHNiM2ZFWWVRQkRQWVJDT1HoB8JRS2nkBqlPVUR4K1FIT09RTDl1b0dOT29KdStnR0Ir5A7MWUJreTFFNmcwMTVnT1NabXhoWitVUWR1WU9KMlZ0N3c2K1pHVjI3Z0R5eOcBeG5BT2prQUpUNURr6AaWNmZxQmJ6b0UzamtBZ1RtRWFQb0VRWG5HbHR1NkIrRTVnM29aT1VhRCtVQkk4WW83Z1ZwY21YbUdyREVTZWNUOGVnYVRXRWdabkox5AobQWxqbEJ2REVCdTRHdEM0Z1RIVmph5AWbVWZtSHJIa0FZWGxCTGZrQnXkEKQ5MWJtVG5CWTd3SEtyc0JZM0VmRzNrQVFySEVQOEXnBDs4RVMrMEVTeTFFSU9RRUxzVucKtndRTDlCRGw2QVB5NVFFVDVRVDU2eFkyeUZqdUZqWHFEeFJwNVFHcDZ4VlA1d0RvNUFHNzVRcHI1eVhYNXfnAa41QVloNVFYdmQzTGtCYm5uQ3lW5A4uajVBOU41aGRWNXdFaDdBRXRh5QtXc0E1QUZqNUJTUXlERGxBSXZ0RmJMbkFlcHo1UecAlTVBSW41Z3pLNVFHellYYm5CM2ZrRuQJEDJzdUlGUG1IWGZFUjNCduQNPlpuVnNJZjhDbytrVlF1UVczR1hrQVBocFkyWGxFQXIxRE5SNTVRSUQ4Qk5oWlhO5BcwMExtOXlaxms4VFhTSSs2UlJzVTB4cDVDUzN45wKYa0UyOHU1UUZKUkU4Z1RrOVVJRk5MU1ZBZ1ZFaEpVeUJQVGtVaDVRRugJbURLNkFES3hscm1JZXJsQTBweGRXRnNhWFRrRWhOdmJPWU5GZVlPVeQM+HVjRjczVG5GSjNsQTJibkRWcmxBajdrQkp6a0ExVno1Z25QWWVVQmlHUG5JSsdg5wsaN3ZEY3ptQmZmbEFwOXk1UTVTNVE4MDVSYXk3Z1BkNmdtejV3REs1QTYzWVhMbEJPcm1I5wbxbEhJxglKVU9jZm5zOGw1Z2llNXhVKzdRc+QSwnk2U05qWldUSVorOEdrdVFDMm1SazVReTl4RjEwYUc5ejZ5T2E1QTlVYjNMbkg1xk1vSFg4dUlPMElrUElOb2VnSjJmOEVMUMQEQUVMT1lDZnVjSWdjY054Z2PkF38x5Au+NWdoWDFCUXRhRzl25xIaOFbnAqlVVugJyUJwZTRCdytRWm1PZ0dYeTdHZDNKakxtcnFGUjNsSHNmbUNBOXli5ws0bkHnBQ1wSGxMc0h1M21Bb2ZrQ3JEbEJCRHFEOGpxQXFwemRIbHN4RHprSnFabGJtUGtHTXJrRE1aa1pXYmtHeURsSFJUbEJpN29EQUxGZHVzQnllOEIrZW9Ha25WemRHOXQ1QittNWg3QWMrY0jnCC84QnZ2VUJ2dWNxME80QkRkRkI3d0hrNWd6WkxtVjRj6QUKUU05SUhzS0lPWUM1bkk2SUNmc0FmQW5MQW9nNUF1Y09zVWpJT2dRWXpvZ2RISjFaY1FjSU9ja2UycHp6QlJsY3piTUQrUUdIY3dRYW1WemRNb1FmY1FGNWdJOWN6b2dXeWZyQWtFbkxDREdEeWRkeENWbGVPUVZCTVVsNkFU5Bdlbk91c0JkK2tFKzhROXlDZkdYenJGVOcTqVZMY1ZoYzJWMDVBRnBjK2dBNzhVd3lBMGc2Q0RIT2lBbjVoMjg1UUVlNXdEQnhRWG1BVVJQNWlTaHlEaGxZMjFoVnNnNk1qQXhPTVkyeEJkRzV3MHh5bVBrQm1scFpXUlRkSEpweEhycUFUUWdJR3B6ZU13UnhYRWdJSE52ZFhKalpW5A7zVeQBGW1BZG5sQUpmRkgzTGtFRDNJWGVRR0JTOHY25xDYdlpPY1h5ZWdDanVnTktPUVVHaTR1eFRJdkwrNE9sT29GNENkMDZSUTI26A/F5AjYY0MzbUhBSG5CS0htQUtFdkwra0tWblIxY3VRb251Y0pnZXdESytRQXFlVURSVHJuQWZFdnlrOG41QUh3YjJabUoxM2xCcTdtQU54OU/GVzhFWGY4U0rJBDBTSmVzR0lPVUpKZVVCWm1WazVBaWJJR2hwWjJoczVSRDc1QecQDzZRZFNjK1FnS3VRRnhlVWVST2NDaytRYytXRjJaZWtDb3lFZ1FlY2xEK1lxWGNaVDV4UHU1aCtMNXdORzVBR1haT1lq5BW4csZPRUFsT1FKR2VRdElHM2tENnJsRUtmbkFJbm5BSUhwRDJYbUhDUHhDS1Z3Y3VRRE5tVnlMbWznDRh3aW02Z2ltVU1jMDd3aW95QmZsQ3pKejV4SWE1UVZjNWdFx2V4SOcLRmcwMDdpbEE1eTJKNWc1VmVlNG5NWFZ6NWhMZTVTQXZ45wS0bUI1RDBDYVBrQk14cWPGFDjnBMlPMMcJRXBsxxtBSm9Pb1podVFUQ3VZRFp1UXJNK1FCeWVRV25HWGxBTERwQWlQdkNDRG1JVVRxSGRVaEvkDFB1b1BjK1VCK09VSFJPd1B6K1FBdXV3WTVtSEZaZWNuejJWeTV4MzA2eGo3eOcKr25LM1BwRUFmxg5CcucCJkNITHdDSExrQUpQbkNIREZDOVY0OUFQ5wSR5wYYRDbnBGrnCvJ6RMdHekRmOckNxy3nCIl3MVg1eG8yNWdpQ2Mra0lnK1lJZnVVTegA+ElndWtxQ09rQXNPb3IwZW9ZSuQYZVA4QucKHDhCbitVQm4rWW1reThLSU9RTkRIVEVDT1lHUytRSzcrVUlidVlGbEhOeVk4b2Nh5B4CWGpMSGVVSUpuQnZibVZ1ZE1WS3lDaEJjSEROSnVZTsZYY3dpeGhMSUpmOEY5UMwEMEY5T1FlZ2lCb2IzY2dTZWNmaStRRFQrZ1JXZWdPMU9vazllWUxzT1lyVmVRS2QrUURTeTRnU2VvRWd1Y3dhT3dXN3VVaDRNZFI2aFZiNkJEOTZBOWZkT1FRcFdYa0FqUnBkc1FxeDJKejVoWjh5amprSUJybEkzVEVQZVFqYm5W5BnvaU7kFapBR2vnAURWb8cJ5BSmTucOuXpQac8Jd07oGG14THlIM29EaVBsRGdQbExtZmxGem5FWnZJV3crUUJJaXpvSecKS29ER3ZsQUs4dXhsRHdERzdxR1dmekRISEbkFYRLeDNxRTdUR1Z1NExoc2hWYjJMRk9XbHVJR+gLu+cByDlEQkh4QUzoEnZCVDNEQlRtRjJ6a0NZSHhGbUxrQ+cRf09GZWtMcXY4Sm5mWUhvT1FlSThadklIZmxEdTVzNWk2NDZpWVY1U0dmNWhOQjVCYml4aTdvSXVUa0UwYm1BZWptTVRIK0dLcmxCekxyR21UcERhdmxFcXZtQjRIcEdYN2xCOWZtR2gzSFN1a2Rhc1JINlJNSzV4dTVjMjNrQUvnAwVNTXZuSVFYcUFLem/nA412bEd3RjU1UUtLNVF6WDVBd+cCz3hENTlnTGQ2QU0yN3h3NjdETU83aUJheHlibUlHSHZBdXJuQTboCKp15x3e3gl6xQRMyTU3MkF1N0dGZWvnAp1PWU5QRnZGRFNESEZjUUI1QWlQT2lBdlhDNXFjeVF2NkEyZDVBNmRZMngxNUE3bzVSbVM2Q1czeXlGMWM4bGN4Z0htR1NYcEQzTEdEK2NPVk1RQjV3M2l5UW5sRHHoAaRQ5wCQQnfnC93VCWtJMHZuQW8za0toVG5N5wXBcExn5BzC5AFoRHNIRFBsSGhMa01GN29NaWprQndnZ2JPUcdndVVETE9nQ211UUlZT29JVitvQ2xlc0hOK2dLNm05MWRPZ0NpT2dpMOcIzEhSdVVJdytrSXVzWkdZdVFKZk9VQW8ra2pFdWtVTStvWVBPUXFSK1lQSecJ20ZKT2dhcTNOeVnGEElrSzhSbnlCYmxGbG5sRXNmdkd3VG1MM3R0NWjGIkc2eElxSUdWdWRPVWE1K2taSXZnRGx2OOkI1sgJTUxGZjg3TXY4N01zWccUd2XnAsdBVFk2UjM0TXVnWVFlVUZ5ZVliNFdseitoNGx4Q0x2S3lYcE1Nck1KUElGTE9rMDdlVTA3T3NGTk9RQTF1Z0bnCkNZalMrUUJCT2NCTGVvalQrVWVFMjdsS1dma0J05wFBQmRMcEFQcEo1d0TnAql5N0wrQzk3NlFDSHhpem5BWEhwQXPGG29NTW5uTnRIdE3nAuky5wWGWHBBN1R0QXJmSGRPVXFybWptS29naTVBVU9JdWNCQ09jVmUrUW1XK3NRZHVrRFJXSGxFakRsSWZURmYrUVBD5AUmxkk4TW9lVUZ6T1VTWTBsdTZCSjI1UUUyNUF5UjVnRVU2QeQLw0NwT2lBaTVBNVpJdVFGU2Y4RlJmSVp5bVRrQXBubEE3REhYT3NBOE9VZGxlVXJaOFljNXd0aDZCNmM1d0tVNmdGNzZCcis2UWhCNUJaRuQQ8TZUaG44eDdVNkFrSDZBS1Q1RFZpeGpIR2Vla3dhdXdUdlA4QugM1kJaK2NCWnlKa1pYWXQ1Z+QMEkZKNXh2eklDMHQ1Q0hINXcrM3hCWGxEZ3pHS01jSExtcMUcYVdma1BmUG1Ea2PoBVBGK8cJYucG8tIJUWJENncyRzZTUjY3dzJJNXdESjZnTcYcNVFEVDZRTTg2UTNuNVJ4WjV4eHE1QVUyNWtLNDdSeUk1QWNvNVFNZzZBSk4zbExsSCs1eWFYWmxidVFHdDlVNjVBRjkwVG5vSm12a0c3M25DMWpsQVblIrDoBhpa5wtmaE5WNWh6ZDV3Sjc3aU1leEd6b0VLbmtKaWprQXdCdmN1Z0ZoUDhDa3Y4Q2t1d0NrdVlGeXVRQ2t1Z29TeTEzSUMxyFJK5wD9Q0x2TFhmcEJYYmtJT1Q0TGlidkJsVnBiaUIzWVhSamFPVU1KZWtWTmVnN1FNZGFaTTVhNVFFalplVUxTMkoxYVd4MExXbmtRSHZ0R2pmb0pHWElaK2sybG1Ic0hrb3Rabkpw5CHeYkhubkJ05wZPTDTpFuTnBX7MCTFBMWRTNndFcTVpY3c1Z0VSY09zdmpQOG56djhJMnZRSTJ2OUTnA6nMCSs1yA04STl2c0dXT1FET2VRZegPxXBIUERrQStmcVBiYmxDQnB2ZCtRQ0d1VVNKK1lIMWVZTlkrY0gxR1Y0NUFDUThCeHg1QUtwOUFwNjVCN1U1VEp5NndoMDZEQWNMdVlWYWVvNHFXeHM1VG5ueGlZdWFIbGs1QUo5eecJgGtBSjlUVTFMbEFKb3A2Z3F4OUF1dDVBTUo1alRsK2d1TDZCTEc1UTVmU0ZSTlRPUUZQ5AjIdjhKU2ZBbnVlWURWK1lCcXU0K3F1UULnB8RFKysrNUNMdVVYQmVVYWk5aOcF23c2U1pTTGxBUURyRlBMb0ZP5wFMRHBZK2FXM2tE5whX5AwUc0lIdmtDbTVUNVNvcWZlWVR2K2NkRERzS0N1WU91ZWs2YkdaMWJ1WWxWVUZ3Y0NncDVRank1RFhaZENCYjVVVElMT1FFWkVQRUNsMGdQY2xXS0RBcE8rUWNKR1hsRzXkAulrbUpteDBP5CgSdVJFTjhVUUlPWWZNdTBCVWNROFpuWG1CTnJyQVY3SE1PY1hxT2NuYSt3QlorWWNWTVprWW7kJgl0bDB4UHFBY2xpZFhSMDZBR2w1UisyNVNhOHh5ZmtGWFJ0NUJ0TWRHbm9RZGhqYuQYPlk1ME90OXcweFBHYW05dVE4UkRQWHNvS1NBOXhDUHBBVDhvNWtZWEt5QXhLWDNFR1h2RkVIM0XoJZhHUGNsU3hSVHFBVXNwT3fnDBBDbugCqmxuccUE6Bl9QWxEdEFsRHZBa0xNRzBSUFRjd2U1RExqNUFKa3h5TuQKiEhIaTd2QXRURUpjaEI2QVFaNUFKSDVBRDd4RGJsQegUmEVMVG9PMjR1WjJWMFJXeGx4QXRDZVVsa0tDZHQ1QecVcDVBa1dKeWtzQ2nHf0VO6AMxU0hxQVNId0Nu5wzsQVNucUFTbm9OemZtQecNxkhEdThCTGY0QlNPY3ZLOHNrNUFGTzV3Q0x55wQGckFWVDBBVlhtQTd6R05TQTk2QUNYS0NrN0NzWVVM5CRJU2pIRmk3bU9lNG9KK1FGVUNjcEtUc0t5Q1ZuWlhRb0p5OG5MQ0FvY21WeExPUUZTdWdDeitvRUlPY2JBMDFoY210MWNDQTk3d0RJNXdZTVboEDdJSTl1WnlqdEFkbkXkF0U3M011YzJWdVpDaGc2UUwyYUhSdGJPOERXV2hsWVdUTEU4WVY1UUd5eEJid0IxVEVI5xFWSkhzdEhMODlJeEJUa0IyRFJXK1FCNnVR5wHAK2tDWUNMRUl5Ujc3UUR2NWdPMzdnVHXpFPJD5wdbbVN4TG5CcVBGUXNVeXhoN0xOY1VXN1FDSXhSTHJBUWhnS1FwOTZ3R2HkKKlaVzRvTkRJME1pd2c2UVJsNUFHU2LkKBFteHZaeWduNkRGMGMrZ3hZeTR1THVRQjN2OETnEqNNSzFlc2UyR25xRXVMa0NybmxSZkhxSytMcURkN3pFdEhwQzJqSUhPZ1BBeWhwYmlBeTZocWFkR1Z5YldsdVlXeHrkHHLnCD04TDRlc2VHdVFBcStvQW5PZERHOGdWNkFD5wJkd0VXOGd2cmJpRGtINWdnZFhEbUNITG5FZXZrRktUdEgrTTZM5yElbFBrSGtN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';</script>
+<script>
+    !function(f,b,e,v,n,t,s) {if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init', '1184601594897239');fbq('track', 'PageView');
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-87671640-3', 'auto'); ga('send', 'pageview');</script>
+<script>
+    (function(d, s, id){var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) {return;}js = d.createElement(s); js.id = id;js.src = "https://connect.facebook.net/en_US/sdk.js";fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));
+      var fbTimer = setTimeout(() => {
+        if (window.FB && window.FB.init) {
+          window.FB.init({
+            appId: 328947630891473,
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v2.9',
+            cookie: true,
+          });
+          window.FB.AppEvents && window.FB.AppEvents.logPageView();
+        }
+      }, 2000);
+    </script>
+<script charset="utf-8" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/button.93a0c25c2d2f3081c705c98c2d9dec0e.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body id="top" class="light" data-gr-c-s-loaded="true">
+<div id="root" class="full"><div id="app" class="DashboardPage"><div id="prompt-bg" class="twbs" hidden=""><div id="prompt-box"><div id="prompt-message">Keep reading, even when you're on the go...</div><div id="prompt-actions"><button id="prompt-cancel" class="btn btn-secondary">Not Now</button><button id="prompt-ok" class="btn btn-info">Install App</button></div></div></div><a class="skip-link" href="https://jscomplete.com/learn/1rd-reactful#main-content">Skip to main</a><div id="navbar" class="twbs"><nav class="navbar-expand-sm navbar-light bg-light"><div class="navbar-inner-container navbar"><a class="navbar-brand" href="https://jscomplete.com/"><img src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/logo-f.svg" width="146" class="img-fluid" alt="jsComplete"></a><ul class="navbar-nav mr-auto"><li class="nav-item d-none d-md-inline-block"><a href="https://jscomplete.com/playground" class="nav-link"><i class="fas fa-play-circle"></i> Playground</a></li><li class="nav-item d-none d-lg-inline-block"><a href="https://jscomplete.com/help" class="nav-link"><i class="fas fa-question-circle"></i> Help</a></li></ul><ul class="navbar-nav"><li class="nav-item"><a href="https://jscomplete.com/login?to=/learn/1rd-reactful" class="nav-link"><i class="fas fa-sign-in-alt"></i> Login </a></li><li class="nav-item d-none d-lg-inline-block"><a href="https://jscomplete.com/join" class="nav-link"><i class="fas fa-user-alt"></i> Create Account</a></li></ul></div></nav></div><div id="general-wrapper"><main id="main-content" class="resource-container"><div id="resource-header"><div class="wrapper"><div class="titles"><div class="header library-link"><a href="https://jscomplete.com/learn"><i class="fas fa-university"></i> Library</a></div><div class="header header-1-0">Reactful</div></div></div></div><div id="lesson-body" class="reading"><div class="converted"><div><h1>The Always-recent Guide to Creating Your Own Development Environment for Node and React</h1>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="https://jscomplete.com/learn/1rd-reactful#initializing">1. Initializing</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#installing-main-dependencies">2. Installing Main Dependencies</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#installing-development-dependencies">3. Installing Development Dependencies</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#creating-an-initial-directory-structure">4. Creating an Initial Directory Structure</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#configuring-webpack-and-babel">5. Configuring Webpack and Babel</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#creating-npm-scripts-for-development">6. Creating npm Scripts for Development</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#testing-everything-with-a-sample-react-application">7. Testing Everything with a Sample React Application</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<aside class="author-block">
+<img src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/samer-1.jpeg">
+<main>
+<a href="https://twitter.com/samerbuna" target="_blank" rel="noopener noreferrer">Samer Buna</a>
+<footer>Updated January 2020 <span id="article-length">. 8 min read</span></footer>
+</main>
+</aside>
+<div class="paragraph">
+<p>You can count on this guide to always be recent. We update it after any major change in any of the packages used. The instructions here should work on any machine with a relatively recent version of Nodejs (&gt;= 10). We recommend using the latest LTS release of Node.</p>
+</div>
+<div class="paragraph">
+<p>This is a step-by-step guide with explanations about all the tools used. At the end of the guide, there is "sample" server-render-ready application that you can use to test your configurations.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This guide uses the most popular tools that are commonly used in Node/React applications. These would be <strong>Express</strong> (for a web server), <strong>Webpack</strong> (for a module bundler), and <strong>Babel</strong> (for a JS/JSX compiler). These are certainly not the only options but they are the most popular ones. This guide also assumes you want to host both the back-end and the front-end on the same server.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>After going through these instructions, you will have a simple but fully-configured environment that’s ready for rendering React applications both on the front-end and the back-end (for server-side rendering). The instructions start with an empty directory and they will guide you through all the dependencies that you need, one-by-one. There will be no use of any "code-generation" tools like <em>create-react-app</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="initializing">1. Initializing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create an empty directory and initialize it with a <code>package.json</code> file. This file is used in Nodejs projects to store general information about the project (like its name, version, etc) and track what dependencies the project needs (so that anyone can install them all at once).</p>
+</div>
+<div class="paragraph">
+<p>You can create this file using the <code>npm init</code> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mkdir fulljs
+
+$ cd fulljs
+
+$ npm init</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>npm init</code> command will ask you a few questions and you can interactively supply your answers (or press Enter to keep the defaults).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can use <code>npm init -y</code> to generate your <code>package.json</code> file with the default values that <code>npm</code> can detect about your project (the <em>y</em> is for <em>yes</em> to all questions).
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Once the <code>npm init</code> command is done, you should have a <code>package.json</code> file under your project directory (and nothing else, yet).</p>
+</div>
+<div class="paragraph">
+<p>The <code>package.json</code> file can now be used to "document" any dependencies you add to your project. This happens automatically when you <code>npm install</code> anything.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-main-dependencies">2. Installing Main Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A full-stack JavaScript environment has 2 main types of dependencies, production dependencies that need to be installed on production servers and development dependencies that are only needed on local development machines.</p>
+</div>
+<div class="paragraph">
+<p>For a Nodejs web server, one great option you can use is <strong>Express</strong>. You can use it to serve dynamic content under your web server. You can also use it to server static content as well, although you should consider using a better host for that, like <a href="https://www.nginx.com/" target="_blank" rel="noopener">NGINX</a> or a CDN service.</p>
+</div>
+<div class="paragraph">
+<p>To install Express:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i express</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This command will download the <code>express</code> npm package and place it under a <code>node_modules</code> folder (which it will create because express is the first package to get installed). The command will also save this dependency to your <code>package.json</code> file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>i</code> in the command above is just a shortcut for <code>install</code>. Take every available chance to type less ;)
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The frontend dependencies you need are <strong>React</strong> and <strong>ReactDOM</strong>. Install them next:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i react react-dom</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+While the <code>react</code> and <code>react-dom</code> packages are not really needed in production because they get <em>bundled</em> into a single file, this guide assumes that you deploy your unbundled code to production and bundle things there. If you want to bundle things in development and push your bundled files to production, you can install these packages - and most of what’s coming next - as development dependencies.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Since you’ll be writing your code in multiple modules (files) and it will depend on other modules (like React), you need a <em>module bundler</em> to translate all these modules into something that can work in all browsers today. You can use <strong>Webpack</strong> for that job. The packages you need to install now are:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i webpack webpack-cli</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The <code>webpack-cli</code> package provides the <code>webpack</code> command, which you can use to bundle your modules. The actual Webpack core code is hosted separately under the <code>webpack</code> packages. You can also use the Webpack Dev Server instead of manually running the <code>webpack</code> command, but while that might work great in development it’s probably not a good idea in production.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>Webpack is just a generic module bundler. You need to configure it with <em>loaders</em> to transform code from one state into the other. For example, you need to transform React’s JSX code into React’s API calls. The tool for that job is <strong>Babel</strong>. Besides JSX, Babel can also transform modern JavaScript features into code that can be understood in any execution environment. You need to install some <em>presets</em> as well to make all Babel transformations happen.</p>
+</div>
+<div class="paragraph">
+<p>Here are the 6 packages that you need to make Babel do its magic:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i babel-loader @babel/core @babel/node @babel/preset-env @babel/preset-react</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>babel-loader</code> package provides the Webpack loader (which you’ll need to configure). The other <code>@babel</code>-scoped libraries are needed to run the Babel configurations for Nodejs and Reactjs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-development-dependencies">3. Installing Development Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following are dependencies that are not needed in production. To track them separately, you can use the npm <code>-D</code> install flag to save them under a <code>devDependencies</code> section in <code>package.json</code>.</p>
+</div>
+<div class="paragraph">
+<p>When you run a Node server and then change the code of that server, you need to restart Node. This will be a frustrating thing in development. Luckily, there are some workarounds. The most popular one is <strong>Nodemon</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i -D nodemon</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This package will make the <code>nodemon</code> command available in your project. Nodemon runs your Node server in a <em>wrapper</em> process that <strong>mon</strong>itors the main process and automatically restarts it when files are saved to the disk. Simple and powerful!</p>
+</div>
+<div class="paragraph">
+<p>Another priceless development dependency is <a href="https://eslint.org/" target="_blank" rel="noopener"><strong>ESLint</strong></a>. <em>DO NOT SKIP THIS ONE!</em></p>
+</div>
+<div class="paragraph">
+<p>ESLint is a code quality tool and if you don’t use it, your code will not be as good as it could be.</p>
+</div>
+<div class="paragraph">
+<p>Since Babel is part of this stack, you need to configure ESLint to parse through what Babel is going to parse through. You should also use the main recommended ESLint configurations in addition to those recommended for React projects. Here are the packages you need for that:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i -D eslint babel-eslint eslint-plugin-react eslint-plugin-react-hooks</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To configure ESLint, you need to add a <code>.eslintrc.js</code> file in the root of the project. This file will naturally depend on your code style preferences, but definitely start it with the recommended configurations and then customize them as needed:</p>
+</div>
+<div class="listingblock">
+<div class="title">.eslintrc.js</div>
+<div class="content">
+<pre>module.exports = {
+  parser: 'babel-eslint',
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true,
+    jest: true,
+  },
+  plugins: ['react-hooks', 'react'],
+  extends: ['<strong>eslint:recommended</strong>', '<strong>plugin:react/recommended</strong>'],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    ecmaFeatures: {
+      impliedStrict: true,
+      jsx: true,
+    },
+    sourceType: 'module',
+  },
+  rules: {
+    <em>// You can do your customizations here...
+    // For example, if you don't want to use the prop-types package,
+    // you can turn off that recommended rule with: 'react/prop-types': ['off']</em>
+  },
+};</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You should make your editor highlight any ESLint issues for you <strong>on save</strong>! All the major editors today have plugins to do that. You should also make your editor auto-format code for you on save as well using <a href="https://prettier.io/" target="_blank" rel="noopener"><strong>Prettier</strong></a>. Prettier works great with ESLint.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The most popular testing library that’s usually used with React is <a href="https://jestjs.io/" target="_blank" rel="noopener"><strong>Jest</strong></a>. Install that if you plan to write tests for your React project (and you should!). You’ll also need <code>babel-jest</code> and a test renderer like <code>react-test-renderer</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm i -D jest babel-jest react-test-renderer</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-an-initial-directory-structure">4. Creating an Initial Directory Structure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This really depends on your style and preferences, but a simple structure would be something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>fulljs/
+  dist/
+    <em>main.js</em>
+  src/
+    <em>index.js</em>
+    components/
+      <em>App.js</em>
+    server/
+      <em>server.js</em></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Note how I created a separate server directory for the backend code. It’s always a good idea to separate code that you run in your trusted private backends from code that is to be run on public clients.
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring-webpack-and-babel">5. Configuring Webpack and Babel</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To configure Babel to compile JSX and modern JavaScript code, create a <code>babel.config.js</code> file under the root of the project and put the following <code>module.exports</code> object in it:</p>
+</div>
+<div class="listingblock">
+<div class="title">babel.config.js</div>
+<div class="content">
+<pre>module.exports = {
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+};</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These presets were already installed above. The env preset is the one Babel uses to transform modern JavaScript (and it’s configurable if you need to target just modern browsers and make the bundle smaller). The react preset is for the mighty JSX extension.</p>
+</div>
+<div class="paragraph">
+<p>To configure Webpack to bundle your application into a single bundle file, create a <code>webpack.config.js</code> file under the root of the project and put the following <code>module.exports</code> object in it:</p>
+</div>
+<div class="listingblock">
+<div class="title">webpack.config.js</div>
+<div class="content">
+<pre>module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
+};</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Webpack has certain defaults on which JavaScript file to start with. It looks for a <code>src/index.js</code> file. It’ll also output the bundle to <code>dist/main.js</code> by default. If you need to change the locations of your <code>src</code> and <code>dist</code> files, you’ll need a few more configuration entries in <code>webpack.config.js</code>.
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-npm-scripts-for-development">6. Creating npm Scripts for Development</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You need 2 commands to run this environment. You need to run your web server and you need to run Webpack to bundle the frontend application for browsers. You can use <strong>npm scripts</strong> to manage these.</p>
+</div>
+<div class="paragraph">
+<p>In your <code>package.json</code> file you should have a <code>scripts</code> section. If you generated the file with the <code>npm init</code> defaults you’ll have a placeholder "test" script in there. You should change that to work with Jest:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>  // In package.json
+  scripts: {
+    "test": "jest"
+  }</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add 2 more scripts in there. The first script is to run the server file with Nodemon and make it work with the same Babel configuration above. You can name the script anything. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>  "dev-server": "nodemon --exec babel-node src/server/server.js --ignore dist/"</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+It’s probably a good idea to ignore the <code>dist/</code> directory when restarting Node automatically as changes in the <code>dist/</code> directory are driven by changes in the <code>src/</code> directory, which is already monitored.
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="paragraph">
+<p>The other script that you need is a simple runner for Webpack:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>  "dev-bundle": "webpack -w -d"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>-w</code> flag in the command above is to run Webpack in watch mode as well and the <code>-d</code> flag is a set of built-in configurations to make Webpack generate a development-friendly bundle.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tbody><tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Run Webpack with <code>-p</code> in production.
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="testing-everything-with-a-sample-react-application">7. Testing Everything with a Sample React Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At this point, you are ready for your own code. If you followed the exact configurations above, you’ll need to place your <code>ReactDOM.render</code> call (or <code>.hydrate</code> for SSR code) in <code>src/index.js</code> and serve <code>dist/main.js</code> in your root HTML response.</p>
+</div>
+<div class="paragraph">
+<p>Here is a sample server-side ready React application that you can test with:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/components/App.js</div>
+<div class="content">
+<pre>import React, { useState } from 'react';
+
+export default function App() {
+  const [count, setCount] = useState(0);
+  return (
+    &lt;div&gt;
+      This is a sample stateful and server-side
+      rendered React application.
+      &lt;br /&gt;
+      &lt;br /&gt;
+      Here is a button that will track
+      how many times you click it:
+      &lt;br /&gt;
+      &lt;br /&gt;
+      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/index.js</div>
+<div class="content">
+<pre>import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './components/App';
+
+ReactDOM.hydrate(
+  &lt;App /&gt;,
+  document.getElementById('mountNode'),
+);</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/server/server.js</div>
+<div class="content">
+<pre>import express from 'express';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import App from '../components/App';
+
+const server = express();
+server.use(express.static('dist'));
+
+server.get('/', (req, res) =&gt; {
+  const initialMarkup = ReactDOMServer.renderToString(&lt;App /&gt;);
+
+  res.send(`
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;Sample React App&lt;/title&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;div id="mountNode"&gt;${initialMarkup}&lt;/div&gt;
+        &lt;script src="/main.js"&gt;&lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  `)
+});
+
+server.listen(4242, () =&gt; console.log('Server is running...'));</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s it. If you run both npm <code>dev-server</code> and <code>dev-bundle</code> scripts (in 2 separate terminals):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm run dev-server
+$ npm run dev-bundle</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then open up your browser on <a href="http://localhost:4242/" class="bare">http://localhost:4242/</a>, you should see the React application rendered. This application should also be rendered if you disable JavaScript in your browser!</p>
+</div>
+</div>
+</div></div><div id="footer-note" class="twbs layout"><hr><div class="title">Thanks for reading!</div><div class="paragraph"><div id="support-form" class="paragraph"><p>Writing high quality content takes a lot of time. If you found this helpful please consider supporting the author with $5 🙏</p><div id="stripe-form"><form method="post"><div class="form"><div class="row"><div class="col-sm-8" id="stripe-card-element-container"><div id="card-element" class="StripeElement StripeElement--empty"><div class="__PrivateStripeElement" style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"><iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeFrame5" allowpaymentrequest="true" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/elements-inner-card-af6c36fe3bb96744407e596128eb10f3.html" title="Secure payment input frame" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; user-select: none !important; height: 19.2px;"></iframe><input class="__PrivateStripeElement-input" aria-hidden="true" aria-label=" " autocomplete="false" maxlength="1" style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"></div></div></div><div class="col-sm-4"><button class="btn btn-info" disabled="">Send $5</button></div></div></div></form></div></div></div><div class="email-line">Leave your email address below if you want to be notified when we publish new content. We will never send spam emails. You can unsubscribe any time.</div><form method="post"><div class="input-group"><input type="email" name="email" class="form-control" placeholder="Your Email Address" required="" value=""></div><div id="email-optins"><div class="group"><div class="col-action"><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailContent" class="form-check-input" value="1" required="">Yes</label></div><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailContent" class="form-check-input" value="0" required="">No</label></div></div><div class="col-text">Receive educational and content emails<div class="tag-line">(Short email articles about full-stack JavaScript)</div></div></div><div class="group"><div class="col-action"><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailNotifications" class="form-check-input" value="1" required="">Yes</label></div><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailNotifications" class="form-check-input" value="0" required="">No</label></div></div><div class="col-text">Receive notifications and announcements emails<div class="tag-line">(When new content is published, for example)</div></div></div><div class="group"><div class="col-action"><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailOffers" class="form-check-input" value="1" required="">Yes</label></div><div class="form-check form-check-inline"><label class="form-check-label"><input type="radio" name="emailOffers" class="form-check-input" value="0" required="">No</label></div></div><div class="col-text">Receive offers and events emails<div class="tag-line">(One-time workshops and other events and giveaways)</div></div></div></div><div class="footer"><button class="btn btn-secondary" type="submit">Join</button></div></form><hr><div class="grayed"><div class="social-row"><a class="twitter" href="https://twitter.com/intent/tweet?text=The%20Always-recent%20Guide%20to%20Creating%20Your%20Own%20Development%20Environment%20for%20Node%20and%20React&amp;url=https%3A%2F%2Fjscomplete.com%2Flearn%2F1rd-reactful&amp;via=agilelabs" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i><span>&nbsp;Tweet this</span></a><a class="email" href="mailto:?subject=Article%20on%20jsComplete%3A%20The%20Always-recent%20Guide%20to%20Creating%20Your%20Own%20Development%20Environment%20for%20Node%20and%20React&amp;body=The%20Always-recent%20Guide%20to%20Creating%20Your%20Own%20Development%20Environment%20for%20Node%20and%20React%0A%0Ahttps%3A%2F%2Fjscomplete.com%2Flearn%2F1rd-reactful" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i><span>&nbsp;Email it</span></a><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjscomplete.com%2Flearn%2F1rd-reactful" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i><span>&nbsp;Share on Facebook</span></a><a class="linkedin" href="https://linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fjscomplete.com%2Flearn%2F1rd-reactful&amp;title=The%20Always-recent%20Guide%20to%20Creating%20Your%20Own%20Development%20Environment%20for%20Node%20and%20React" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i><span>&nbsp;Share on LinkedIn</span></a></div></div><div class="paragraph"><p><strong>Any questions or feedback?</strong> <a href="https://twitter.com/agilelabs" target="_blank" rel="noopener noreferrer">Tweet us</a> or ask in the jsComplete slack <a href="https://jscomplete.com/help" target="_blank" rel="noopener noreferrer">help channel</a>.</p></div></div></div><div id="toc-sidebar"><a class="toc-top-link" href="https://jscomplete.com/learn/1rd-reactful#top"><i class="fas fa-home"></i> TOP</a><div>
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="https://jscomplete.com/learn/1rd-reactful#initializing">1. Initializing</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#installing-main-dependencies">2. Installing Main Dependencies</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#installing-development-dependencies">3. Installing Development Dependencies</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#creating-an-initial-directory-structure">4. Creating an Initial Directory Structure</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#configuring-webpack-and-babel">5. Configuring Webpack and Babel</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#creating-npm-scripts-for-development">6. Creating npm Scripts for Development</a></li>
+<li><a href="https://jscomplete.com/learn/1rd-reactful#testing-everything-with-a-sample-react-application">7. Testing Everything with a Sample React Application</a></li>
+</ul>
+</div></div></div></main></div><div id="footer" class="twbs"><footer class="main-footer"><div><div class="section">Copyright © 2016-2020 Agilelabs LLC. All rights reserved</div><div class="tos-note">By using jsComplete, you agree to our <a href="https://jscomplete.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Terms and Conditions</a> and <a href="https://jscomplete.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy Policy</a>.</div></div><div id="help-section" class="section d-none d-sm-block"><div>Need any help?<div class="text-center">support@jscomplete.com</div></div></div><div id="footer-links" class="d-none d-lg-flex"><div class="social-profile twitter"><iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-follow-button twitter-follow-button-rendered" style="position: static; visibility: visible; width: 79px; height: 28px;" title="Twitter Follow Button" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/follow_button.6787510241df65d128e2b60207ad4c25.en.html" data-screen-name="agilelabs"></iframe></div><div class="social-profile facebook"><div class="fb-like fb_iframe_widget" data-href="https://www.facebook.com/jscomplete" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="false" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=328947630891473&amp;container_width=0&amp;href=https%3A%2F%2Fwww.facebook.com%2Fjscomplete&amp;layout=button&amp;locale=en_US&amp;sdk=joey&amp;share=false&amp;show_faces=false&amp;size=large"><span style="vertical-align: bottom; width: 67px; height: 28px;"><iframe name="f2af4689478722c" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/like.html" style="border: none; visibility: visible; width: 67px; height: 28px;" class=""></iframe></span></div></div></div></footer><footer class="tiny-footer"><div><div class="section">Copyright 2020 © Agilelabs LLC :: <a href="https://jscomplete.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Terms</a> | <a href="https://jscomplete.com/privacy" target="_blank" rel="noopener noreferrer" class="link">Privacy</a></div></div></footer></div></div></div>
+<link rel="stylesheet" href="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/all.css" crossorigin="anonymous">
+<link href="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/icon" rel="stylesheet">
+<script src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/saved_resource"></script><script src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/vendor.c4eebc5ea3f4534c3858.js"></script><script src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/main.8eaeb9b6a525c0f9d167.js"></script>
+<script async="" defer="" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/widgets.js" charset="utf-8"></script>
+
+
+<iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeMetricsController0" allowpaymentrequest="true" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/m-outer-a0f6c1465b8d9aab778cf2913d1d3c86.html" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeController1" allowpaymentrequest="true" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/controller-aad836387d25ee49ff147a25b7c96169.html" aria-hidden="true" tabindex="-1" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;"></iframe><iframe scrolling="no" frameborder="0" allowtransparency="true" src="./The Always-recent Guide to Creating Your Own Full-stack JavaScript Development Environment for Nodejs and Reactjs_files/widget_iframe.6787510241df65d128e2b60207ad4c25.html" title="Twitter settings iframe" style="display: none;"></iframe><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div></body></html>
