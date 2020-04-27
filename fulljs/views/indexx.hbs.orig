@@ -1,6 +1,0 @@
-<h1>{{ title }}</h1>
-<p>Welcome to {{ title }}</p>
-<div id="root">This text is in views/indexx.hbs
-    <p>Seeing this means nothing else was rendered to root. </p>
-</div>
-

@@ -11,7 +11,7 @@ ReactDOM.hydrate(
   // empty string, or from a call to the server here.  This
   // is why the server render returned an object with the
   // rendered data and the raw data we stored in window.
-  <App initialContests={window.initialData.contests} />,
+  <App initialData={window.initialData} />,
   // <App initialContests={[]} />,
   document.getElementById('root')
 );

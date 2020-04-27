@@ -1,6 +1,8 @@
 import path from 'path';
 import config from './config';
-// import fs from 'fs';
+// import { inspect } from 'util'; // console.log of objects
+
+// import fs from 'fs';:
 import apiRouter from './api'; // import the api router we made
 // using npm for sass instead of webpack
 import sassMiddleware from 'node-sass-middleware';
@@ -18,7 +20,7 @@ server.use(
     src: path.join(__dirname, 'sass'),
     dest: path.join(__dirname, 'public/css'),
     prefix: '/css', // needed if src and dest are not the same path
-    debug: true
+    debug: false
   })
 );
 
@@ -65,9 +67,10 @@ server.get('/', (req, res) => {
 
 import serverRender from './serverRender';
 
-server.get('/', (req, res) => {
+server.get(['/', '/contests/:contestId'], (req, res) => {
   // res.send('Hello from Express (root) :)\n');
-  serverRender() // promise from serverRender axios get call
+  //console.log(`contestId in server.js: ${req.params.contestId}`);
+  serverRender(req.params.contestId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
       res.render('indexx', {
         title: 'HBS Templated',
