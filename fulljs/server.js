@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './config';
-// import { inspect } from 'util'; // console.log of objects
+import { inspect } from 'util'; // console.log of objects
 
 // import fs from 'fs';:
 import apiRouter from './api'; // import the api router we made
@@ -14,7 +14,9 @@ import hbs from 'express-handlebars';
 
 const server = express();
 
-// use sass middleware with express
+// Use sass middleware with express
+// Note: Must go before express.static or it (sass?) won't work.
+// sass will take in /sass/style.scss (src file, extension is short for "sass css file") and create /css/style.css
 server.use(
   sassMiddleware({
     src: path.join(__dirname, 'sass'),
@@ -67,11 +69,15 @@ server.get('/', (req, res) => {
 
 import serverRender from './serverRender';
 
-server.get(['/', '/contests/:contestId'], (req, res) => {
+server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
   // res.send('Hello from Express (root) :)\n');
   //console.log(`contestId in server.js: ${req.params.contestId}`);
   serverRender(req.params.contestId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
+      console.log('after serverRender');
+      console.log(
+        inspect(initialData, { showHidden: false, depth: null, colors: true })
+      );
       res.render('indexx', {
         title: 'HBS Templated',
         layout: 'altLayout',

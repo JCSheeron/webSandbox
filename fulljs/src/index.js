@@ -15,3 +15,4 @@ ReactDOM.hydrate(
   // <App initialContests={[]} />,
   document.getElementById('root')
 );
+

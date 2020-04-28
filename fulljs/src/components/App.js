@@ -20,6 +20,9 @@ import * as api from '../api';
 // Put it in a function so if it needs to change, only the innerds of
 // the function need to change.
 const pushState = (obj, url) => window.history.pushState(obj, '', url);
+const onPopState = (handler) => {
+  window.onpopstate = handler;
+};
 
 // React.createClass ... old syntax
 // extends React.Component ... new(er) syntax
@@ -55,7 +58,7 @@ class App extends React.Component {
         currentContestId: contest.id,
         contestData: {
           ...prevState.contestData,
-          contests: { ...prevState.contests, [contest.id]: contest }
+          contests: { ...prevState.contestData.contests, [contest.id]: contest }
         }
       };
     });
@@ -81,10 +84,17 @@ class App extends React.Component {
     // contests: data.contests
     // });
     */
+    onPopState((event) => {
+      //console.log(event.state);
+      this.setState({
+        currentContestId: (event.state || {}).currentContestId // null or the current id
+      });
+    });
   }
 
   componentWillUnmount() {
-    // clean timere, listeners
+    // clean timers, listeners, events
+    onPopState(null);
   }
 
   fetchContest = (contestId) => {
@@ -96,6 +106,16 @@ class App extends React.Component {
     // using the api
     api.fetchContest(contestId).then((dataObj) => {
       this.updateState(dataObj.contests[dataObj.currentContestId]);
+    });
+  };
+
+  fetchContestList = () => {
+    pushState({ currentContestId: null }, '/');
+    api.fetchContestList().then((contests) => {
+      this.setState({
+        currentContestId: null,
+        contestData: { contests }
+      });
     });
   };
 
@@ -119,7 +139,12 @@ class App extends React.Component {
     // If you have a valid id (from a click on a contest), then
     // display the contest, otherwise display the contest list
     if (this.state.currentContestId) {
-      return <Contest {...this.currentContest()} />;
+      return (
+        <Contest
+          contestListClick={this.fetchContestList}
+          {...this.currentContest()}
+        />
+      );
     }
     return (
       <ContestList

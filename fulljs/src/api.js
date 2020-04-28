@@ -1,7 +1,7 @@
 // Api logic
 // // Funcitons to fetch data from api
 import axios from 'axios';
-import { inspect } from 'util'; // console.log of objects
+// import { inspect } from 'util'; // console.log of objects
 
 export const fetchContest = (contestId) => {
   return axios.get(`/api/contests/${contestId}`).then((resp) => {
@@ -11,4 +11,8 @@ export const fetchContest = (contestId) => {
     //);
     return resp.data;
   });
+};
+
+export const fetchContestList = () => {
+  return axios.get('/api/contests').then((resp) => resp.data.contests);
 };

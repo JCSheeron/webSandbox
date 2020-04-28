@@ -1,0 +1,8 @@
+# we don't want to ignore this directory, just some of its contents.
+# auto generated backup files
+*.js.orig
+# dont ignore the ignore file
+!.gitignore
+# don't ignore the place holder file so it gets put in the repo
+!placeholder.txt
+

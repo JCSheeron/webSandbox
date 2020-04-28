@@ -6,7 +6,7 @@ import App from './src/components/App';
 import config from './config';
 import axios from 'axios';
 
-// import { inspect } from 'util'; // console.log of objects
+import { inspect } from 'util'; // console.log of objects
 
 // return the url of a contest if there is a contest id passed in,
 // or the url for the contest list if there is not contest id defined
@@ -23,13 +23,16 @@ const getInitialData = (contestId, apiData) => {
   // the contest id.
   // If there is no id, return an the contests as an object.
   // In both cases, use an object consistent with App state variables.
+  // App state has this structure
+  // { contestData:
+  //    {contests : {contestid, contestName, categoryName, description} }
 
   //console.log(`contestId in getInitialData: ${contestId}`);
-  //console.log('apiData in getInitialData');
-  //console.log(
-  //  inspect(apiData, { showHidden: false, depth: null, colors: true })
-  //);
-  //
+  console.log('apiData initial getInitialData');
+  console.log(
+    inspect(apiData, { showHidden: false, depth: null, colors: true })
+  );
+
   if (contestId)
     // valid contest id. Return the contest info and currentContestId
     // in an object
