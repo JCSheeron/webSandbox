@@ -1,2 +1,0 @@
-This file just keeps this folder from being not empty so it shows in a github
-repository.

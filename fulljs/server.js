@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './config';
-import { inspect } from 'util'; // console.log of objects
+//import { inspect } from 'util'; // console.log of objects
 
 // import fs from 'fs';:
 import apiRouter from './api'; // import the api router we made
@@ -20,7 +20,7 @@ const server = express();
 server.use(
   sassMiddleware({
     src: path.join(__dirname, 'sass'),
-    dest: path.join(__dirname, 'public/css'),
+    dest: path.join(__dirname, 'dist/css'),
     prefix: '/css', // needed if src and dest are not the same path
     debug: false
   })
@@ -74,11 +74,11 @@ server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
   //console.log(`contestId in server.js: ${req.params.contestId}`);
   serverRender(req.params.contestId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
-      console.log('after serverRender');
-      console.log(
-        inspect(initialData, { showHidden: false, depth: null, colors: true })
-      );
-      res.render('indexx', {
+      //console.log('after serverRender');
+      //console.log(
+      //  inspect(initialData, { showHidden: false, depth: null, colors: true })
+      //);
+      res.render('index', {
         title: 'HBS Templated',
         layout: 'altLayout',
         condition: true,
@@ -106,7 +106,7 @@ server.get('/about.html', (req, res) => {
 // or even simpler, for static pages, you can do this
 // by speifying the path 'public' in this case
 // and moving the about.html file to that directory
-server.use(express.static('public'));
+server.use(express.static('dist'));
 
 // first arg is the route, second is the apiRouter we imported above
 server.use('/api', apiRouter); // use the api router we made (api/index.js)

@@ -119,6 +119,14 @@ class App extends React.Component {
     });
   };
 
+  // Fetch names from the api given a list (array) of name ids, and put them
+  // into the state.
+  fetchNames = (nameIds) => {
+    api.fetchNames(nameIds).then((names) => {
+      this.setState({ names });
+    });
+  };
+
   // get the contest corresponding to the current id
   currentContest = () => {
     return this.state.contestData.contests[this.state.currentContestId];
@@ -142,6 +150,7 @@ class App extends React.Component {
       return (
         <Contest
           contestListClick={this.fetchContestList}
+          fetchNames={this.fetchNames} // tell contest to get the associated names
           {...this.currentContest()}
         />
       );

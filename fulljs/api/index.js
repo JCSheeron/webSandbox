@@ -2,13 +2,13 @@
 // Handle api requests here
 
 import express from 'express';
-
-// simulated data from backend
-import data from '../src/testData';
+// import { inspect } from 'util'; // console.log of objects
 
 const router = express.Router();
 
-// import { inspect } from 'util'; // console.log of objects
+/*  SIMULATED DATA FROM DATA FILE 
+// simulated data from backend
+// import data from '../src/testData';
 
 // convert array of contests into an object.
 const contestsObj = data.contests.reduce((obj, contest) => {
@@ -48,6 +48,97 @@ router.get('/contests/:contestId', (req, res) => {
   //);
   res.send(dataObj);
 });
+END SIMULATED DATA FROM DATA FILE 
+*/
+
+// GET DATA FROM MONGO DB
+import { MongoClient } from 'mongodb';
+import assert from 'assert';
+import config from '../config';
+
+// NodeJs MongoDb driver
+// Find examples at node-mongodb-native on github
+// https://github.com/mongodb/node-mongodb-native
+let mdb; // empty object to hold the db once we connect
+MongoClient.connect(
+  config.mongodbUri,
+  { useUnifiedTopology: true, useNewUrlParser: true },
+  (err, client) => {
+    assert.equal(null, err);
+    console.log('Sucessfully Connected to MongoDb Server');
+    // connect returns the client. Get the desired db.
+    mdb = client.db('fulljs'); // newer version of connect gives back the parent client, not the db
+  }
+);
+
+router.get('/contests', (req, res) => {
+  // Get the contests collection from the db object.
+  // Instead of an array, lets put the contests into a contests object.
+  // collection.find() is async, so we can't simply respond right after
+  // the each loop, or we'll respond before processing anything. Instead,
+  // start with an empty object, append contest to it as they come, and
+  // test that when there are no more contests, then respond with the
+  // completed contests object.
+  let contests = {};
+  mdb
+    .collection('contests')
+    .find({}) // get all in the collections (async)
+    .project({
+      // use project to get just the fields we want
+      id: 1,
+      categoryName: 1,
+      contestName: 1
+    })
+    .each((err, contest) => {
+      assert.equal(null, err);
+      // if there are not more contest, return the populated object.
+      if (!contest) {
+        res.send({ contests });
+        return;
+      }
+      // if we get there, there is a contest avail. Put it in the object
+      contests[contest.id] = contest;
+    });
+});
+
+router.get('/contests/:contestId', (req, res) => {
+  mdb
+    .collection('contests')
+    .findOne({ id: Number(req.params.contestId) }) // convert req params from str
+    .then((contest) => {
+      let dataObj = { contests: { [contest.id]: contest } };
+      dataObj.currentContestId = req.params.contestId;
+      res.send(dataObj);
+    })
+    .catch(console.error);
+});
+
+router.get('/names/:nameIds', (req, res) => {
+  // inside the req, the name ids is a assumed to be a comma
+  // separated string in req.params.nameIds. Use split to produce
+  // an array of string, broken out at the commas, and convert them to numbers.
+  const nameIds = req.params.nameIds.split(',').map(Number);
+  // Get the collection from the db object.
+  // find() is async, so we can't simply respond right after
+  // the each loop, or we'll respond before processing anything. Instead,
+  // start with an empty object, append content to it as they come, and
+  // test that when there is no more content, then respond with the
+  // completed object
+  let names = {};
+  mdb
+    .collection('names')
+    // find all the ids for all the names passed to the api
+    .find({ id: { $in: nameIds } }) // find based on an array of values
+    .each((err, name) => {
+      assert.equal(null, err);
+      // if there are not more contest, return the populated object.
+      if (!name) {
+        res.send({ names });
+        return;
+      }
+      // if we get there, there is a contest avail. Put it in the object
+      names[name.id] = name;
+    });
+});
 
 export default router;
-

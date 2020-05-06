@@ -2,21 +2,58 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Contest extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    // Could have component fetch its own names, but we want to keep state
+    // in the App component instead. Use passed in function and the nameIds
+    this.props.fetchNames(this.props.nameIds);
   }
-
-  state = {};
   render() {
     return (
       <div className='Contest'>
-        <div className='contest-details'>
-          {`Contest Component ID: ${this.props.id}`} <br />
-          {`Contest Component Name: ${this.props.contestName}`} <br />
-          {`Contest Component Catagory: ${this.props.categoryName}`} <br />
-          {`Contest Component Description: ${this.props.description}`} <br />
+        <div className='panel panel-default'>
+          <div className='panel-heading'>
+            <h3 className='panel-title'>Contest Description</h3>
+          </div>
+          <div className='panel-body'>
+            <div className='contest-description'>{this.props.description}</div>
+          </div>
         </div>
-        <div className='link home-link' onClick={this.props.contestListClick}>
+
+        <div className='panel panel-default'>
+          <div className='panel-heading'>
+            <h3 className='panel-title'>Proposed Names</h3>
+          </div>
+          <div className='panel-body'>
+            <ul className='list-group'>
+              <li className='list-group-item'>Name one...</li>
+              <li className='list-group-item'>Name two...</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className='panel panel-info'>
+          <div className='panel-heading'>
+            <h3 className='panel-title'>Propose a New Name</h3>
+          </div>
+          <div className='panel-body'>
+            <form>
+              <div className='input-group'>
+                <input
+                  type='text'
+                  placeholder='New Name Here...'
+                  className='form-control'
+                />
+                <span className='input-group-btn'>
+                  <button type='submit' className='btn btn-info'>
+                    Sumbit
+                  </button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div className='home-link link' onClick={this.props.contestListClick}>
           Contest List
         </div>
       </div>
@@ -25,11 +62,10 @@ class Contest extends Component {
 }
 
 Contest.propTypes = {
-  id: PropTypes.number.isRequired,
-  contestName: PropTypes.string.isRequired,
-  categoryName: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  contestListClick: PropTypes.func.isRequired
+  contestListClick: PropTypes.func.isRequired,
+  fetchNames: PropTypes.func.isRequired,
+  nameIds: PropTypes.array.isRequired
 };
 
 export default Contest;

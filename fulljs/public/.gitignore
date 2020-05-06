@@ -1,3 +1,0 @@
-# ignore bundle.js since this is a generated file (webpack)
-bundle.js
-
