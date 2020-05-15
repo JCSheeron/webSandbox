@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-server": "nodemon --exec babel-node server.js --ignore dist/",
-    "dev-client": "webpack-dev-server --port 9000",
+    "dev-client": "webpack-dev-server",
     "build": "webpack -d",
     "buildw": "webpack -wd",
     "buildc": "npm run clean && webpack -d",
@@ -31,6 +31,7 @@
   "homepage": "https://github.com/jscomplete/learn-fullstack-javascript#readme",
   "dependencies": {
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
     "bundle-loader": "^0.5.5",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.3",

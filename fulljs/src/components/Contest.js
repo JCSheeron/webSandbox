@@ -6,6 +6,7 @@ class Contest extends Component {
     // Could have component fetch its own names, but we want to keep state
     // in the App component instead. Use passed in function and the nameIds
     this.props.fetchNames(this.props.nameIds);
+    //console.log(this.props);
   }
   render() {
     return (
@@ -25,8 +26,11 @@ class Contest extends Component {
           </div>
           <div className='panel-body'>
             <ul className='list-group'>
-              <li className='list-group-item'>Name one...</li>
-              <li className='list-group-item'>Name two...</li>
+              {this.props.nameIds.map((nameId) => (
+                <li key={nameId} className='list-group-item'>
+                  {this.props.lookupNameObj(nameId).name}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -65,7 +69,8 @@ Contest.propTypes = {
   description: PropTypes.string.isRequired,
   contestListClick: PropTypes.func.isRequired,
   fetchNames: PropTypes.func.isRequired,
-  nameIds: PropTypes.array.isRequired
+  nameIds: PropTypes.array.isRequired,
+  lookupNameObj: PropTypes.func.isRequired
 };
 
 export default Contest;

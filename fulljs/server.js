@@ -6,13 +6,22 @@ import config from './config';
 import apiRouter from './api'; // import the api router we made
 // using npm for sass instead of webpack
 import sassMiddleware from 'node-sass-middleware';
-
+// express
 import express from 'express';
-
 // handlbars tempalte engine
 import hbs from 'express-handlebars';
+// body parser
+// import bodyParser from 'body-parser';
 
 const server = express();
+
+// body-parser at app top level to parse all incoming requests
+// server.use(bodyParser.json());
+// OR
+// create application parser, but then use it on the routes that need it.
+// Put the following lines in api/index.js and then use jsonParser in a POST
+// import bodyParser from 'body-parser';
+// const jsonParser = bodyParser.json();
 
 // Use sass middleware with express
 // Note: Must go before express.static or it (sass?) won't work.
@@ -89,7 +98,9 @@ server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
+      res.status(404).send('Bad Request');
+      //res.send(error);
     });
 });
 

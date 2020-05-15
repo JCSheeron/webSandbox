@@ -55,10 +55,13 @@ class App extends React.Component {
   updateState = (contest) => {
     this.setState((prevState) => {
       return {
-        currentContestId: contest.id,
+        currentContestId: contest._id,
         contestData: {
           ...prevState.contestData,
-          contests: { ...prevState.contestData.contests, [contest.id]: contest }
+          contests: {
+            ...prevState.contestData.contests,
+            [contest._id]: contest
+          }
         }
       };
     });
@@ -85,7 +88,7 @@ class App extends React.Component {
     // });
     */
     onPopState((event) => {
-      //console.log(event.state);
+      // console.log(event.state);
       this.setState({
         currentContestId: (event.state || {}).currentContestId // null or the current id
       });
@@ -122,6 +125,11 @@ class App extends React.Component {
   // Fetch names from the api given a list (array) of name ids, and put them
   // into the state.
   fetchNames = (nameIds) => {
+    // guard the no-names case
+    if (nameIds.length === 0) {
+      this.setState({ names: {} });
+      return;
+    }
     api.fetchNames(nameIds).then((names) => {
       this.setState({ names });
     });
@@ -136,9 +144,22 @@ class App extends React.Component {
   // the page header value. It should be the contest name or the default
   pageHeader = () => {
     if (this.state.currentContestId) {
+      console.log(this.state);
       return this.currentContest().contestName;
     }
     return 'Naming Contests Contests';
+  };
+
+  // Given an id, return the name from the state
+  lookupNameObj = (nameId) => {
+    // If it isn't available for lookup, (they won't be immediately from db)
+    // show an indication of this ...
+    // if names isn't on state or if there is no name by the passed in id
+    if (!this.state.names || !this.state.names[nameId]) {
+      // return fake name object
+      return { name: '...' };
+    }
+    return this.state.names[nameId];
   };
 
   // return either a list of contests or if there is a valid id, the
@@ -151,6 +172,11 @@ class App extends React.Component {
         <Contest
           contestListClick={this.fetchContestList}
           fetchNames={this.fetchNames} // tell contest to get the associated names
+          // we could have had Contest Component look up the names if we pass in the names
+          // names={this.state.names}  // pass names to contest object
+          // instead pass in a lookukp function and have Contest look up the
+          // name from the state
+          lookupNameObj={this.lookupNameObj} // pass in lookup function
           {...this.currentContest()}
         />
       );

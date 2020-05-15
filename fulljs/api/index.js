@@ -51,8 +51,14 @@ router.get('/contests/:contestId', (req, res) => {
 END SIMULATED DATA FROM DATA FILE 
 */
 
+// Use body-parser and set up for route specific parsing
+
+// body parser
+import bodyParser from 'body-parser';
+const jsonParser = bodyParser.json();
+
 // GET DATA FROM MONGO DB
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb'; // ObjectID to deal with id fields
 import assert from 'assert';
 import config from '../config';
 
@@ -85,7 +91,6 @@ router.get('/contests', (req, res) => {
     .find({}) // get all in the collections (async)
     .project({
       // use project to get just the fields we want
-      id: 1,
       categoryName: 1,
       contestName: 1
     })
@@ -97,27 +102,33 @@ router.get('/contests', (req, res) => {
         return;
       }
       // if we get there, there is a contest avail. Put it in the object
-      contests[contest.id] = contest;
+      contests[contest._id] = contest;
     });
 });
 
 router.get('/contests/:contestId', (req, res) => {
   mdb
     .collection('contests')
-    .findOne({ id: Number(req.params.contestId) }) // convert req params from str
+    // .findOne({ _id: Number(req.params.contestId) }) // convert req params from str
+    .findOne({ _id: ObjectID(req.params.contestId) }) // convert req params from str
     .then((contest) => {
-      let dataObj = { contests: { [contest.id]: contest } };
+      let dataObj = { contests: { [contest._id]: contest } };
       dataObj.currentContestId = req.params.contestId;
       res.send(dataObj);
     })
-    .catch(console.error);
+    .catch((error) => {
+      console.error(error);
+      res.status(404).send('Bad Request');
+    });
 });
 
 router.get('/names/:nameIds', (req, res) => {
   // inside the req, the name ids is a assumed to be a comma
   // separated string in req.params.nameIds. Use split to produce
   // an array of string, broken out at the commas, and convert them to numbers.
-  const nameIds = req.params.nameIds.split(',').map(Number);
+  // const nameIds = req.params.nameIds.split(',').map(Number);
+  // Once we are using object ids instead of simple numbers, map to a mongo ObjectID
+  const nameIds = req.params.nameIds.split(',').map(ObjectID);
   // Get the collection from the db object.
   // find() is async, so we can't simply respond right after
   // the each loop, or we'll respond before processing anything. Instead,
@@ -128,7 +139,7 @@ router.get('/names/:nameIds', (req, res) => {
   mdb
     .collection('names')
     // find all the ids for all the names passed to the api
-    .find({ id: { $in: nameIds } }) // find based on an array of values
+    .find({ _id: { $in: nameIds } }) // find based on an array of values
     .each((err, name) => {
       assert.equal(null, err);
       // if there are not more contest, return the populated object.
@@ -136,8 +147,57 @@ router.get('/names/:nameIds', (req, res) => {
         res.send({ names });
         return;
       }
-      // if we get there, there is a contest avail. Put it in the object
-      names[name.id] = name;
+      // if we get here, there is a name avail. Put it in the object
+      names[name._id] = name;
+    });
+});
+
+// router.post('/names', (req, res) => {
+// Use route specific parser
+router.post('/names', jsonParser, (req, res) => {
+  // read the data from the request body, but it also needs to be parsed.
+  // Use body-parser
+  // console.log(req.body);
+  // res.send(req.body);
+  const contestId = ObjectID(req.body.contestId); // put req string into ObjectId type
+  const name = req.body.newName;
+  // validation ... (skip for simplicity)
+  // This api post need to do 3 things:
+  // 1) Create the name entry in the db,
+  // 2) Read the created name id
+  // 3) Add  the new name to the contest
+  // Then return something helpful for the UI: return the updated contest info
+  // and the new name info
+  //
+  // 1) Insert a new name, and a promise will be returned.  On the promise, use
+  // the findAndModify method to associate the new name with the contest.
+  mdb
+    .collection('names')
+    .insertOne({ name })
+    .then((result) =>
+      mdb
+        .collection('contests')
+        //.findAndModify(
+        //  { _id: contestId }, // contestId is already an object (above)
+        //  [], // sort -- not needed since _id is unique
+        //  { $push: { nameIds: result.insertedId } }, // what we need to modify (push)
+        //  { new: true } // options new:true to return the id of the modified object rather than orig.
+        //)
+        .findOneAndUpdate(
+          { _id: contestId }, // contestId is already an object (above)
+          { $push: { nameIds: result.insertedId } }, // what we need to modify (push)
+          { returnOriginal: false } // return the updated object rather than orig.
+        )
+        .then((doc) =>
+          res.send({
+            updatedContest: doc.value,
+            newName: { _id: result.insertedId, name }
+          })
+        )
+    )
+    .catch((error) => {
+      console.error(error);
+      res.status(404).send('Bad Request');
     });
 });
 
