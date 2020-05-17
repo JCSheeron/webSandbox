@@ -80,7 +80,7 @@ import serverRender from './serverRender';
 
 server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
   // res.send('Hello from Express (root) :)\n');
-  //console.log(`contestId in server.js: ${req.params.contestId}`);
+  // console.log(`contestId in server.js: ${req.params.contestId}`);
   serverRender(req.params.contestId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
       //console.log('after serverRender');
@@ -99,7 +99,7 @@ server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.status(404).send('Bad Request');
+      res.status(404).send('Bad Request server.js L:102');
       //res.send(error);
     });
 });

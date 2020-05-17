@@ -40,10 +40,11 @@ class App extends React.Component {
       // contestData is an object contining a contests object. The contests
       // object contains contest objects.
       // { contestData:
-      //    {contests : {contestid, contestName, categoryName, description} }
+      //    {contests : {contestid, contestName, categoryName, description} },
+      //    currentContestId: <ObjectId from mongo>
       // }
       contestData: this.props.initialData.contestData,
-      currentContestId: parseInt(this.props.initialData.currentContestId)
+      currentContestId: this.props.initialData.currentContestId
     };
     // this.currentContent = this.currentContent.bind(this); // not needed for arrow function
   }
@@ -144,7 +145,8 @@ class App extends React.Component {
   // the page header value. It should be the contest name or the default
   pageHeader = () => {
     if (this.state.currentContestId) {
-      console.log(this.state);
+      //console.log('***App.js state');
+      //console.log(this.state);
       return this.currentContest().contestName;
     }
     return 'Naming Contests Contests';

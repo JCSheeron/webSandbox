@@ -113,12 +113,15 @@ router.get('/contests/:contestId', (req, res) => {
     .findOne({ _id: ObjectID(req.params.contestId) }) // convert req params from str
     .then((contest) => {
       let dataObj = { contests: { [contest._id]: contest } };
+      console.log(
+        `currentContestId req in api_index.js ${req.params.contestId}`
+      );
       dataObj.currentContestId = req.params.contestId;
       res.send(dataObj);
     })
     .catch((error) => {
       console.error(error);
-      res.status(404).send('Bad Request');
+      res.status(404).send('Bad Request api_index L:121');
     });
 });
 
@@ -177,12 +180,6 @@ router.post('/names', jsonParser, (req, res) => {
     .then((result) =>
       mdb
         .collection('contests')
-        //.findAndModify(
-        //  { _id: contestId }, // contestId is already an object (above)
-        //  [], // sort -- not needed since _id is unique
-        //  { $push: { nameIds: result.insertedId } }, // what we need to modify (push)
-        //  { new: true } // options new:true to return the id of the modified object rather than orig.
-        //)
         .findOneAndUpdate(
           { _id: contestId }, // contestId is already an object (above)
           { $push: { nameIds: result.insertedId } }, // what we need to modify (push)
@@ -197,7 +194,7 @@ router.post('/names', jsonParser, (req, res) => {
     )
     .catch((error) => {
       console.error(error);
-      res.status(404).send('Bad Request');
+      res.status(404).send('Bad Request api_index L:194');
     });
 });
 

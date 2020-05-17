@@ -30,7 +30,7 @@ const getInitialData = (contestId, apiData) => {
   //console.log(`contestId in getInitialData: ${contestId}`);
   //console.log('apiData initial ');
   //console.log(
-  //  inspect(apiData, { showHidden: false, depth: null, colors: true })
+  //inspect(apiData, { showHidden: false, depth: null, colors: true })
   //);
 
   if (contestId)
@@ -55,6 +55,10 @@ const serverRender = (contestId) => {
     // simple test
     //console.log('ServerRender resp.data');
     const initialData = getInitialData(contestId, resp.data);
+    //console.log('serverRender after call to initialData');
+    //console.log(
+    //inspect(initialData, { showHidden: false, depth: null, colors: true })
+    //);
     return {
       // Return markup from server, and the data itself.
       // The data allows the client to store it, and render

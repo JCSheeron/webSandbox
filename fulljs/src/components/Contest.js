@@ -8,6 +8,10 @@ class Contest extends Component {
     this.props.fetchNames(this.props.nameIds);
     //console.log(this.props);
   }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('test');
+  };
   render() {
     return (
       <div className='Contest'>
@@ -40,7 +44,7 @@ class Contest extends Component {
             <h3 className='panel-title'>Propose a New Name</h3>
           </div>
           <div className='panel-body'>
-            <form>
+            <form onSubmit={this.handleSubmit}>
               <div className='input-group'>
                 <input
                   type='text'
