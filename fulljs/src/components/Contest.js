@@ -10,7 +10,14 @@ class Contest extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log('test');
+    // read the value that the user typed
+    //console.log(`Contest.js newNameInput ${this.refs.newNameInput.value}`);
+    //console.log(`Contest.js id ${this.props._id}`);
+    // Only do something interesting if the user input is not empty
+    if (this.refs.newNameInput.value) {
+      this.props.addName(this.refs.newNameInput.value, this.props._id);
+    }
+    this.refs.newNameInput.value = '';
   };
   render() {
     return (
@@ -49,6 +56,7 @@ class Contest extends Component {
                 <input
                   type='text'
                   placeholder='New Name Here...'
+                  ref='newNameInput'
                   className='form-control'
                 />
                 <span className='input-group-btn'>
@@ -70,11 +78,13 @@ class Contest extends Component {
 }
 
 Contest.propTypes = {
+  _id: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   contestListClick: PropTypes.func.isRequired,
   fetchNames: PropTypes.func.isRequired,
   nameIds: PropTypes.array.isRequired,
-  lookupNameObj: PropTypes.func.isRequired
+  lookupNameObj: PropTypes.func.isRequired,
+  addName: PropTypes.func.isRequired
 };
 
 export default Contest;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { inspect } from 'util'; //console.log of objects
+import { inspect } from 'util'; //console.log of objects
 
 // Axios not needed after server side scripting
 // import axios from 'axios'; // for ajax use
@@ -149,7 +149,7 @@ class App extends React.Component {
       //console.log(this.state);
       return this.currentContest().contestName;
     }
-    return 'Naming Contests Contests';
+    return 'Naming Contests';
   };
 
   // Given an id, return the name from the state
@@ -162,6 +162,40 @@ class App extends React.Component {
       return { name: '...' };
     }
     return this.state.names[nameId];
+  };
+
+  addName = (newName, contestId) => {
+    // use api method to
+    api.addName(newName, contestId).then((resp) => {
+      //console.log(
+      //  `addName resp updatedContest: ${inspect(resp.updatedContest, {
+      //    showHidden: false,
+      //    depth: null,
+      //    colors: true
+      //  })}`
+      //);
+      //console.log(
+      //  `addName resp updatedContest: ${inspect(resp.newName, {
+      //    showHidden: false,
+      //    depth: null,
+      //    colors: true
+      //  })}`
+      //);
+      this.setState({
+        contestData: {
+          ...this.state.contestData,
+          contests: {
+            ...this.state.contestData.contests,
+            [resp.updatedContest._id]: resp.updatedContest
+          }
+        },
+        names: {
+          ...this.state.names,
+          [resp.newName._id]: resp.newName
+        }
+      });
+    });
+    //.catch(console.error);
   };
 
   // return either a list of contests or if there is a valid id, the
@@ -179,6 +213,7 @@ class App extends React.Component {
           // instead pass in a lookukp function and have Contest look up the
           // name from the state
           lookupNameObj={this.lookupNameObj} // pass in lookup function
+          addName={this.addName} // pass in add name function
           {...this.currentContest()}
         />
       );

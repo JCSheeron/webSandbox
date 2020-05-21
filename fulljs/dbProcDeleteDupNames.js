@@ -70,43 +70,60 @@ MongoClient.connect(
           console.log(nonDups);
           // now for each name with a dup id find the contests that reference the dup ids
           // remove the duplicate reference and replace them with the retained reference.
-          dups.forEach((element, idx) => {
-            // remove the duplicate ids
+          // Note the dups array is an array of arrays, so each element is an array list
+          // of ids.
+          dups.forEach((d_ele, d_idx) => {
             client
               .db('fulljs')
               .collection('contests')
-              .update(
-                { nameIds: { $in: element } },
-                { $pull: { nameIds: { $in: element } } },
-                { multi: true }
-              )
-              .then(() => {
-                console.log('Deleted duplicate ids from contest name ids.');
-                // Now we want to add in the id we want to retain.
-                // Use addToSet so it is only added if not there already
-                client
-                  .db('fulljs')
-                  .collection('contests')
-                  .update(
-                    { nameIds: { $in: element } },
-                    { $addToSet: { nameIds: nonDups[idx] } },
-                    {}
-                  )
-                  .then(() => {
-                    console.log(
-                      'Update contest name ids to contain the retained name id.'
-                    );
-                    // now remove duplicate names from the names collection.
-                    client
-                      .db('fulljs')
-                      .collection('names')
-                      .deleteMany({ _id: { $in: element } })
-                      // all done!
-                      .then(() => {
-                        console.log('Deleted dups from Names collection');
-                        client.close();
-                      });
-                  });
+              .find({ nameIds: { $in: d_ele } })
+              .toArray()
+              .then((ctests) => {
+                // These contests contain the duplicated ids
+                // For each one, remove the duplicates and use the dup index to add
+                // in the retained id (the dup and nondup arrays are parallel
+                // such that the indexes correspond
+                ctests.forEach((c_ele) => {
+                  console.log(`Handling dups in contest id: ${c_ele._id}`);
+                  console.log(`    Deleting dup id: ${d_ele}`);
+                  // Remove the dup id from the contest
+                  client
+                    .db('fulljs')
+                    .collection('contests')
+                    .updateOne(
+                      { _id: c_ele._id },
+                      { $pull: { nameIds: { $in: d_ele } } },
+                      {}
+                    )
+                    .then(() => {
+                      console.log(
+                        `    Adding in retained id: ${nonDups[d_idx]}`
+                      );
+                      // Add the retained id. Use add to set so it is added only once.
+                      client
+                        .db('fulljs')
+                        .collection('contests')
+                        .updateOne(
+                          { _id: c_ele._id },
+                          { $addToSet: { nameIds: nonDups[d_idx] } },
+                          {}
+                        )
+                        .then(() => {
+                          // Now remove duplicate ids from the names collection.
+                          console.log(
+                            `Deleted dup id from names collection: ${d_ele}`
+                          );
+                          client
+                            .db('fulljs')
+                            .collection('names')
+                            .deleteMany({ _id: { $in: d_ele } })
+                            // all done!
+                            .then(() => {
+                              client.close();
+                            });
+                        });
+                    });
+                });
               });
           });
         } else {
@@ -118,7 +135,9 @@ MongoClient.connect(
       .catch(console.error);
   }
 );
-
+/*
+// 
+  // Remove duplicated name ids from the nameIds field in the contests collection
 MongoClient.connect(
   config.mongodbUri,
   { useUnifiedTopology: true },
@@ -162,3 +181,4 @@ MongoClient.connect(
       .catch(console.error);
   }
 );
+*/

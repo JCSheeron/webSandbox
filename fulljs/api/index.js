@@ -113,9 +113,9 @@ router.get('/contests/:contestId', (req, res) => {
     .findOne({ _id: ObjectID(req.params.contestId) }) // convert req params from str
     .then((contest) => {
       let dataObj = { contests: { [contest._id]: contest } };
-      console.log(
-        `currentContestId req in api_index.js ${req.params.contestId}`
-      );
+      //console.log(
+      //`currentContestId req in api_index.js ${req.params.contestId}`
+      //);
       dataObj.currentContestId = req.params.contestId;
       res.send(dataObj);
     })
@@ -164,6 +164,8 @@ router.post('/names', jsonParser, (req, res) => {
   // res.send(req.body);
   const contestId = ObjectID(req.body.contestId); // put req string into ObjectId type
   const name = req.body.newName;
+  console.log(`api/index.js name: ${name}`);
+  console.log(`api/index.js contestId: ${contestId}`);
   // validation ... (skip for simplicity)
   // This api post need to do 3 things:
   // 1) Create the name entry in the db,
@@ -193,7 +195,7 @@ router.post('/names', jsonParser, (req, res) => {
         )
     )
     .catch((error) => {
-      console.error(error);
+      //console.error(error);
       res.status(404).send('Bad Request api_index L:194');
     });
 });
