@@ -2,8 +2,7 @@ import path from 'path';
 import config from './config';
 //import { inspect } from 'util'; // console.log of objects
 
-// import fs from 'fs';:
-import apiRouter from './api'; // import the api router we made
+import apiRouter from './api'; // import the api router
 // using npm for sass instead of webpack
 import sassMiddleware from 'node-sass-middleware';
 // express
@@ -12,7 +11,6 @@ import express from 'express';
 import hbs from 'express-handlebars';
 // body parser
 // import bodyParser from 'body-parser';
-
 const server = express();
 
 // body-parser at app top level to parse all incoming requests
@@ -35,12 +33,10 @@ server.use(
   })
 );
 
-// set up embedded javascript template language to
+// Det up embedded javascript template language to
 // server render javascript fronend components.
 // By default express will look for templates
 // in a views folder.
-// for ejs
-// server.set('view engine', 'ejs')
 
 // express-handlebars assumes the /views folder. Take this
 // a step further by specifying subfolders for partials and layouts.
@@ -63,43 +59,26 @@ server.engine(
 // Handlebars view engine setup
 server.set('view engine', 'hbs');
 
-// root route
-// Using ejs
-/*
-server.get('/', (req, res) => {
-  // res.send('Hello from Express (root) :)\n');
-  res.render('index', {
-    contentParam1: 'EJS Rendered Message from a parameter!',
-    anotherParam: 'From Another Param!',
-    param3: 'Content with <em>Embedded Tag</em>'
-  }); // for EJS rendering. .ejs ending is the default
-});
-*/
-
 import serverRender from './serverRender';
 
-server.get(['/', '/contests', '/contests/:contestId'], (req, res) => {
-  // res.send('Hello from Express (root) :)\n');
-  // console.log(`contestId in server.js: ${req.params.contestId}`);
-  serverRender(req.params.contestId) // promise from serverRender axios get call
+server.get(['/', '/events', '/events/:eventId'], (req, res) => {
+  // console.log(`eventId in server.js: ${req.params.eventId}`);
+  serverRender(req.params.eventId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
       //console.log('after serverRender');
       //console.log(
       //  inspect(initialData, { showHidden: false, depth: null, colors: true })
       //);
       res.render('index', {
-        title: 'HBS Templated',
-        layout: 'altLayout',
-        condition: true,
-        param3: 'Content with <em>Embedded Tag</em>',
-        arrData: [1, 2, 3],
+        title: 'BPS Arpio',
+        layout: 'defaultLayout',
         initialMarkup,
         initialData
       });
     })
     .catch((error) => {
       console.error(error);
-      res.status(404).send('Bad Request server.js L:102');
+      res.status(404).send('Bad Request server.js');
       //res.send(error);
     });
 });

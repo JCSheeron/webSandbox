@@ -1,0 +1,23 @@
+{
+  "arpiData": {
+    "currentArpiEventId": null,
+    "events": {
+        "<id1>": {
+            "_id": "<id>",
+            "name": "",
+            "description": "",
+            "startTimes": [],
+            "endTimes": [],
+            "triggers": []
+        },
+        "<id2>": {
+            "_id": "<id>",
+            "name": "",
+            "description": "",
+            "startTimes": [],
+            "endTimes": [],
+            "triggers": []
+        }
+    }
+  }
+}

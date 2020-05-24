@@ -6,51 +6,62 @@ import express from 'express';
 
 const router = express.Router();
 
-/*  SIMULATED DATA FROM DATA FILE 
+// body parser
+import bodyParser from 'body-parser';
+const jsonParser = bodyParser.json();
+
+//  SIMULATED DATA FROM DATA FILE
 // simulated data from backend
-// import data from '../src/testData';
+import data from '../src/testData';
 
-// convert array of contests into an object.
-const contestsObj = data.contests.reduce((obj, contest) => {
-  obj[contest.id] = contest;
-  return obj;
-}, {});
+// Do any coditioning of the read in data.
+// Get the data in to a a data object.
+const arpiDataObj = data.arpiData;
 
-// Make overall object to support returning additional values
-// const dataObj = { contests: contestsObj };
-//const contestsObj = data.contests.reduce((obj, contest) => {
-//  obj[contest.id] = contest;
-//  return obj;
-//}, {});
-
-router.get('/contests', (req, res) => {
-  // send back a sample object
-  // res.send({ contests: data.contests }); // array of contests
-  // instead of needing to scan an array of contests
+router.get('/events', (req, res) => {
+  // send back the events object
   res.send({
-    contests: contestsObj
+    events: arpiData.events
   });
 });
 
-router.get('/contests/:contestId', (req, res) => {
-  // get contest object from the request params id
+router.get('/events/:eventId', (req, res) => {
+  // get event object from the request params id
   // Make overall object to support returning additional values,
   // and to be consistent with the App state variables.
   let dataObj = {
-    contests: { [req.params.contestId]: contestsObj[req.params.contestId] }
+    events: { [req.params.eventId]: arpiDataObj.events[req.params.eventId] }
   };
-  // Update the contest id and description in the object
-  dataObj.currentContestId = req.params.contestId;
-  dataObj.contests[req.params.contestId].description =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+  // Update the current event id
+  dataObj.currentArpiEventId = req.params.eventId;
   //console.log(
   //  inspect(dataObj, { showHidden: false, depth: null, colors: true })
   //);
   res.send(dataObj);
 });
-END SIMULATED DATA FROM DATA FILE 
-*/
 
+// Use route specific parser -- body-parser
+router.post('/events/startTimes', jsonParser, (req, res) => {
+  // Read the data from the request body, but it also needs to be parsed.
+  // should get s(tartTime, eventId) in the request
+  // Put req params into vars to facilitate validation
+  const startTime = req.body.startTime;
+  const eventId = req.body.eventId;
+  console.log(`api/index.js post /names eventId: ${eventId}`);
+  console.log(`api/index.js post /names startTime: ${startTime}`);
+  // This api post need to:
+  // 1) Read in and validate the start time and event id.
+  // 2) Add the start time to the event
+  //
+  // TODO: validation ...
+  //
+  // TODO: Update startTimes array in arpiData
+  // Something like:
+  // arpiData.events[eventId].startTimes.push(startTime)
+});
+//END SIMULATED DATA FROM DATA FILE
+
+/* BEGIN MONGO DB DATA HANDLING
 // Use body-parser and set up for route specific parsing
 
 // body parser
@@ -77,17 +88,17 @@ MongoClient.connect(
   }
 );
 
-router.get('/contests', (req, res) => {
-  // Get the contests collection from the db object.
-  // Instead of an array, lets put the contests into a contests object.
+router.get('/events', (req, res) => {
+  // Get the events collection from the db object.
+  // Instead of an array, lets put the events into a events object.
   // collection.find() is async, so we can't simply respond right after
   // the each loop, or we'll respond before processing anything. Instead,
   // start with an empty object, append contest to it as they come, and
-  // test that when there are no more contests, then respond with the
-  // completed contests object.
-  let contests = {};
+  // test that when there are no more events, then respond with the
+  // completed events object.
+  let events = {};
   mdb
-    .collection('contests')
+    .collection('events')
     .find({}) // get all in the collections (async)
     .project({
       // use project to get just the fields we want
@@ -98,21 +109,21 @@ router.get('/contests', (req, res) => {
       assert.equal(null, err);
       // if there are not more contest, return the populated object.
       if (!contest) {
-        res.send({ contests });
+        res.send({ events });
         return;
       }
       // if we get there, there is a contest avail. Put it in the object
-      contests[contest._id] = contest;
+      events[contest._id] = contest;
     });
 });
 
-router.get('/contests/:contestId', (req, res) => {
+router.get('/events/:contestId', (req, res) => {
   mdb
-    .collection('contests')
+    .collection('events')
     // .findOne({ _id: Number(req.params.contestId) }) // convert req params from str
     .findOne({ _id: ObjectID(req.params.contestId) }) // convert req params from str
     .then((contest) => {
-      let dataObj = { contests: { [contest._id]: contest } };
+      let dataObj = { events: { [contest._id]: contest } };
       //console.log(
       //`currentContestId req in api_index.js ${req.params.contestId}`
       //);
@@ -181,7 +192,7 @@ router.post('/names', jsonParser, (req, res) => {
     .insertOne({ name })
     .then((result) =>
       mdb
-        .collection('contests')
+        .collection('events')
         .findOneAndUpdate(
           { _id: contestId }, // contestId is already an object (above)
           { $push: { nameIds: result.insertedId } }, // what we need to modify (push)
@@ -200,4 +211,5 @@ router.post('/names', jsonParser, (req, res) => {
     });
 });
 
+*/
 export default router;
