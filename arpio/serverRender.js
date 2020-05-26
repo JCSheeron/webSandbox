@@ -10,14 +10,14 @@ import axios from 'axios';
 
 // return the url of an event if there is an id passed in,
 // or the url for the event list if there is no event identified
-const getApiUrl = (arpiEventId) => {
-  if (arpiEventId) {
-    return `${config.serverUrl}/api/events/${arpiEventId}`;
+const getApiUrl = (eventId) => {
+  if (eventId) {
+    return `${config.serverUrl}/api/events/${eventId}`;
   }
   return `${config.serverUrl}/api/events`;
 };
 
-const getInitialData = (arpiEventId, apiData) => {
+const getInitialData = (eventId, apiData) => {
   // if we have an event id, then return the
   // event data for the associated event, and
   // the event id.
@@ -37,15 +37,15 @@ const getInitialData = (arpiEventId, apiData) => {
   //inspect(apiData, { showHidden: false, depth: null, colors: true })
   //);
 
-  if (arpiEventId)
+  if (eventId)
     // valid event id. Return the event info in an arpi data object
     return {
       arpiData: {
         events: {
-          [arpiEventId]: apiData.events[arpiEventId]
+          [eventId]: apiData.events[eventId]
         }
       },
-      currentArpiEventId: arpiEventId
+      currentEventId: eventId
     };
   // no valid event id. Return the events in the arpiData object.
   return { arpiData: { events: apiData.events } };
@@ -53,10 +53,10 @@ const getInitialData = (arpiEventId, apiData) => {
 
 // Fetch the data from the api
 // Wrap the axios promise in a function that returns the promise
-const serverRender = (arpiEventId) => {
-  return axios.get(getApiUrl(arpiEventId)).then((resp) => {
+const serverRender = (eventId) => {
+  return axios.get(getApiUrl(eventId)).then((resp) => {
     //console.log('ServerRender resp.data');
-    const initialData = getInitialData(arpiEventId, resp.data);
+    const initialData = getInitialData(eventId, resp.data);
     //console.log('serverRender after call to initialData');
     //console.log(
     //inspect(initialData, { showHidden: false, depth: null, colors: true })

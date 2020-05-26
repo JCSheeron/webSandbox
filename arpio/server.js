@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './config';
-//import { inspect } from 'util'; // console.log of objects
+import { inspect } from 'util'; // console.log of objects
 
 import apiRouter from './api'; // import the api router
 // using npm for sass instead of webpack

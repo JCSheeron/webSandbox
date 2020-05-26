@@ -1,7 +1,7 @@
 {
-  "name": "fulljs",
+  "name": "Arpio",
   "version": "0.1.0",
-  "description": "First time full stack dev",
+  "description": "Raspberry Pi I/O Control",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,7 +21,8 @@
     "handlebars",
     "javascript",
     "mondodb",
-    "node"
+    "node",
+    "raspberry pi"
   ],
   "author": "JCSheeron",
   "license": "ISC",

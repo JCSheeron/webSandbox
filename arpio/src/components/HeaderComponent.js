@@ -12,7 +12,7 @@ const HeaderComponent = ({ message }) => {
 };
 
 // Optional but recommended property type check.
-// The .isRequired is options, but specifies that
+// The .isRequired is optional, but specifies that
 // a message must be provided.
 HeaderComponent.propTypes = {
   //headerMessage: PropTypes.string

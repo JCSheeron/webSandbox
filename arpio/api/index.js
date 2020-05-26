@@ -12,7 +12,7 @@ const jsonParser = bodyParser.json();
 
 //  SIMULATED DATA FROM DATA FILE
 // simulated data from backend
-import data from '../src/testData';
+import data from '../src/testData1';
 
 // Do any coditioning of the read in data.
 // Get the data in to a a data object.
@@ -21,7 +21,7 @@ const arpiDataObj = data.arpiData;
 router.get('/events', (req, res) => {
   // send back the events object
   res.send({
-    events: arpiData.events
+    events: arpiDataObj.events
   });
 });
 
@@ -30,10 +30,9 @@ router.get('/events/:eventId', (req, res) => {
   // Make overall object to support returning additional values,
   // and to be consistent with the App state variables.
   let dataObj = {
+    currentEventId: req.params.eventId,
     events: { [req.params.eventId]: arpiDataObj.events[req.params.eventId] }
   };
-  // Update the current event id
-  dataObj.currentArpiEventId = req.params.eventId;
   //console.log(
   //  inspect(dataObj, { showHidden: false, depth: null, colors: true })
   //);

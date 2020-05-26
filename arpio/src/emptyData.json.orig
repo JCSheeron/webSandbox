@@ -1,6 +1,6 @@
 {
   "arpiData": {
-    "currentEventId": null,
+    "currentArpiEventId": null,
     "events": {
         "<id1>": {
             "_id": "<id>",
@@ -8,8 +8,7 @@
             "description": "",
             "startTimes": [],
             "endTimes": [],
-            "triggers": [],
-            "actions":[]
+            "triggers": []
         },
         "<id2>": {
             "_id": "<id>",
@@ -17,7 +16,6 @@
             "description": "",
             "startTimes": [],
             "endTimes": [],
-            "actions":[],
             "triggers": []
         }
     }

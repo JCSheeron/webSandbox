@@ -24,12 +24,6 @@ const HBS_HELPERS_DIR = path.join(HBS_VIEWS_DIR, 'helpers');
 var config = {
   mode: 'development',
   entry: { bpsMain: APP_DIR + '/index.js' },
-  /* OLD -- From class
-  output: {
-    path: path.resolve('public'),
-    filename: 'bundle.js'
-  },
-*/
   output: {
     /* without lazy loading */
     // path: BUILD_DIR,
@@ -63,7 +57,7 @@ var config = {
       // template to use
       template: path.join(HBS_VIEWS_DIR, 'index.hbs'),
       // output file name
-      filename: path.join(HBS_PARTIALS_DIR, 'jcs1.hbs')
+      filename: path.join(HBS_PARTIALS_DIR, 'index_wscripts.hbs')
     }),
     new ManifestPlugin(),
     new webpack.HotModuleReplacementPlugin()
