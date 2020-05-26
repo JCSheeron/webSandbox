@@ -1,0 +1,49 @@
+.ContestPreview {
+  margin: 1em;
+  border: 1px solid #ccc;
+
+  .catagory-name {
+    border-bottom: 1px solid #ccc;
+    padding: 0.25em 0.5em;
+    font-weight: bold;
+    background-color: #eee;
+  }
+
+  .contest-name {
+    padding: 0.5em;
+  }
+}
+
+.Contest {
+  margin: 1em;
+  border: 1px solid #ccc;
+
+  .panel-heading {
+    border-bottom: 0.25px solid #ccc;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    font-weight: bold;
+    background-color: #eee;
+  }
+  .list-group-item {
+    border: 1px solid #ccc;
+  }
+
+  .panel-info {
+    .panel-title {
+      background-color: #e0ffff;
+    }
+  }
+}
+
+.btn {
+  background-color: #00ffff;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.home-link {
+  margin-top: 1em;
+  color: #0000ee;
+}
