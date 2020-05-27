@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { inspect } from 'util'; //console.log of objects
+import { inspect } from 'util'; //console.log of objects
 
 // components
 import HeaderComponent from './HeaderComponent';
@@ -33,14 +33,14 @@ class App extends React.Component {
       // Thus, supporting server rendering for example.
       // eventData is an object contining a events object. The events
       // object contains event objects.
-      // { arpiData:
-      //    currentEventId: id,
+      // {  currentEventId: <id>
+      //    arpiData:
       //    {events : {_id, name, description,
       //              startTimes[], endTimes[], triggers[], actions[] }
       //    }
       // }
-      arpiData: this.props.initialData.arpiData,
-      currentEventId: this.props.initialData.currentEventId
+      currentEventId: this.props.initialData.currentEventId,
+      arpiData: this.props.initialData.arpiData
     };
   }
 
@@ -67,15 +67,25 @@ class App extends React.Component {
     pushState({ currentEventId: eventId }, `/events/${eventId}`);
     // Now look up the event
     // using the api
+    console.log(`EventId in fetchEvent ${eventId}`);
     api.fetchEvent(eventId).then((dataObj) => {
+      console.log('dataObj in FetchEvent');
+      console.log(
+        inspect(dataObj, {
+          showHidden: false,
+          depth: null,
+          colors: true
+        })
+      );
+
       this.setState((prevState) => {
         return {
+          currentEventId: dataObj.currentEventId,
           arpiData: {
             ...prevState.arpiData,
-            currentEventId: dataObj.currentEventId,
             events: {
               ...prevState.arpiData.events,
-              [dataObj.currentEventId]: events[dataObj.currentEventId]
+              [eventId]: dataObj.events[eventId]
             }
           }
         };
@@ -91,9 +101,9 @@ class App extends React.Component {
     api.fetchEventList().then((events) => {
       this.setState((prevState) => {
         return {
+          currentEventId: null,
           arpiData: {
             ...prevState.arpiData,
-            currentEventId: null,
             events: events
           }
         };

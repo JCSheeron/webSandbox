@@ -27,7 +27,7 @@ const getInitialData = (eventId, apiData) => {
   // { arpiData:
   //    currentArpiEventId,
   //    {events : [_id]: {_id, name, description,
-  //               startTime {}, endTime {}, trigger {}
+  //               startTimes [], endTimes [], triggers [], actions []
   //              }
   //     }
 
@@ -40,15 +40,20 @@ const getInitialData = (eventId, apiData) => {
   if (eventId)
     // valid event id. Return the event info in an arpi data object
     return {
+      currentEventId: eventId,
       arpiData: {
         events: {
           [eventId]: apiData.events[eventId]
         }
-      },
-      currentEventId: eventId
+      }
     };
   // no valid event id. Return the events in the arpiData object.
-  return { arpiData: { events: apiData.events } };
+  return {
+    currentEventId: null,
+    arpiData: {
+      events: apiData.events
+    }
+  };
 };
 
 // Fetch the data from the api
