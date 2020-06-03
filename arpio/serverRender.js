@@ -58,7 +58,7 @@ const getInitialData = (eventId, apiData) => {
 
 // Fetch the data from the api
 // Wrap the axios promise in a function that returns the promise
-const serverRender = (eventId) => {
+export const eventListRender = (eventId) => {
   return axios.get(getApiUrl(eventId)).then((resp) => {
     //console.log('ServerRender resp.data');
     const initialData = getInitialData(eventId, resp.data);
@@ -79,4 +79,5 @@ const serverRender = (eventId) => {
   });
 };
 
-export default serverRender;
+export const puStartTimesRender = (eventId) => {};
+

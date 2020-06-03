@@ -67,16 +67,16 @@ class App extends React.Component {
     pushState({ currentEventId: eventId }, `/events/${eventId}`);
     // Now look up the event
     // using the api
-    console.log(`EventId in fetchEvent ${eventId}`);
+    // console.log(`EventId in fetchEvent ${eventId}`);
     api.fetchEvent(eventId).then((dataObj) => {
-      console.log('dataObj in FetchEvent');
-      console.log(
-        inspect(dataObj, {
-          showHidden: false,
-          depth: null,
-          colors: true
-        })
-      );
+      //console.log('dataObj in FetchEvent');
+      //console.log(
+      //  inspect(dataObj, {
+      //    showHidden: false,
+      //    depth: null,
+      //    colors: true
+      //  })
+      //);
 
       this.setState((prevState) => {
         return {
@@ -111,9 +111,9 @@ class App extends React.Component {
     });
   };
 
-  // Fetch the start times from the api and put them into the state.
-  fetchStartTimes = (eventId) => {
-    api.fetchStartTimes(eventId).then((startTimes) => {
+  // Fetch the triggers from the api and put them into the state.
+  fetchtriggers = (eventId) => {
+    api.fetchTriggers(eventId).then((triggers) => {
       this.setState((prevState) => {
         return {
           arpiData: {
@@ -122,7 +122,7 @@ class App extends React.Component {
               ...prevState.arpiData.events,
               [eventId]: {
                 ...prevState.arpiData.events[eventId],
-                startTimes: startTimes
+                triggers: triggers
               }
             }
           }
@@ -131,6 +131,25 @@ class App extends React.Component {
     });
   };
 
+  // Fetch the actions from the api and put them into the state.
+  fetchActions = (eventId) => {
+    api.fetchActions(eventId).then((actions) => {
+      this.setState((prevState) => {
+        return {
+          arpiData: {
+            ...prevState.arpiData,
+            events: {
+              ...prevState.arpiData.events,
+              [eventId]: {
+                ...prevState.arpiData.events[eventId],
+                actions: actions
+              }
+            }
+          }
+        };
+      });
+    });
+  };
   // get the event corresponding to the current id
   currentEvent = () => {
     return this.state.arpiData.events[this.state.currentEventId];
@@ -145,13 +164,13 @@ class App extends React.Component {
     return 'Event List';
   };
 
-  addStartTimes = (newStartTime, eventId) => {
+  addTrigger = (newTrigger, eventId) => {
     // use api method to add a start time to the event start times
-    api.addStartTime(newStartTime, eventId).then((resp) => {
-      console.log('editStartTime api responded');
+    api.addTrigger(newStartTime, eventId).then((resp) => {
+      console.log('addTrigger api responded');
       // TODO: Figure out the "updatedEvent" part of the console log statement
       console.log(
-        `editStartTime api resp updatedEvent: ${inspect(resp.updatedEvent, {
+        `addTrigger api resp updatedEvent: ${inspect(resp.updatedEvent, {
           showHidden: false,
           depth: null,
           colors: true
@@ -177,20 +196,6 @@ class App extends React.Component {
     });
   };
 
-  editStartTimes = (newStartTime, eventId) => {
-    console.log(
-      `App.js::editStartTime called.
-        newStartTime: ${newStartTime}, eventId: ${eventId}`
-    );
-  };
-
-  editEndTimes = (newEndTime, eventId) => {
-    console.log(
-      `App.js::editEndTime called.
-        newEndTime: ${newEndTime}, eventId: ${eventId}`
-    );
-  };
-
   editTriggers = (newTrigger, eventId) => {
     console.log(
       `App.js::editTrigger called.
@@ -210,13 +215,17 @@ class App extends React.Component {
     // If you have a valid id (from a click on an event), then
     // display the event, otherwise display the event list
     if (this.state.currentEventId) {
+      //console.log(
+      //  `App.js this.currentEvent:  ${inspect(this.currentEvent(), {
+      //    showHidden: false,
+      //    depth: null,
+      //    colors: false
+      //  })}`
+      //);
       return (
         <Event
           eventListClick={this.fetchEventList}
-          editStartTimes={this.editStartTimes}
-          editEndTimes={this.editStartTimes}
-          editTriggers={this.editStartTimes}
-          editActions={this.editStartTimes}
+          editTriggers={this.editTriggers}
           {...this.currentEvent()}
         />
       );

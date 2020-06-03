@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './config';
-import { inspect } from 'util'; // console.log of objects
+// import { inspect } from 'util'; // console.log of objects
 
 import apiRouter from './api'; // import the api router
 // using npm for sass instead of webpack
@@ -59,11 +59,12 @@ server.engine(
 // Handlebars view engine setup
 server.set('view engine', 'hbs');
 
-import serverRender from './serverRender';
+import * as serverRender from './serverRender';
 
 server.get(['/', '/events', '/events/:eventId'], (req, res) => {
   // console.log(`eventId in server.js: ${req.params.eventId}`);
-  serverRender(req.params.eventId) // promise from serverRender axios get call
+  serverRender
+    .eventListRender(req.params.eventId) // promise from serverRender axios get call
     .then(({ initialMarkup, initialData }) => {
       //console.log('after serverRender');
       //console.log(
