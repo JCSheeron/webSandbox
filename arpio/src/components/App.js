@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { inspect } from 'util'; //console.log of objects
 
 // components
@@ -40,12 +41,20 @@ class App extends React.Component {
       //    }
       // }
       currentEventId: this.props.initialData.currentEventId,
-      arpiData: this.props.initialData.arpiData
+      arpiData: this.props.initialData.arpiData,
+      modalEditTriggersIsOpen: false
     };
   }
-
   static propTypes = {
     initialData: PropTypes.object.isRequired
+  };
+
+  openReqModalEditTriggers = () => {
+    this.setState({ modalEditTriggersIsOpen: true });
+  };
+
+  closeReqModalEditTriggers = () => {
+    this.setState({ modalEditTriggersIsOpen: false });
   };
 
   componentDidMount() {
@@ -65,8 +74,7 @@ class App extends React.Component {
   fetchEvent = (eventId) => {
     // push the event to browser history (which makes it current and adds it to history)
     pushState({ currentEventId: eventId }, `/events/${eventId}`);
-    // Now look up the event
-    // using the api
+    // Now look up the event using the api
     // console.log(`EventId in fetchEvent ${eventId}`);
     api.fetchEvent(eventId).then((dataObj) => {
       //console.log('dataObj in FetchEvent');
@@ -150,6 +158,7 @@ class App extends React.Component {
       });
     });
   };
+
   // get the event corresponding to the current id
   currentEvent = () => {
     return this.state.arpiData.events[this.state.currentEventId];
@@ -225,7 +234,9 @@ class App extends React.Component {
       return (
         <Event
           eventListClick={this.fetchEventList}
-          editTriggers={this.editTriggers}
+          openReqModalEditTriggers={this.openReqModalEditTriggers}
+          closeReqModalEditTriggers={this.closeReqModalEditTriggers}
+          isModalEditTriggersOpen={this.state.modalEditTriggersIsOpen}
           {...this.currentEvent()}
         />
       );

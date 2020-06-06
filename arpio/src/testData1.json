@@ -10,7 +10,7 @@
                     "_id": "1",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 11,
+                    "channel": 21,
                     "level": 1,
                     "actions": {
                         "1": {
@@ -43,7 +43,7 @@
                     "_id": "2",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 12,
+                    "channel": 22,
                     "level": 1,
                     "actions": {
                         "5": {
@@ -83,7 +83,7 @@
                     "_id": "3",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 13,
+                    "channel": 23,
                     "level": 1,
                     "actions": {
                         "9": {
@@ -116,7 +116,7 @@
                     "_id": "4",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 14,
+                    "channel": 24,
                     "level": 1,
                     "actions": {
                         "14": {

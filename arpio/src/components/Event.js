@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
+import Modal from 'react-modal'; // for modal popup
+
 import PropTypes from 'prop-types';
 
 // import { inspect } from 'util'; //console.log of objects
 
-class Event extends Component {
-  componentDidMount() {
-    //console.log(this.props);
-  }
+// Bind modal to the app element to properly hide it while modal is open.
+// This helps with assistive screen readers
+Modal.setAppElement('#root');
 
+class Event extends Component {
   handleEditTriggers = (event) => {
     event.preventDefault();
     console.log('Edit Triggers Pressed');
+    this.props.openReqModalEditTriggers(); // passed in fct
   };
+
+  handleEditTriggersCloseReq = (event) => {
+    event.preventDefault();
+    console.log('Edit Triggers Modal Close Pressed');
+    this.props.closeReqModalEditTriggers(); // passed in fct
+  };
+
+  componentDidMount() {
+    //console.log(this.props);
+  }
 
   renderActions = (triggerId) => {
     return (
@@ -75,6 +88,14 @@ class Event extends Component {
                   onClick={this.handleEditTriggers}>
                   Edit Triggers
                 </button>
+                <Modal
+                  isOpen={this.props.isModalEditTriggersOpen}
+                  onRequestClose={this.handleEditTriggersCloseReq}>
+                  <button onClick={this.handleEditTriggersCloseReq}>
+                    Close
+                  </button>
+                  <form></form>
+                </Modal>
               </span>
             </div>
           </div>
@@ -90,7 +111,9 @@ class Event extends Component {
 
 Event.propTypes = {
   eventListClick: PropTypes.func.isRequired,
-  editTriggers: PropTypes.func.isRequired,
+  openReqModalEditTriggers: PropTypes.func.isRequired,
+  closeReqModalEditTriggers: PropTypes.func.isRequired,
+  isModalEditTriggersOpen: PropTypes.bool.isRequired,
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
