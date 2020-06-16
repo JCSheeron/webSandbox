@@ -8,26 +8,31 @@ class EventPreview extends React.Component {
   render() {
     return (
       <div className='link EventPreview' onClick={this.handleClick}>
-        <div className='event-name'>Event Name: {this.props.name}</div>
+        <div className='event-name'>
+          <h3>Event Name</h3> {this.props.name}
+        </div>
         <div className='event-desc'>
-          Event Description: {this.props.description}
+          <h3>Event Description</h3> {this.props.description}
         </div>
-        <div className='event-triggers'>
-          {' '}
-          {Object.keys(this.props.triggers).map((triggerId) => (
-            <div key={triggerId} className='trigger-properities'>
-              <div className='trigger-id'>
-                Trigger Id: {this.props.triggers[triggerId]._id}
-              </div>
-              <div className='trigger-enabled'>
-                Trigger Enabled: {this.props.triggers[triggerId].enabled}
-              </div>
-              <div className='trigger-type'>
-                Action Type: {this.props.triggers[triggerId].type}
-              </div>
-            </div>
-          ))}
-        </div>
+        <h3 className='event-triggers'>Triggers</h3>
+        <table>
+          <thead>
+            <tr className='tblHeadingRow'>
+              <th>Id</th>
+              <th>Enabled </th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(this.props.triggers).map((triggerId, idx) => (
+              <tr className='tblDataRow' key={idx}>
+                <td>{this.props.triggers[triggerId]._id} </td>
+                <td>{this.props.triggers[triggerId].enabled} </td>
+                <td>{this.props.triggers[triggerId].type} </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

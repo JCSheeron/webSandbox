@@ -28,77 +28,129 @@ class Event extends Component {
 
   renderActions = (triggerId) => {
     return (
-      <ul className='list-actions'>
-        {Object.keys(this.props.triggers[triggerId].actions).map((actionId) => (
-          <li
-            key={this.props.triggers[triggerId].actions[actionId]._id}
-            className='action-properties'>
-            {' '}
-            {this.props.triggers[triggerId].actions[actionId]._id}{' '}
-            {this.props.triggers[triggerId].actions[actionId].enabled}{' '}
-            {this.props.triggers[triggerId].actions[actionId].type}{' '}
-            {this.props.triggers[triggerId].actions[actionId].channel}{' '}
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr className='tblHeadingRow'>
+            <th>Id</th>
+            <th>Enabled </th>
+            <th>Type</th>
+            <th>Item</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(this.props.triggers[triggerId].actions).map(
+            (actionId, idx) => (
+              <tr className='tblDataRow' key={idx}>
+                <td>{this.props.triggers[triggerId].actions[actionId]._id}</td>
+                <td>
+                  {this.props.triggers[triggerId].actions[actionId].enabled}
+                </td>
+                <td>{this.props.triggers[triggerId].actions[actionId].type}</td>
+                <td>{this.props.triggers[triggerId].actions[actionId].item}</td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
     );
   };
 
   render() {
     return (
       <div className='Event'>
-        <div className='panel panel-default'>
-          <div className='panel-heading'>
-            <h3 className='panel-title'>Event Name</h3>
-          </div>
-          <div className='panel-body'>
-            <div className='event-name'>{this.props.name}</div>
-          </div>
-          <div className='panel-heading'>
-            <h3 className='panel-title'>Event Description</h3>
-          </div>
-          <div className='panel-body'>
-            <div className='event-description'>{this.props.description}</div>
-          </div>
-        </div>
-
-        <div className='panel panel-default'>
-          <div className='panel-heading'>
-            <h3 className='panel-title'>Triggers</h3>
-          </div>
-          <div className='panel-body'>
-            <ul className='list-triggers'>
-              {Object.keys(this.props.triggers).map((triggerId) => (
-                <li key={triggerId} className='trigger-properties'>
-                  {' '}
-                  {this.props.triggers[triggerId]._id}{' '}
-                  {this.props.triggers[triggerId].enabled}{' '}
-                  {this.props.triggers[triggerId].type}{' '}
-                  {this.props.triggers[triggerId].channel}{' '}
-                  {this.props.triggers[triggerId].level}{' '}
-                  {this.renderActions(triggerId)}
-                </li>
-              ))}
-            </ul>
-            <div className='edit-group'>
-              <span className='edit-group-btn'>
-                <button
-                  type='button'
-                  className='btn btn-info'
-                  onClick={this.handleEditTriggers}>
-                  Edit Triggers
-                </button>
-                <Modal
-                  isOpen={this.props.isModalEditTriggersOpen}
-                  onRequestClose={this.handleEditTriggersCloseReq}>
-                  <button onClick={this.handleEditTriggersCloseReq}>
-                    Close
-                  </button>
-                  <form></form>
-                </Modal>
-              </span>
-            </div>
-          </div>
+        <h3 className='panel-title'>Event Name</h3>
+        <div className='event-name'>{this.props.name}</div>
+        <h3 className='panel-title'>Event Description</h3>
+        <div className='event-description'>{this.props.description}</div>
+        <h3 className='panel-title'>Triggers</h3>
+        <table>
+          <thead>
+            <tr className='tblTriggerHeaderRow'>
+              <th>Id</th>
+              <th>Enabled </th>
+              <th>Type</th>
+              <th>Trigger</th>
+              <th>Condition</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(this.props.triggers).map((triggerId, idx) => (
+              <div>
+                <tr className='tblTriggerDataRow' key={idx}>
+                  <td>{this.props.triggers[triggerId]._id} </td>
+                  <td>{this.props.triggers[triggerId].enabled} </td>
+                  <td>{this.props.triggers[triggerId].type} </td>
+                  <td>{this.props.triggers[triggerId].trigger} </td>
+                  <td>{this.props.triggers[triggerId].condition} </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th colSpan='4'>Actions</th>
+                        </tr>
+                        <tr className='tblActionHeaderRow'>
+                          <th>Id</th>
+                          <th>Enabled</th>
+                          <th>Type</th>
+                          <th>Item</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Object.keys(
+                          this.props.triggers[triggerId].actions
+                        ).map((actionId, idx) => (
+                          <tr className='tblActionDataRow' key={idx}>
+                            <td>
+                              {
+                                this.props.triggers[triggerId].actions[actionId]
+                                  ._id
+                              }
+                            </td>
+                            <td>
+                              {
+                                this.props.triggers[triggerId].actions[actionId]
+                                  .enabled
+                              }
+                            </td>
+                            <td>
+                              {
+                                this.props.triggers[triggerId].actions[actionId]
+                                  .type
+                              }
+                            </td>
+                            <td>
+                              {
+                                this.props.triggers[triggerId].actions[actionId]
+                                  .item
+                              }
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </div>
+            ))}
+          </tbody>
+        </table>
+        <div className='edit-group'>
+          <span className='edit-group-btn'>
+            <button
+              type='button'
+              className='btn btn-info'
+              onClick={this.handleEditTriggers}>
+              Edit Triggers
+            </button>
+            <Modal
+              isOpen={this.props.isModalEditTriggersOpen}
+              onRequestClose={this.handleEditTriggersCloseReq}>
+              <button onClick={this.handleEditTriggersCloseReq}>Close</button>
+              <form></form>
+            </Modal>
+          </span>
         </div>
 
         <div className='home-link link' onClick={this.props.eventListClick}>

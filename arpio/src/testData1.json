@@ -10,32 +10,32 @@
                     "_id": "1",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 21,
-                    "level": 1,
+                    "trigger": 21,
+                    "condition": 1,
                     "actions": {
                         "1": {
                         "_id": "1",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 1
+                        "item": 1
                         },
                         "2": {
                         "_id": "2",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 2
+                        "item": 2
                         },
                         "3": {
                         "_id": "3",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 3
+                        "item": 3
                         },
                         "4": {
                         "_id": "4",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 4
+                        "item": 4
                         }
                     }
                 },
@@ -43,32 +43,32 @@
                     "_id": "2",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 22,
-                    "level": 1,
+                    "trigger": 22,
+                    "condition": 1,
                     "actions": {
                         "5": {
                         "_id": "5",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 5
+                        "item": 5
                         },
                         "6": {
                         "_id": "6",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 6
+                        "item": 6
                         },
                         "7": {
                         "_id": "7",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 7
+                        "item": 7
                         },
                         "8": {
                         "_id": "8",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 8
+                        "item": 8
                         }
                     }
                 }
@@ -83,32 +83,32 @@
                     "_id": "3",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 23,
-                    "level": 1,
+                    "trigger": 23,
+                    "condition": 1,
                     "actions": {
                         "9": {
                         "_id": "9",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 9
+                        "item": 9
                         },
                         "10": {
                         "_id": "10",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 10
+                        "item": 10
                         },
                         "11": {
                         "_id": "12",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 11
+                        "item": 11
                         },
                         "13": {
                         "_id": "13",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 12
+                        "item": 12
                         }
                     }
                 },
@@ -116,32 +116,32 @@
                     "_id": "4",
                     "enabled": "true", 
                     "type": "DI",
-                    "channel": 24,
-                    "level": 1,
+                    "trigger": 24,
+                    "condition": 1,
                     "actions": {
                         "14": {
                         "_id": "14",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 13
+                        "item": 13
                         },
                         "15": {
                         "_id": "15",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 14
+                        "item": 14
                         },
                         "16": {
                         "_id": "16",
                         "enabled": "true",
                         "type": "DO",
-                        "channel": 15
+                        "item": 15
                         },
                         "17": {
                         "_id": "17",
                         "enabled": "false",
                         "type": "DO",
-                        "channel": 16
+                        "item": 16
                         }
                     }
                 }
