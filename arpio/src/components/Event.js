@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal'; // for modal popup
+import { useTable } from 'react-table';
 
 import PropTypes from 'prop-types';
 
@@ -55,7 +56,96 @@ class Event extends Component {
     );
   };
 
+  renderTriggerTable = ({ columns, data }) => {
+    // deconstruction to get the state and functions returned from useTable
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      prepareRow
+    } = useTable({
+      columns,
+      data
+    });
+
+    // render the table
+    return (
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
+
+  // generate an array of objects describing the columns
+  getTriggerTableColumns = () => [
+    {
+      Header: 'Trigger',
+      columns: [
+        {
+          Header: 'ID',
+          accessor: '_id'
+        },
+        {
+          Header: 'Enabled',
+          accessor: 'enabled'
+        }
+      ],
+      Header: 'Details',
+      columns: [
+        {
+          Header: 'Type',
+          accessor: 'type'
+        },
+        {
+          Header: 'Trigger',
+          accessor: 'trigger'
+        },
+        {
+          Header: 'Condition',
+          accessor: 'condition'
+        }
+      ]
+    }
+  ];
+
+  getTriggerData = (triggers) => {
+    {
+      Object.keys(triggers).map((triggerId) => ({
+        _id: triggers[triggerId]._id,
+        enabled: triggers[triggerId].enabled,
+        type: triggers[triggerId].type,
+        trigger: triggers[triggerId].trigger,
+        condition: triggers[triggerId].condition
+      }));
+    }
+  };
+
   render() {
+    console.log(Object.keys(this.props.triggers));
+    console.log(this.props.triggers);
     return (
       <div className='Event'>
         <h3 className='panel-title'>Event Name</h3>
@@ -63,79 +153,10 @@ class Event extends Component {
         <h3 className='panel-title'>Event Description</h3>
         <div className='event-description'>{this.props.description}</div>
         <h3 className='panel-title'>Triggers</h3>
-        <table>
-          <thead>
-            <tr className='tblTriggerHeaderRow'>
-              <th>Id</th>
-              <th>Enabled </th>
-              <th>Type</th>
-              <th>Trigger</th>
-              <th>Condition</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(this.props.triggers).map((triggerId, idx) => (
-              <div>
-                <tr className='tblTriggerDataRow' key={idx}>
-                  <td>{this.props.triggers[triggerId]._id} </td>
-                  <td>{this.props.triggers[triggerId].enabled} </td>
-                  <td>{this.props.triggers[triggerId].type} </td>
-                  <td>{this.props.triggers[triggerId].trigger} </td>
-                  <td>{this.props.triggers[triggerId].condition} </td>
-                </tr>
-                <tr>
-                  <td>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th colSpan='4'>Actions</th>
-                        </tr>
-                        <tr className='tblActionHeaderRow'>
-                          <th>Id</th>
-                          <th>Enabled</th>
-                          <th>Type</th>
-                          <th>Item</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {Object.keys(
-                          this.props.triggers[triggerId].actions
-                        ).map((actionId, idx) => (
-                          <tr className='tblActionDataRow' key={idx}>
-                            <td>
-                              {
-                                this.props.triggers[triggerId].actions[actionId]
-                                  ._id
-                              }
-                            </td>
-                            <td>
-                              {
-                                this.props.triggers[triggerId].actions[actionId]
-                                  .enabled
-                              }
-                            </td>
-                            <td>
-                              {
-                                this.props.triggers[triggerId].actions[actionId]
-                                  .type
-                              }
-                            </td>
-                            <td>
-                              {
-                                this.props.triggers[triggerId].actions[actionId]
-                                  .item
-                              }
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </td>
-                </tr>
-              </div>
-            ))}
-          </tbody>
-        </table>
+        <this.renderTriggerTable
+          columns={this.getTriggerTableColumns()}
+          data={this.getTriggerData(this.props.triggers)}
+        />
         <div className='edit-group'>
           <span className='edit-group-btn'>
             <button
