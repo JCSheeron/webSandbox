@@ -1,13 +1,15 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { useTable, useExpanded } from 'react-table';
 import PropTypes from 'prop-types';
 
 class EventPreview extends React.Component {
+  /*
   handleClick = () => {
     this.props.onClick(this.props._id);
   };
+  */
 
-  renderTriggerTable = ({ columns, data }) => {
+  renderTriggerTable = ({ columns, data, renderRowSubComponent }) => {
     // deconstruction to get the state and functions returned
     // from react-table useTable()
     const {
@@ -15,11 +17,16 @@ class EventPreview extends React.Component {
       getTableBodyProps,
       headerGroups,
       rows,
-      prepareRow
-    } = useTable({
-      columns,
-      data
-    });
+      prepareRow,
+      visibleColumns,
+      state: { expanded }
+    } = useTable(
+      {
+        columns,
+        data
+      },
+      useExpanded // track the expanded state
+    );
 
     // render the table
     return (
@@ -37,13 +44,34 @@ class EventPreview extends React.Component {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
-                })}
-              </tr>
+              // Use a React.Fragment here so the table markup is still valid
+              <React.Fragment key={i}>
+                <tr>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    );
+                  })}
+                </tr>
+                {/*
+                    If the row is in an expanded state, render a row with a
+                    column that fills the entire length of the table.
+                  */}
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      {/*
+                          Inside it, call our renderRowSubComponent function. In reality,
+                          you could pass whatever you want as props to
+                          a component like this, including the entire
+                          table instance. But for this example, we'll just
+                          pass the row
+                        */}
+                      {renderRowSubComponent({ row })}
+                    </td>
+                  </tr>
+                ) : null}
+              </React.Fragment>
             );
           })}
         </tbody>
@@ -53,6 +81,19 @@ class EventPreview extends React.Component {
 
   // generate an array of objects describing the columns
   getTriggerTableColumns = () => [
+    {
+      // Make an expander cell
+      Header: () => null, // No header
+      id: 'expander', // It needs an ID
+      Cell: ({ row }) => (
+        // Use Cell to render an expander for each row.
+        // We can use the getToggleRowExpandedProps prop-getter
+        // to build the expander.
+        <span {...row.getToggleRowExpandedProps()}>
+          {row.isExpanded ? '👇' : '👉'}
+        </span>
+      )
+    },
     {
       Header: 'Trigger',
       columns: [
@@ -86,7 +127,6 @@ class EventPreview extends React.Component {
   ];
 
   getTriggerTableData = () => {
-    console.log(this.props);
     return Object.keys(this.props.triggers).map((triggerId) => ({
       _id: this.props.triggers[triggerId]._id,
       enabled: this.props.triggers[triggerId].enabled,
@@ -96,9 +136,14 @@ class EventPreview extends React.Component {
     }));
   };
 
+  // Create a function that will render our row sub components
+  renderRowSubComponent = ({ row }) => <h2>Big Farts</h2>;
+
   render() {
     return (
-      <div className='link EventPreview' onClick={this.handleClick}>
+      <div className='link EventPreview'>
+        {' '}
+        //onClick={this.handleClick}>
         <div className='event-name'>
           <h3>Event Name</h3> {this.props.name}
         </div>
@@ -109,6 +154,7 @@ class EventPreview extends React.Component {
         <this.renderTriggerTable
           columns={this.getTriggerTableColumns()}
           data={this.getTriggerTableData()}
+          renderRowSubComponent={this.renderRowSubComponent}
         />
       </div>
     );
