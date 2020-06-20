@@ -1,10 +1,101 @@
 import React from 'react';
+import { useTable } from 'react-table';
 import PropTypes from 'prop-types';
 
 class EventPreview extends React.Component {
   handleClick = () => {
     this.props.onClick(this.props._id);
   };
+
+  renderTriggerTable = ({ columns, data }) => {
+    // deconstruction to get the state and functions returned
+    // from react-table useTable()
+    const {
+      getTableProps,
+      getTableBodyProps,
+      headerGroups,
+      rows,
+      prepareRow
+    } = useTable({
+      columns,
+      data
+    });
+
+    // render the table
+    return (
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
+
+  // generate an array of objects describing the columns
+  getTriggerTableColumns = () => [
+    {
+      Header: 'Trigger',
+      columns: [
+        {
+          Header: 'ID',
+          accessor: '_id'
+        },
+        {
+          Header: 'Enabled',
+          accessor: 'enabled'
+        }
+      ]
+    },
+    {
+      Header: 'Details',
+      columns: [
+        {
+          Header: 'Type',
+          accessor: 'type'
+        },
+        {
+          Header: 'Trigger',
+          accessor: 'trigger'
+        },
+        {
+          Header: 'Condition',
+          accessor: 'condition'
+        }
+      ]
+    }
+  ];
+
+  getTriggerTableData = () => {
+    console.log(this.props);
+    return Object.keys(this.props.triggers).map((triggerId) => ({
+      _id: this.props.triggers[triggerId]._id,
+      enabled: this.props.triggers[triggerId].enabled,
+      type: this.props.triggers[triggerId].type,
+      trigger: this.props.triggers[triggerId].trigger,
+      condition: this.props.triggers[triggerId].condition
+    }));
+  };
+
   render() {
     return (
       <div className='link EventPreview' onClick={this.handleClick}>
@@ -15,24 +106,10 @@ class EventPreview extends React.Component {
           <h3>Event Description</h3> {this.props.description}
         </div>
         <h3 className='event-triggers'>Triggers</h3>
-        <table>
-          <thead>
-            <tr className='tblHeadingRow'>
-              <th>Id</th>
-              <th>Enabled </th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(this.props.triggers).map((triggerId, idx) => (
-              <tr className='tblDataRow' key={idx}>
-                <td>{this.props.triggers[triggerId]._id} </td>
-                <td>{this.props.triggers[triggerId].enabled} </td>
-                <td>{this.props.triggers[triggerId].type} </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <this.renderTriggerTable
+          columns={this.getTriggerTableColumns()}
+          data={this.getTriggerTableData()}
+        />
       </div>
     );
   }

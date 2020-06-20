@@ -112,7 +112,9 @@ class Event extends Component {
           Header: 'Enabled',
           accessor: 'enabled'
         }
-      ],
+      ]
+    },
+    {
       Header: 'Details',
       columns: [
         {
@@ -131,21 +133,17 @@ class Event extends Component {
     }
   ];
 
-  getTriggerData = (triggers) => {
-    {
-      Object.keys(triggers).map((triggerId) => ({
-        _id: triggers[triggerId]._id,
-        enabled: triggers[triggerId].enabled,
-        type: triggers[triggerId].type,
-        trigger: triggers[triggerId].trigger,
-        condition: triggers[triggerId].condition
-      }));
-    }
+  getTriggerData = () => {
+    return Object.keys(this.props.triggers).map((triggerId) => ({
+      _id: this.props.triggers[triggerId]._id,
+      enabled: this.props.triggers[triggerId].enabled,
+      type: this.props.triggers[triggerId].type,
+      trigger: this.props.triggers[triggerId].trigger,
+      condition: this.props.triggers[triggerId].condition
+    }));
   };
 
   render() {
-    console.log(Object.keys(this.props.triggers));
-    console.log(this.props.triggers);
     return (
       <div className='Event'>
         <h3 className='panel-title'>Event Name</h3>
@@ -155,7 +153,7 @@ class Event extends Component {
         <h3 className='panel-title'>Triggers</h3>
         <this.renderTriggerTable
           columns={this.getTriggerTableColumns()}
-          data={this.getTriggerData(this.props.triggers)}
+          data={this.getTriggerData()}
         />
         <div className='edit-group'>
           <span className='edit-group-btn'>
