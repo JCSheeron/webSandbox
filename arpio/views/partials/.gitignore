@@ -8,3 +8,6 @@
 # don't ignore the place holder file so it gets put in the repo
 !placeholder.txt
 
+# the output file has cache busting js names with hashes inserted,
+# so it is always changing and does not need to be in the repo
+index_wscripts.hbs

@@ -133,7 +133,7 @@ class Event extends Component {
     }
   ];
 
-  getTriggerData = () => {
+  getTriggerTableData = () => {
     return Object.keys(this.props.triggers).map((triggerId) => ({
       _id: this.props.triggers[triggerId]._id,
       enabled: this.props.triggers[triggerId].enabled,
@@ -153,7 +153,7 @@ class Event extends Component {
         <h3 className='panel-title'>Triggers</h3>
         <this.renderTriggerTable
           columns={this.getTriggerTableColumns()}
-          data={this.getTriggerData()}
+          data={this.getTriggerTableData()}
         />
         <div className='edit-group'>
           <span className='edit-group-btn'>
