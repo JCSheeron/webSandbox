@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import * as TriggerTable from './TriggerTable';
 import * as ActionTable from './ActionTable';
 
+import DialogTrigger from './DialogTrigger';
+
 class EventPreview extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  //constructor(props) {
+  //super(props);
+  //}
   /*
   handleClick = () => {
     this.props.onClick(this.props._id);
@@ -29,7 +31,6 @@ class EventPreview extends React.Component {
   // data={this.getActionTableData(3)}
 
   render() {
-    console.log(this.props.triggers);
     return (
       <div className='link EventPreview'>
         {' '}
@@ -46,6 +47,7 @@ class EventPreview extends React.Component {
           data={TriggerTable.getTableData(this.props.triggers)}
           renderRowSubComponent={this.renderRowSubComponent}
         />
+        <DialogTrigger />
       </div>
     );
   }

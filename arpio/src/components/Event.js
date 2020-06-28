@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal'; // for modal popup
+//import Modal from 'react-modal'; // for modal popup
 import { useTable } from 'react-table';
 
 import PropTypes from 'prop-types';
@@ -8,19 +8,19 @@ import PropTypes from 'prop-types';
 
 // Bind modal to the app element to properly hide it while modal is open.
 // This helps with assistive screen readers
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 
 class Event extends Component {
   handleEditTriggers = (event) => {
     event.preventDefault();
     console.log('Edit Triggers Pressed');
-    this.props.openReqModalEditTriggers(); // passed in fct
+    // this.props.openReqModalEditTriggers(); // passed in fct
   };
 
   handleEditTriggersCloseReq = (event) => {
     event.preventDefault();
     console.log('Edit Triggers Modal Close Pressed');
-    this.props.closeReqModalEditTriggers(); // passed in fct
+    // this.props.closeReqModalEditTriggers(); // passed in fct
   };
 
   componentDidMount() {
@@ -163,12 +163,14 @@ class Event extends Component {
               onClick={this.handleEditTriggers}>
               Edit Triggers
             </button>
+            {/*
             <Modal
               isOpen={this.props.isModalEditTriggersOpen}
               onRequestClose={this.handleEditTriggersCloseReq}>
               <button onClick={this.handleEditTriggersCloseReq}>Close</button>
               <form></form>
             </Modal>
+            */}
           </span>
         </div>
 
