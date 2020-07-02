@@ -24,10 +24,13 @@ import {
 } from '@material-ui/pickers';
 
 export default function FormDialog() {
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
+  //const [open2, setOpen2] = useState(false);
+  //const [open3, setOpen3] = useState(false);
   // const [enabled, setEnabled] = useState(true);
   // OR for multiple state variables, immitate a class
   const [state, setState] = useState({
+    open: false,
     triggers: { Select: [] },
     conditions: [],
     enabled: true,
@@ -38,11 +41,11 @@ export default function FormDialog() {
   });
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setState({ ...state, open: true });
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setState({ ...state, open: false });
   };
 
   // onChange (generic) for component that does not need a special handler
@@ -63,12 +66,19 @@ export default function FormDialog() {
   // Variable   text variable name
 
   const handleTypeChange = (event) => {
-    console.log(event.target);
-    console.log(event.target.name);
-    console.log(event.target.value);
+    // console.log(event.target);
+    // console.log(event.target.name);
+    // console.log(event.target.value);
     const name = event.target.name;
-    const value = event.target.value;
-    if ('di' == value) {
+    const value = event.target.value; // the selected type
+    if ('' == value) {
+      setState({
+        ...state,
+        [name]: value,
+        triggers: [],
+        trigger: ''
+      });
+    } else if ('di' == value) {
       setState({
         ...state,
         [name]: value,
@@ -101,6 +111,47 @@ export default function FormDialog() {
     }
   };
 
+  const renderTriggerSelect = (triggers) => {
+    // examine trigger to know how to render trigger
+    // If there is no trigger data, a type probably has not been selected.
+    // Disable the trigger control.
+    if (!Array.isArray(triggers) || 0 == triggers.length) {
+      return (
+        <FormControl component='fieldset' disabled>
+          <InputLabel htmlFor='selTrigger'>Trigger</InputLabel>
+          <Select
+            native
+            value={state.trigger}
+            onChange={handleComponentChange}
+            inputProps={{
+              name: 'trigger',
+              id: 'selTrigger'
+            }}>
+            <option aria-label='None' value='' />
+          </Select>
+        </FormControl>
+      );
+    } else
+      return (
+        <FormControl component='fieldset'>
+          <InputLabel htmlFor='selTrigger'>Trigger</InputLabel>
+          <Select
+            native
+            value={state.trigger}
+            onChange={handleComponentChange}
+            inputProps={{
+              name: 'trigger',
+              id: 'selTrigger'
+            }}>
+            <option aria-label='None' value='' />
+            <option value='true'>True</option>
+            <option value='false'>False</option>
+            <option value='value'>Value</option>
+          </Select>
+        </FormControl>
+      );
+  };
+
   const handleTriggerChange = (event) => {
     const name = event.target.name;
     setState({ ...state, [name]: event.target.value });
@@ -112,7 +163,7 @@ export default function FormDialog() {
         Add Trigger
       </Button>
       <Dialog
-        open={open}
+        open={state.open}
         onClose={handleClose}
         aria-labelledby='form-dialog-title'>
         <DialogTitle id='form-dialog-title'>Trigger</DialogTitle>
@@ -141,16 +192,12 @@ export default function FormDialog() {
             <InputLabel htmlFor='selType'>Type</InputLabel>
             <Select
               native
-              name='type'
-              id='selType'
               value={state.type}
-              onChange={handleTypeChange}>
-              {/*
-                inputProps={{
-                  name: 'type',
-                  id: 'selType'
-                }}>
-                */}
+              onChange={handleTypeChange}
+              inputProps={{
+                name: 'type',
+                id: 'selType'
+              }}>
               <option aria-label='None' value='' />
               <optgroup label='Input/Output'>
                 <option value='di'>DI</option>
@@ -166,22 +213,7 @@ export default function FormDialog() {
               </optgroup>
             </Select>
           </FormControl>
-          <FormControl component='fieldset'>
-            <InputLabel htmlFor='selTrigger'>Trigger</InputLabel>
-            <Select
-              native
-              value={state.trigger}
-              onChange={handleComponentChange}
-              inputProps={{
-                name: 'trigger',
-                id: 'selTrigger'
-              }}>
-              <option aria-label='None' value='' />
-              <option value='true'>True</option>
-              <option value='false'>False</option>
-              <option value='value'>Value</option>
-            </Select>
-          </FormControl>
+          {renderTriggerSelect(state.triggers)}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color='primary'>
