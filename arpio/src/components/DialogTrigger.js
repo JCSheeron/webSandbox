@@ -46,7 +46,7 @@ export default function FormDialog() {
     open: false,
     triggers: [],
     conditions: [],
-    enabled: 'true',
+    enabled: true,
     type: '',
     trigger: '',
     condition: '',
@@ -71,25 +71,36 @@ export default function FormDialog() {
     setState({ ...state, [name]: event.target.value });
   };
 
+  // onChange for trigger enable/disable
+  const handleEnabledChange = (event) => {
+    // Value gets converted to a string by the onChange.
+    // but the rest of the enable is configured to use boolean.
+    // Convert to a boolean so a bool is stored in state
+    // const value = 'true' == event.target.value ? true : false;
+    const value = 'true' == event.target.value.toLowerCase();
+    setState({ ...state, enabled: value });
+  };
+  // onChange for trigger
+  const handleTriggerChange = (event) => {
+    setState({ ...state, trigger: event.target.value });
+  };
+
   // onChange for time picker
   const handleDateTimeChange = (dateTime) => {
     setState({ ...state, trigger: dateTime });
   };
 
-  const handleTriggerChange = (event) => {
-    setState({ ...state, trigger: event.target.value });
-  };
-
-  // onChange for type needs to dynamically render the trigger component.
-  // This handler will update the trigers state array, which is
-  // used to render the triggers select statement
-  // Type       Trigger
-  // DI         Select DI channel list
-  // AI         Select AI channel list
-  // Time       Time picker
-  // Date       Date picker
-  // DateTime   DateTime picker
-  // Variable   text variable name
+  // onChange for type needs to dynamically provide trigger and condition options
+  // for dynamically rendering the trigger and condition components.
+  // This handler will update the triggers and conditions state arrays, which are
+  // used to render the select components
+  // Type       Trigger                   Condition options
+  // DI         Select DI channel list    true/false
+  // AI         Select AI channel list    >, >=, =, <=, < a specified value
+  // Time       Time picker               before, at, after a specified time
+  // Date       Date picker               before, at or after a specified date
+  // DateTime   DateTime picker           before, at or after a specified datetime
+  // Variable   text variable name        >, >=, =, <=, < a specified value
 
   const handleTypeChange = (event) => {
     // console.log(event);
@@ -106,23 +117,40 @@ export default function FormDialog() {
         ...state,
         type: '',
         trigger: '',
-        triggers: []
+        triggers: [],
+        conditions: []
       });
     } else if ('di' == value) {
       setState({
         ...state,
         type: value,
         trigger: '',
-        // [0] type of control, [1] label, [2] options
-        triggers: ['select', 'Channel', [1, 2, 3]]
+        // [0] type of control, [1] label, [2] option values, [3] option labels
+        triggers: ['select', 'Channel', [1, 2, 3], ['Ch1', 'Ch2', 'Ch3']],
+        // [0] type of condition, [1] label, [2] option values, [3] option labels
+        conditions: ['bool', 'Level', [true, false], ['On/High', 'Off/Low']]
       });
     } else if ('ai' == value) {
       setState({
         ...state,
         type: value,
         trigger: '',
-        // [0] type of control, [1] label, [2] options
-        triggers: ['select', 'Channel', [4, 5, 6]]
+        // [0] type of control, [1] label, [2] option values, [3] option labels
+        triggers: ['select', 'Channel', [4, 5, 3], ['Ch4', 'Ch5', 'Ch6']],
+        // [0] type of condition, [1] label, [2] option values, [3] option labels
+        conditions: [
+          'bool',
+          'Comparison',
+          ['==', '!=', '>', '>=', '<=', '<'],
+          [
+            'Equal',
+            'Not Equal',
+            'Greater Than',
+            'Greater Than or Equal',
+            'Less Than or Equal',
+            'Less Than'
+          ]
+        ]
       });
     } else if ('time' == value) {
       // if type was a datetime or similar, keep the trigger selection
@@ -140,7 +168,14 @@ export default function FormDialog() {
         type: value,
         trigger: trigger,
         // [0] type of control, [1] label
-        triggers: ['time', 'Trigger Time']
+        triggers: ['time', 'Trigger Time'],
+        // [0] type of condition, [1] label, [2] option values, [3] option labels
+        conditions: [
+          'time',
+          'Comparison',
+          ['==', '!=', '>', '>=', '<=', '<'],
+          ['At', 'Not At', 'After', 'At or After', 'At or Before', 'Before']
+        ]
       });
     } else if ('date' == value) {
       // if type was a datetime or similar, keep the trigger selection
@@ -158,7 +193,13 @@ export default function FormDialog() {
         type: value,
         trigger: trigger,
         // [0] type of control, [1] label
-        triggers: ['date', 'Trigger Date']
+        triggers: ['date', 'Trigger Date'],
+        conditions: [
+          'time',
+          'Comparison',
+          ['==', '!=', '>', '>=', '<=', '<'],
+          ['At', 'Not At', 'After', 'At or After', 'At or Before', 'Before']
+        ]
       });
     } else if ('datetime' == value) {
       // if type was a datetime or similar, keep the trigger selection
@@ -176,7 +217,13 @@ export default function FormDialog() {
         type: value,
         trigger: trigger,
         // [0] type of control, [1] label
-        triggers: ['datetime', 'Trigger DateTime']
+        triggers: ['datetime', 'Trigger DateTime'],
+        conditions: [
+          'time',
+          'Comparison',
+          ['==', '!=', '>', '>=', '<=', '<'],
+          ['At', 'Not At', 'After', 'At or After', 'At or Before', 'Before']
+        ]
       });
     }
   };
@@ -220,8 +267,12 @@ export default function FormDialog() {
             value={state.trigger}
             onChange={handleTriggerChange}>
             <MenuItem value=''>None</MenuItem>
-            {state.triggers[2].map((channel) => (
-              <MenuItem value={channel}>{channel}</MenuItem>
+            // triggers has this structure: // [0] type of control, [1] label,
+            // [2] option values, [3] option labels
+            {state.triggers[2].map((channel, idx) => (
+              <MenuItem key={idx} value={channel}>
+                {triggers[3][idx]}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -300,14 +351,14 @@ export default function FormDialog() {
               aria-label='enabled'
               name='enabled'
               value={state.enabled}
-              onChange={handleComponentChange}>
+              onChange={handleEnabledChange}>
               <FormControlLabel
-                value='true'
+                value={true}
                 control={<Radio />}
                 label='Enabled'
               />
               <FormControlLabel
-                value='false'
+                value={false}
                 control={<Radio />}
                 label='Disabled'
               />
