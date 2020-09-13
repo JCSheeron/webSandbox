@@ -80,9 +80,15 @@ export default function FormDialog() {
     const value = 'true' == event.target.value.toLowerCase();
     setState({ ...state, enabled: value });
   };
+
   // onChange for trigger
   const handleTriggerChange = (event) => {
     setState({ ...state, trigger: event.target.value });
+  };
+
+  // onChange for condition
+  const handleConditionChange = (event) => {
+    setState({ ...state, condition: event.target.value });
   };
 
   // onChange for time picker
@@ -90,6 +96,10 @@ export default function FormDialog() {
     setState({ ...state, trigger: dateTime });
   };
 
+  // onChange for condition time picker
+  const handleConditionDateTimeChange = (dateTime) => {
+    setState({ ...state, conditions: dateTime });
+  };
   // onChange for type needs to dynamically provide trigger and condition options
   // for dynamically rendering the trigger and condition components.
   // This handler will update the triggers and conditions state arrays, which are
@@ -128,7 +138,7 @@ export default function FormDialog() {
         // [0] type of control, [1] label, [2] option values, [3] option labels
         triggers: ['select', 'Channel', [1, 2, 3], ['Ch1', 'Ch2', 'Ch3']],
         // [0] type of condition, [1] label, [2] option values, [3] option labels
-        conditions: ['bool', 'Level', [true, false], ['On/High', 'Off/Low']]
+        conditions: ['select', 'Level', [true, false], ['On/High', 'Off/Low']]
       });
     } else if ('ai' == value) {
       setState({
@@ -139,7 +149,7 @@ export default function FormDialog() {
         triggers: ['select', 'Channel', [4, 5, 3], ['Ch4', 'Ch5', 'Ch6']],
         // [0] type of condition, [1] label, [2] option values, [3] option labels
         conditions: [
-          'bool',
+          'select',
           'Comparison',
           ['==', '!=', '>', '>=', '<=', '<'],
           [
@@ -194,8 +204,9 @@ export default function FormDialog() {
         trigger: trigger,
         // [0] type of control, [1] label
         triggers: ['date', 'Trigger Date'],
+        // [0] type of condition, [1] label, [2] option values, [3] option labels
         conditions: [
-          'time',
+          'date',
           'Comparison',
           ['==', '!=', '>', '>=', '<=', '<'],
           ['At', 'Not At', 'After', 'At or After', 'At or Before', 'Before']
@@ -218,8 +229,9 @@ export default function FormDialog() {
         trigger: trigger,
         // [0] type of control, [1] label
         triggers: ['datetime', 'Trigger DateTime'],
+        // [0] type of condition, [1] label, [2] option values, [3] option labels
         conditions: [
-          'time',
+          'datetime',
           'Comparison',
           ['==', '!=', '>', '>=', '<=', '<'],
           ['At', 'Not At', 'After', 'At or After', 'At or Before', 'Before']
@@ -228,7 +240,7 @@ export default function FormDialog() {
     }
   };
 
-  const renderTriggerSelect = (triggers) => {
+  const renderTriggerSelect = (triggerOptions) => {
     // The triggers data was set in state when type was chosen.
     // It is passed in to support some "custom" ability when called,
     // but in reality the triggers data could have been fetched from state.
@@ -236,10 +248,14 @@ export default function FormDialog() {
     // If type is empty, or if there is no trigger data,
     // a type probably has not been selected.
     // Disable the trigger control.
-    if ('' == state.type || !Array.isArray(triggers) || 0 == triggers.length) {
+    if (
+      '' == state.type ||
+      !Array.isArray(triggerOptions) ||
+      0 == triggerOptions.length
+    ) {
       return (
         // disable the trigger selection if there is no type selected,
-        // or if the triggers state is an empty array/not an array.
+        // or if the options is an empty array/not an array.
         <FormControl
           className={classes.formControl}
           component='fieldset'
@@ -255,34 +271,34 @@ export default function FormDialog() {
           </Select>
         </FormControl>
       );
-      // if trigger type should be a selection,
-      // then use the label and choices from the triggers state
-    } else if ('select' == triggers[0].toLowerCase()) {
+      // if trigger type is specified in options,
+      // then use the label and choices from the options
+    } else if ('select' == triggerOptions[0].toLowerCase()) {
       return (
         <FormControl className={classes.formControl} component='fieldset'>
-          <InputLabel id='selTriggerLabel'>{triggers[1]}</InputLabel>
+          <InputLabel id='selTriggerLabel'>{triggerOptions[1]}</InputLabel>
           <Select
             labelId='selTriggerLabel'
             id='selTrigger'
             value={state.trigger}
             onChange={handleTriggerChange}>
             <MenuItem value=''>None</MenuItem>
-            // triggers has this structure: // [0] type of control, [1] label,
-            // [2] option values, [3] option labels
-            {state.triggers[2].map((channel, idx) => (
+            // trigger options has this structure: // [0] type of control, [1]
+            // label, [2] option values, [3] option labels
+            {triggerOptions[2].map((channel, idx) => (
               <MenuItem key={idx} value={channel}>
-                {triggers[3][idx]}
+                {triggerOptions[3][idx]}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       );
-    } else if ('time' == triggers[0].toLowerCase()) {
+    } else if ('time' == triggerOptions[0].toLowerCase()) {
       return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardTimePicker
             id='trigger-time-picker'
-            label={triggers[1]}
+            label={triggerOptions[1]}
             //24 hr format with seconds and now button
             ampm={false}
             views={['hours', 'minutes', 'seconds']}
@@ -297,12 +313,12 @@ export default function FormDialog() {
           />
         </MuiPickersUtilsProvider>
       );
-    } else if ('date' == triggers[0].toLowerCase()) {
+    } else if ('date' == triggerOptions[0].toLowerCase()) {
       return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
             id='trigger-date-picker'
-            label={triggers[1]}
+            label={triggerOptions[1]}
             format='MM/dd/yyyy'
             showTodayButton
             todayLabel='today'
@@ -314,12 +330,12 @@ export default function FormDialog() {
           />
         </MuiPickersUtilsProvider>
       );
-    } else if ('datetime' == triggers[0].toLowerCase()) {
+    } else if ('datetime' == triggerOptions[0].toLowerCase()) {
       return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDateTimePicker
             id='trigger-datetime-picker'
-            label={triggers[1]}
+            label={triggerOptions[1]}
             format='MM/dd/yyyy HH:mm:ss'
             showTodayButton
             todayLabel='now'
@@ -334,6 +350,115 @@ export default function FormDialog() {
     }
   };
 
+  const renderConditionSelect = (conditionOptions) => {
+    // The conditions data was set in state when type was chosen.
+    // It is passed in to support some "custom" ability when called,
+    // but in reality the conditions data could have been fetched from state.
+    // Examine type to know how to render condition.
+    // If type is empty, or if there is no condition data,
+    // a type probably has not been selected.
+    // Disable the trigger control.
+    if (
+      '' == state.type ||
+      !Array.isArray(conditionOptions) ||
+      0 == conditionOptions.length
+    ) {
+      return (
+        // disable the condition selection if there is no type selected,
+        // or if the options is an empty array/not an array.
+        <FormControl
+          className={classes.formControl}
+          component='fieldset'
+          disabled>
+          <InputLabel id='selConditionLabel'>Condition</InputLabel>
+          <Select
+            className={classes.select}
+            labelId='selConditionLabel'
+            id='selCondition'
+            value={state.condition}
+            onChange={handleConditionChange}>
+            <MenuItem value=''>None</MenuItem>
+          </Select>
+        </FormControl>
+      );
+      // if condition type is specified in options,
+      // then use the label and choices from the options
+    } else if ('select' == conditionOptions[0].toLowerCase()) {
+      return (
+        <FormControl className={classes.formControl} component='fieldset'>
+          <InputLabel id='selConditionLabel'>{conditionOptions[1]}</InputLabel>
+          <Select
+            labelId='selConditionLabel'
+            id='selCondition'
+            value={state.condition}
+            onChange={handleConditionChange}>
+            <MenuItem value=''>None</MenuItem>
+            // condition options has this structure: [0] type of condition, [1]
+            // label, [2] option values, [3] option labels
+            {conditionOptions[2].map((channel, idx) => (
+              <MenuItem key={idx} value={channel}>
+                {conditionOptions[3][idx]}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      );
+    } else if ('time' == conditionOptions[0].toLowerCase()) {
+      return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardTimePicker
+            id='condition-time-picker'
+            label={conditionOptions[1]}
+            //24 hr format with seconds and now button
+            ampm={false}
+            views={['hours', 'minutes', 'seconds']}
+            format='HH:mm:ss'
+            showTodayButton
+            todayLabel='now'
+            value={state.condition}
+            onChange={handleConditionDateTimeChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change time'
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      );
+    } else if ('date' == conditionOptions[0].toLowerCase()) {
+      return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            id='condition-date-picker'
+            label={conditionOptions[1]}
+            format='MM/dd/yyyy'
+            showTodayButton
+            todayLabel='today'
+            value={state.condition}
+            onChange={handleConditionDateTimeChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      );
+    } else if ('datetime' == conditionOptions[0].toLowerCase()) {
+      return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDateTimePicker
+            id='condition-datetime-picker'
+            label={conditionOptions[1]}
+            format='MM/dd/yyyy HH:mm:ss'
+            showTodayButton
+            todayLabel='now'
+            value={state.condition}
+            onChange={handleConditionDateTimeChange}
+            KeyboardButtonProps={{
+              'aria-label': 'change date'
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      );
+    }
+  };
   return (
     <div>
       <Button variant='outlined' color='primary' onClick={handleClickOpen}>
@@ -382,6 +507,7 @@ export default function FormDialog() {
             </Select>
           </FormControl>
           {renderTriggerSelect(state.triggers)}
+          {renderConditionSelect(state.conditions)}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color='primary'>
