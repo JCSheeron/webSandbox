@@ -72,7 +72,7 @@ server.get(['/', '/events', '/events/:eventId'], (req, res) => {
       //);
       res.render('index', {
         title: 'BPS Arpio',
-        layout: 'defaultLayout',
+        layout: 'arpioLayout',
         initialMarkup,
         initialData
       });
