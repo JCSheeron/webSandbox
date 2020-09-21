@@ -18,6 +18,17 @@ export const fetchEvent = (eventId) => {
   });
 };
 
+export const fetchChannelList = () => {
+  // axios returns a promise
+  return axios.get('/api/channels').then((resp) => resp.data.channels);
+};
+
+export const fetchChannel = (channelId) => {
+  return axios.get(`/api/channels/${channelId}`).then((resp) => {
+    return resp.data;
+  });
+};
+
 export const fetchTriggers = (eventId) => {
   return axios.get(`/api/events/${eventId}/triggers`).then((resp) => {
     // console.log('axios resp from api fetchTriggers');

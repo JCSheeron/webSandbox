@@ -2,7 +2,7 @@
 // Handle api requests here
 
 import express from 'express';
-// import { inspect } from 'util'; // console.log of objects
+import { inspect } from 'util'; // console.log of objects
 
 const router = express.Router();
 
@@ -17,6 +17,19 @@ import data from '../src/testData1';
 // Do any coditioning of the read in data.
 // Get the data in to a a data object.
 const arpiDataObj = data.arpiData;
+
+router.get('/', (req, res) => {
+  // send back the events object
+  //console.log('Hellow Bob');
+  //console.log(
+  //  inspect(arpiDataObj, { showHidden: false, depth: null, colors: true })
+  //);
+  res.send({
+    channels: arpiDataObj.channels,
+    operation: arpiDataObj.operation,
+    events: arpiDataObj.events
+  });
+});
 
 router.get('/events', (req, res) => {
   // send back the events object
@@ -39,6 +52,25 @@ router.get('/events/:eventId', (req, res) => {
   res.send(dataObj);
 });
 
+router.get('/channels/', (req, res) => {
+  // send back the channels object
+  res.send({
+    channels: arpiDataObj.channels
+  });
+});
+
+router.get('/channels/:channelId', (req, res) => {
+  // get channels object from the request params id
+  // Make overall object to support returning additional values,
+  // and to be consistent with the App state variables.
+  let dataObj = {
+    currentChannelId: req.params.channelId,
+    channels: {
+      [req.params.channelId]: arpiDataObj.channels[req.params.channelId]
+    }
+  };
+  res.send(dataObj);
+});
 // Use route specific parser -- body-parser
 router.post('/events/startTimes', jsonParser, (req, res) => {
   // Read the data from the request body, but it also needs to be parsed.

@@ -1,152 +1,257 @@
 {
-  "arpiData": {
-    "events": {
-        "1": {
-            "_id": "1",
-            "name": "Event 1 Name",
-            "description": "Event 1 desc: Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-            "triggers": {
-                "1": {
-                    "_id": "1",
-                    "enabled": "true", 
-                    "type": "DI",
-                    "trigger": 21,
-                    "condition": 1,
-                    "actions": {
-                        "1": {
+    "arpiData": {
+        "channels": {
+            "2": {
+                "name": "",
+                "mode": ""
+            },
+            "3": {
+                "name": "",
+                "mode": ""
+            },
+            "4": {
+                "name": "",
+                "mode": ""
+            },
+            "5": {
+                "name": "",
+                "mode": ""
+            },
+            "6": {
+                "name": "",
+                "mode": ""
+            },
+            "7": {
+                "name": "",
+                "mode": ""
+            },
+            "8": {
+                "name": "",
+                "mode": ""
+            },
+            "9": {
+                "name": "",
+                "mode": ""
+            },
+            "10": {
+                "name": "",
+                "mode": ""
+            },
+            "11": {
+                "name": "",
+                "mode": ""
+            },
+            "12": {
+                "name": "",
+                "mode": ""
+            },
+            "13": {
+                "name": "",
+                "mode": ""
+            },
+            "14": {
+                "name": "",
+                "mode": ""
+            },
+            "15": {
+                "name": "",
+                "mode": ""
+            },
+            "16": {
+                "name": "",
+                "mode": ""
+            },
+            "17": {
+                "name": "",
+                "mode": ""
+            },
+            "18": {
+                "name": "",
+                "mode": ""
+            },
+            "19": {
+                "name": "",
+                "mode": ""
+            },
+            "20": {
+                "name": "",
+                "mode": ""
+            },
+            "21": {
+                "name": "",
+                "mode": ""
+            },
+            "22": {
+                "name": "",
+                "mode": ""
+            },
+            "23": {
+                "name": "",
+                "mode": ""
+            },
+            "24": {
+                "name": "",
+                "mode": ""
+            },
+            "25": {
+                "name": "",
+                "mode": ""
+            },
+            "26": {
+                "name": "",
+                "mode": ""
+            }
+        },
+        "operation": {
+            "mode": ""
+        },
+        "events": {
+            "1": {
+                "_id": "1",
+                "name": "Event 1 Name",
+                "description": "Event 1 desc: Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+                "triggers": {
+                    "1": {
                         "_id": "1",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 11
-                        },
-                        "2": {
-                        "_id": "2",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 12
-                        },
-                        "3": {
-                        "_id": "3",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 13
-                        },
-                        "4": {
-                        "_id": "4",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 14
+                        "enabled": "true", 
+                        "type": "DI",
+                        "trigger": 21,
+                        "condition": 1,
+                        "actions": {
+                            "1": {
+                            "_id": "1",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 11
+                            },
+                            "2": {
+                            "_id": "2",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 12
+                            },
+                            "3": {
+                            "_id": "3",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 13
+                            },
+                            "4": {
+                            "_id": "4",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 14
+                            }
                         }
-                    }
-                },
-                "2": {
-                    "_id": "2",
-                    "enabled": "true", 
-                    "type": "DI",
-                    "trigger": 22,
-                    "condition": 1,
-                    "actions": {
-                        "5": {
-                        "_id": "5",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 25
-                        },
-                        "6": {
-                        "_id": "6",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 26
-                        },
-                        "7": {
-                        "_id": "7",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 27
-                        },
-                        "8": {
-                        "_id": "8",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 28
+                    },
+                    "2": {
+                        "_id": "2",
+                        "enabled": "true", 
+                        "type": "DI",
+                        "trigger": 22,
+                        "condition": 1,
+                        "actions": {
+                            "5": {
+                            "_id": "5",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 25
+                            },
+                            "6": {
+                            "_id": "6",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 26
+                            },
+                            "7": {
+                            "_id": "7",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 27
+                            },
+                            "8": {
+                            "_id": "8",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 28
+                            }
                         }
                     }
                 }
-            }
-        },
-        "2": {
-            "_id": "2",
-            "name": "Event 2 Name",
-            "description": "Event 2 desc: Lorem ipsum dolor sit amet, consectetur adipisicing elit",
-            "triggers": {
-                "3": {
-                    "_id": "3",
-                    "enabled": "true", 
-                    "type": "DI",
-                    "trigger": 23,
-                    "condition": 1,
-                    "actions": {
-                        "9": {
-                        "_id": "9",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 39
-                        },
-                        "10": {
-                        "_id": "10",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 310
-                        },
-                        "11": {
-                        "_id": "12",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 311
-                        },
-                        "13": {
-                        "_id": "13",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 312
+            },
+            "2": {
+                "_id": "2",
+                "name": "Event 2 Name",
+                "description": "Event 2 desc: Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+                "triggers": {
+                    "3": {
+                        "_id": "3",
+                        "enabled": "true", 
+                        "type": "DI",
+                        "trigger": 23,
+                        "condition": 1,
+                        "actions": {
+                            "9": {
+                            "_id": "9",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 39
+                            },
+                            "10": {
+                            "_id": "10",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 310
+                            },
+                            "11": {
+                            "_id": "12",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 311
+                            },
+                            "13": {
+                            "_id": "13",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 312
+                            }
                         }
-                    }
-                },
-                "4": {
-                    "_id": "4",
-                    "enabled": "true", 
-                    "type": "DI",
-                    "trigger": 24,
-                    "condition": 1,
-                    "actions": {
-                        "14": {
-                        "_id": "14",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 413
-                        },
-                        "15": {
-                        "_id": "15",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 414
-                        },
-                        "16": {
-                        "_id": "16",
-                        "enabled": "true",
-                        "type": "DO",
-                        "item": 415
-                        },
-                        "17": {
-                        "_id": "17",
-                        "enabled": "false",
-                        "type": "DO",
-                        "item": 416
+                    },
+                    "4": {
+                        "_id": "4",
+                        "enabled": "true", 
+                        "type": "DI",
+                        "trigger": 24,
+                        "condition": 1,
+                        "actions": {
+                            "14": {
+                            "_id": "14",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 413
+                            },
+                            "15": {
+                            "_id": "15",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 414
+                            },
+                            "16": {
+                            "_id": "16",
+                            "enabled": "true",
+                            "type": "DO",
+                            "item": 415
+                            },
+                            "17": {
+                            "_id": "17",
+                            "enabled": "false",
+                            "type": "DO",
+                            "item": 416
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
 }

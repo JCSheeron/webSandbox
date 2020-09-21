@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './components/App';
 
@@ -10,7 +11,8 @@ ReactDOM.hydrate(
   // empty string, or from a call to the server here.  This
   // is why the server render returned an object with the
   // rendered data and the raw data we stored in window.
-  <App initialData={window.initialData} />,
+  <BrowserRouter>
+    <App initialData={window.initialData} />
+  </BrowserRouter>,
   document.getElementById('root')
 );
-

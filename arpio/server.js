@@ -1,6 +1,6 @@
 import path from 'path';
 import config from './config';
-// import { inspect } from 'util'; // console.log of objects
+import { inspect } from 'util'; // console.log of objects
 
 import apiRouter from './api'; // import the api router
 // using npm for sass instead of webpack
@@ -61,7 +61,33 @@ server.set('view engine', 'hbs');
 
 import * as serverRender from './serverRender';
 
-server.get(['/', '/events', '/events/:eventId'], (req, res) => {
+server.get('/', (req, res) => {
+  //console.log('params in server.js');
+  //console.log(
+  //  inspect(req.params, { showHidden: false, depth: null, colors: true })
+  //);
+  serverRender
+    .baseDataRender() // promise from serverRender axios get call
+    .then(({ initialMarkup, initialData }) => {
+      //console.log('after serverRender');
+      //console.log(
+      //  inspect(initialData, { showHidden: false, depth: null, colors: true })
+      //);
+      res.render('index', {
+        title: 'BPS Arpio',
+        layout: 'arpioLayout',
+        initialMarkup,
+        initialData
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(404).send('Bad Request server.js');
+      //res.send(error);
+    });
+});
+
+server.get(['/events', '/events/:eventId'], (req, res) => {
   // console.log(`eventId in server.js: ${req.params.eventId}`);
   serverRender
     .eventListRender(req.params.eventId) // promise from serverRender axios get call
@@ -95,7 +121,7 @@ server.get('/about.html', (req, res) => {
 */
 
 // or even simpler, for static pages, you can do this
-// by speifying the path 'public' in this case
+// by specifying the path 'dist' in this case
 // and moving the about.html file to that directory
 server.use(express.static('dist'));
 

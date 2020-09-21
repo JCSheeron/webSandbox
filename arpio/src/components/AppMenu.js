@@ -6,9 +6,11 @@ import List from '@material-ui/core/List';
 //icons
 import Icon from '@mdi/react';
 import {
+  mdiHome,
   mdiTabletDashboard,
   mdiCalendarClock,
   mdiCogs,
+  mdiVideoInputComponent,
   mdiImport,
   mdiExport
 } from '@mdi/js';
@@ -20,28 +22,41 @@ import AppMenuItem from './AppMenuItem';
 // const IconDashboard = (props) => <Icon path={mdiTabletDashboard} size={1.5} />;
 const appMenuItems = [
   {
-    name: 'Dashboard',
+    name: 'Home',
     link: '/',
+    icon: <Icon path={mdiHome} size={1.5} />
+  },
+  {
+    name: 'Dashboard',
+    link: '/dashboard',
     icon: <Icon path={mdiTabletDashboard} size={1.5} />
   },
   {
-    name: 'Scheduler',
-    link: '/scheduler',
-    icon: <Icon path={mdiCalendarClock} size={1.5} />
+    name: 'Events',
+    link: '/events',
+    icon: <Icon path={mdiCalendarClock} size={1.5} />,
+    divider: true
   },
   {
     name: 'Setup',
     icon: <Icon path={mdiCogs} size={1.5} />,
     items: [
       {
-        name: 'Inputs',
-        link: '/setup/inputs',
-        icon: <Icon path={mdiImport} size={1.5} />
-      },
-      {
-        name: 'Outputs',
-        link: '/setup/outputs',
-        icon: <Icon path={mdiExport} size={1.5} />
+        name: 'Channels',
+        link: '/channels',
+        icon: <Icon path={mdiVideoInputComponent} size={1.5} />,
+        items: [
+          {
+            name: 'Inputs',
+            link: '/channels/inputs',
+            icon: <Icon path={mdiImport} size={1.5} />
+          },
+          {
+            name: 'Outputs',
+            link: '/channels/outputs',
+            icon: <Icon path={mdiExport} size={1.5} />
+          }
+        ]
       }
     ]
   }

@@ -14,12 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jscomplete/learn-fullstack-javascript.git"
+    "url": "git+https://github.com/JCSheeron/Arpio.git"
   },
   "keywords": [
     "express",
     "handlebars",
     "javascript",
+    "material-ui",
+    "react-router",
     "mondodb",
     "node",
     "raspberry pi"
@@ -27,9 +29,9 @@
   "author": "JCSheeron",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jscomplete/learn-fullstack-javascript/issues"
+    "url": "https://github.com/JCSheeron/Arpio/issues"
   },
-  "homepage": "https://github.com/jscomplete/learn-fullstack-javascript#readme",
+  "homepage": "https://github.com/JCSheeron/Arpio#readme",
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.10.2",

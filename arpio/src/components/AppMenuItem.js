@@ -21,11 +21,12 @@ export const AppMenuItemPropTypes = {
   name: PropTypes.string.isRequired,
   link: PropTypes.string,
   icon: PropTypes.element,
-  items: PropTypes.array
+  items: PropTypes.array,
+  divider: PropTypes.bool
 };
 
 const AppMenuItem = (props) => {
-  const { name, icon, items = [] } = props;
+  const { name, icon, link, divider, items = [] } = props;
   const classes = useStyles();
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
@@ -35,7 +36,11 @@ const AppMenuItem = (props) => {
   }
 
   const MenuItemRoot = (
-    <ListItem button className={classes.menuItem} onClick={handleClick}>
+    <ListItem
+      button
+      className={classes.menuItem}
+      divider={divider}
+      onClick={handleClick}>
       {/* Display an icon if any */}
       {icon && (
         <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>

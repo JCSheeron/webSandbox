@@ -1,25 +1,129 @@
 {
-  "arpiData": {
-    "currentEventId": null,
-    "events": {
-        "<id1>": {
-            "_id": "<id>",
-            "name": "",
-            "description": "",
-            "startTimes": [],
-            "endTimes": [],
-            "triggers": [],
-            "actions":[]
+    "arpiData": {
+        "channels": {
+            "2": {
+                "name": "",
+                "mode": ""
+            },
+            "3": {
+                "name": "",
+                "mode": ""
+            },
+            "4": {
+                "name": "",
+                "mode": ""
+            },
+            "5": {
+                "name": "",
+                "mode": ""
+            },
+            "6": {
+                "name": "",
+                "mode": ""
+            },
+            "7": {
+                "name": "",
+                "mode": ""
+            },
+            "8": {
+                "name": "",
+                "mode": ""
+            },
+            "9": {
+                "name": "",
+                "mode": ""
+            },
+            "10": {
+                "name": "",
+                "mode": ""
+            },
+            "11": {
+                "name": "",
+                "mode": ""
+            },
+            "12": {
+                "name": "",
+                "mode": ""
+            },
+            "13": {
+                "name": "",
+                "mode": ""
+            },
+            "14": {
+                "name": "",
+                "mode": ""
+            },
+            "15": {
+                "name": "",
+                "mode": ""
+            },
+            "16": {
+                "name": "",
+                "mode": ""
+            },
+            "17": {
+                "name": "",
+                "mode": ""
+            },
+            "18": {
+                "name": "",
+                "mode": ""
+            },
+            "19": {
+                "name": "",
+                "mode": ""
+            },
+            "20": {
+                "name": "",
+                "mode": ""
+            },
+            "21": {
+                "name": "",
+                "mode": ""
+            },
+            "22": {
+                "name": "",
+                "mode": ""
+            },
+            "23": {
+                "name": "",
+                "mode": ""
+            },
+            "24": {
+                "name": "",
+                "mode": ""
+            },
+            "25": {
+                "name": "",
+                "mode": ""
+            },
+            "26": {
+                "name": "",
+                "mode": ""
+            }
         },
-        "<id2>": {
-            "_id": "<id>",
-            "name": "",
-            "description": "",
-            "startTimes": [],
-            "endTimes": [],
-            "actions":[],
-            "triggers": []
+        "operation": {
+            "mode": ""
+        },
+        "events": {
+            "<id1>": {
+                "_id": "<id>",
+                "name": "",
+                "description": "",
+                "startTimes": [],
+                "endTimes": [],
+                "triggers": [],
+                "actions":[]
+            },
+            "<id2>": {
+                "_id": "<id>",
+                "name": "",
+                "description": "",
+                "startTimes": [],
+                "endTimes": [],
+                "actions":[],
+                "triggers": []
+            }
         }
     }
-  }
 }
