@@ -1,8 +1,20 @@
+// File: server.json
+// This file is used in conjuction with serverRender.js for server side rendering:
+// Express server is set up.
+// sassMiddleware is used, and handlebars is used as a template engine.
+// server.get(path, callback) calls are made, and in general, the specified callback
+// function is in the serverRender.js file.  The callback calls an Axios promise,
+// and the resulting promise is returned to the server.get call in this file.  The
+// view is then rendered using handlebars template engine.
+// The api rounter in ./api/index.js is used.
+// Static pages are set to be served from the dist path: server.use(express.static('dist'));
+//
+//
 import path from 'path';
 import config from './config';
-import { inspect } from 'util'; // console.log of objects
+// import { inspect } from 'util'; // console.log of objects
 
-import apiRouter from './api'; // import the api router
+import apiRouter from './api'; // import the api router (./api/index.js)
 // using npm for sass instead of webpack
 import sassMiddleware from 'node-sass-middleware';
 // express
@@ -33,7 +45,7 @@ server.use(
   })
 );
 
-// Det up embedded javascript template language to
+// Set up template engine to
 // server render javascript fronend components.
 // By default express will look for templates
 // in a views folder.
@@ -71,8 +83,9 @@ server.get('/', (req, res) => {
     .then(({ initialMarkup, initialData }) => {
       //console.log('after serverRender');
       //console.log(
-      //  inspect(initialData, { showHidden: false, depth: null, colors: true })
+      //  inspect(res, { showHidden: false, depth: null, colors: true })
       //);
+      // Render a view, passing local variables to the view
       res.render('index', {
         title: 'BPS Arpio',
         layout: 'arpioLayout',
@@ -96,6 +109,7 @@ server.get(['/events', '/events/:eventId'], (req, res) => {
       //console.log(
       //  inspect(initialData, { showHidden: false, depth: null, colors: true })
       //);
+      // Render a view, passing local variables to the view
       res.render('index', {
         title: 'BPS Arpio',
         layout: 'arpioLayout',

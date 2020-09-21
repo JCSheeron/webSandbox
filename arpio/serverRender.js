@@ -1,3 +1,9 @@
+// File: serverRender.js
+// This file is used in conjunction with server.js for server side rendering:
+// A server.get(path, callback) call in server.js is used,
+// and the callback is a funciton in this file.  The callback
+// funciton calls an Axios promise, and then returns the promise.  The
+// promise is returned to server.js
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
@@ -8,7 +14,7 @@ import axios from 'axios';
 
 import { inspect } from 'util'; // console.log of objects
 
-// return the url of the base
+// return the url of the root api, so the root can be server side rendered.
 const getApiUrl = () => {
   return `${config.serverUrl}/api`;
 };
@@ -46,12 +52,7 @@ const getInitialData = (apiData) => {
   //              }
   //     }
 
-  //console.log('apiData in getInitialData:');
-  //console.log(
-  //inspect(apiData, { showHidden: false, depth: null, colors: true })
-  //);
-
-  // Return the events in the arpiData object.
+  // Return the data in the arpiData object.
   return {
     currentChannelId: null,
     currentEventId: null,
@@ -67,12 +68,7 @@ const getInitialData = (apiData) => {
 // Wrap the axios promise in a function that returns the promise
 export const baseDataRender = () => {
   return axios.get(getApiUrl()).then((resp) => {
-    console.log('baseDataRender resp.data');
     const initialData = getInitialData(resp.data);
-    console.log('baseDataRender after call to initialData');
-    console.log(
-      inspect(initialData, { showHidden: false, depth: null, colors: true })
-    );
     return {
       // Return markup from server, and the data itself.
       // The data allows the client to store it, and render
@@ -90,12 +86,7 @@ export const baseDataRender = () => {
 // Wrap the axios promise in a function that returns the promise
 export const eventListRender = (eventId) => {
   return axios.get(getApiEventUrl(eventId)).then((resp) => {
-    // console.log('eventListRender resp.data');
     const initialData = getInitialData(resp.data);
-    //console.log('eventListRender after call to initialData');
-    //console.log(
-    //  inspect(initialData, { showHidden: false, depth: null, colors: true })
-    //);
     return {
       // Return markup from server, and the data itself.
       // The data allows the client to store it, and render
@@ -113,12 +104,7 @@ export const eventListRender = (eventId) => {
 // Wrap the axios promise in a function that returns the promise
 export const channelListRender = (channelId) => {
   return axios.get(getApiChannelUrl(channelId)).then((resp) => {
-    //console.log('channelListRender resp.data');
     const initialData = getInitialData(resp.data);
-    //console.log('channelListRender after call to initialData');
-    //console.log(
-    //inspect(initialData, { showHidden: false, depth: null, colors: true })
-    //);
     return {
       // Return markup from server, and the data itself.
       // The data allows the client to store it, and render
@@ -131,4 +117,3 @@ export const channelListRender = (channelId) => {
     };
   });
 };
-

@@ -1,8 +1,10 @@
 // File: api/index.js
 // Handle api requests here
+// API calls for data (json, db, etc.) that is not static is
+// handled by the backend by express router.
 
 import express from 'express';
-import { inspect } from 'util'; // console.log of objects
+// import { inspect } from 'util'; // console.log of objects
 
 const router = express.Router();
 
@@ -20,10 +22,6 @@ const arpiDataObj = data.arpiData;
 
 router.get('/', (req, res) => {
   // send back the events object
-  //console.log('Hellow Bob');
-  //console.log(
-  //  inspect(arpiDataObj, { showHidden: false, depth: null, colors: true })
-  //);
   res.send({
     channels: arpiDataObj.channels,
     operation: arpiDataObj.operation,
@@ -74,7 +72,7 @@ router.get('/channels/:channelId', (req, res) => {
 // Use route specific parser -- body-parser
 router.post('/events/startTimes', jsonParser, (req, res) => {
   // Read the data from the request body, but it also needs to be parsed.
-  // should get s(tartTime, eventId) in the request
+  // should get (startTime, eventId) in the request
   // Put req params into vars to facilitate validation
   const startTime = req.body.startTime;
   const eventId = req.body.eventId;
