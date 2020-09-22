@@ -6,13 +6,14 @@
 // promise is returned to server.js
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
+import { StaticRouter } from 'react-router';
 
 import App from './src/components/App';
 
 import config from './config';
 import axios from 'axios';
 
-import { inspect } from 'util'; // console.log of objects
+// import { inspect } from 'util'; // console.log of objects
 
 // return the url of the root api, so the root can be server side rendered.
 const getApiUrl = () => {
@@ -74,7 +75,9 @@ export const baseDataRender = () => {
       // The data allows the client to store it, and render
       // it locally without an initial ajax call back to the server
       initialMarkup: ReactDOMServer.renderToString(
-        <App initialData={initialData} />
+        <StaticRouter>
+          <App initialData={initialData} />
+        </StaticRouter>
       ),
       //initialData: initialData // can be decomposed into just initialData
       initialData // can be decomposed into just initialData
@@ -92,7 +95,9 @@ export const eventListRender = (eventId) => {
       // The data allows the client to store it, and render
       // it locally without an initial ajax call back to the server
       initialMarkup: ReactDOMServer.renderToString(
-        <App initialData={initialData} />
+        <StaticRouter>
+          <App initialData={initialData} />
+        </StaticRouter>
       ),
       //initialData: initialData // can be decomposed into just initialData
       initialData // can be decomposed into just initialData
@@ -110,7 +115,9 @@ export const channelListRender = (channelId) => {
       // The data allows the client to store it, and render
       // it locally without an initial ajax call back to the server
       initialMarkup: ReactDOMServer.renderToString(
-        <App initialData={initialData} />
+        <StaticRouter>
+          <App initialData={initialData} />
+        </StaticRouter>
       ),
       //initialData: initialData // can be decomposed into just initialData
       initialData // can be decomposed into just initialData

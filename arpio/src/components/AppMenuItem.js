@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 
@@ -35,23 +36,47 @@ const AppMenuItem = (props) => {
     setOpen(!open);
   }
 
-  const MenuItemRoot = (
-    <ListItem
-      button
-      className={classes.menuItem}
-      divider={divider}
-      onClick={handleClick}>
-      {/* Display an icon if any */}
-      {icon && (
-        <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>
-      )}
-      <ListItemText primary={name} />
+  const MenuItemRoot = (link) => {
+    // If link is not set, return an ordinary list item
+    if (!link || typeof link !== 'string') {
+      return (
+        <ListItem
+          button
+          className={classes.menuItem}
+          divider={divider}
+          onClick={handleClick}>
+          {/* Display an icon if any */}
+          {icon && (
+            <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>
+          )}
+          <ListItemText primary={name} inset={!icon} />
 
-      {/* Display the expand menu if the item has children */}
-      {isExpandable && !open && <IconExpandMore />}
-      {isExpandable && open && <IconExpandLess />}
-    </ListItem>
-  );
+          {/* Display the expand menu if the item has children */}
+          {isExpandable && !open && <IconExpandMore />}
+          {isExpandable && open && <IconExpandLess />}
+        </ListItem>
+      );
+    }
+
+    return (
+      // Link is set, and is a string, return a list item with a link
+      <ListItem
+        button
+        className={classes.menuItem}
+        divider={divider}
+        onClick={handleClick}>
+        to={link}
+        {/* Display an icon if any */}
+        {icon && (
+          <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>
+        )}
+        <ListItemText primary={name} inset={!icon} />
+        {/* Display the expand menu if the item has children */}
+        {isExpandable && !open && <IconExpandMore />}
+        {isExpandable && open && <IconExpandLess />}
+      </ListItem>
+    );
+  };
 
   const MenuItemChildren = isExpandable ? (
     <Collapse in={open} timeout='auto' unmountOnExit>
@@ -66,7 +91,7 @@ const AppMenuItem = (props) => {
 
   return (
     <>
-      {MenuItemRoot}
+      {MenuItemRoot(link)}
       {MenuItemChildren}
     </>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/*
 // Use browser history. HTML5 window.history supported on most browsers
 // Put it in a function so if it needs to change, only the innerds of
 // the function need to change.
@@ -55,6 +57,30 @@ const pushState = (obj, url) => window.history.pushState(obj, '', url);
 const onPopState = (handler) => {
   window.onpopstate = handler;
 };
+*/
+
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+);
+
+const Dashboard = () => (
+  <div>
+    <h2>Dashboard</h2>
+  </div>
+);
+
+const Events = () => (
+  <div>
+    <h2>Events</h2>
+  </div>
+);
+const Channels = () => (
+  <div>
+    <h2>Channels</h2>
+  </div>
+);
 
 const App = (props) => {
   // state variables
@@ -95,16 +121,10 @@ const App = (props) => {
   //);
   // };
 
-  //<Drawer
-  //  variant='permanent'
-  //  classes={{
-  //    paper: classes.drawerPaper
-  //  }}></Drawer>
   return (
     // render using currentContent method
     // which conditionally looks at eventId state to know
     // how to render
-
     <div className={clsx('App', classes.root)}>
       <CssBaseline />
       <Drawer variant='permanent' classes={{ paper: classes.drawerPaper }}>
@@ -112,7 +132,26 @@ const App = (props) => {
       </Drawer>
       <main className={classes.content}>
         <Container maxWidth='lg' className={classes.container}>
-          <Typography>I'm the content</Typography>
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/dashboard'>
+              <Dashboard />
+            </Route>
+            <Route path='/events'>
+              <Events />
+            </Route>
+            <Route path='/channels'>
+              <Channels />
+            </Route>
+            <Route path='/channels/inputs'>
+              <Channels />
+            </Route>
+            <Route path='/channels/outputs'>
+              <Channels />
+            </Route>
+          </Switch>
         </Container>
       </main>
     </div>
