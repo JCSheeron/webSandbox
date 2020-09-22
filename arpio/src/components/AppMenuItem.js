@@ -32,9 +32,22 @@ const AppMenuItem = (props) => {
   const isExpandable = items && items.length > 0;
   const [open, setOpen] = React.useState(false);
 
-  function handleClick() {
+  const handleClick = () => {
     setOpen(!open);
-  }
+  };
+
+  // MenuLink is a functional component that returns a react router Link.
+  // The return is constant (via useMemo) unless the "to" changes. This is to
+  // prevent re-rendering problems with passing custom components to a
+  // react ListItem.
+  // forwardRef passes the props and ref to the child Link from the ListItem.
+  const MenuLink = React.useMemo(
+    () =>
+      React.forwardRef((itemProps, ref) => (
+        <Link to={link} ref={ref} {...itemProps} />
+      )),
+    [link]
+  );
 
   const MenuItemRoot = (link) => {
     // If link is not set, return an ordinary list item
@@ -62,10 +75,10 @@ const AppMenuItem = (props) => {
       // Link is set, and is a string, return a list item with a link
       <ListItem
         button
+        component={MenuLink}
         className={classes.menuItem}
         divider={divider}
         onClick={handleClick}>
-        to={link}
         {/* Display an icon if any */}
         {icon && (
           <ListItemIcon className={classes.menuItemIcon}>{icon}</ListItemIcon>
