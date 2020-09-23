@@ -43,9 +43,11 @@ const AppMenuItem = (props) => {
   // forwardRef passes the props and ref to the child Link from the ListItem.
   const MenuLink = React.useMemo(
     () =>
-      React.forwardRef((itemProps, ref) => (
-        <Link to={link} ref={ref} {...itemProps} />
-      )),
+      React.forwardRef((itemProps, ref) => {
+        console.log('forwardRef');
+        console.log(itemProps);
+        return <NavLink to={link} ref={ref} {...itemProps} />;
+      }),
     [link]
   );
 

@@ -61,24 +61,24 @@ const onPopState = (handler) => {
 
 const Home = () => (
   <div>
-    <h2>Home</h2>
+    <h2>HomeRouted</h2>
   </div>
 );
 
 const Dashboard = () => (
   <div>
-    <h2>Dashboard</h2>
+    <h2>DashboardRouted</h2>
   </div>
 );
 
 const Events = () => (
   <div>
-    <h2>Events</h2>
+    <h2>EventsRouted</h2>
   </div>
 );
 const Channels = () => (
   <div>
-    <h2>Channels</h2>
+    <h2>ChannelsRouted</h2>
   </div>
 );
 
@@ -164,3 +164,26 @@ App.propTypes = {
 };
 
 export default App;
+
+/*
+          <Switch>
+            <Route exact path='/'>
+              <Home />
+            </Route>
+            <Route path='/dashboard'>
+              <Dashboard />
+            </Route>
+            <Route path='/events'>
+              <Events />
+            </Route>
+            <Route path='/channels'>
+              <Channels />
+            </Route>
+            <Route path='/channels/inputs'>
+              <Channels />
+            </Route>
+            <Route path='/channels/outputs'>
+              <Channels />
+            </Route>
+          </Switch>
+          */
